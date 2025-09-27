@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
-from Board import Board
 from PlayerManager import PlayerManagerContext
-from MessageOutput import MessageOutput, MessageOutputContext, MessageOutputToTerminal
-from Processing import Processing
+from MessageOutput import MessageOutputContext, MessageOutputToTerminal
 
 class ResultOutput(ABC):
     @abstractmethod
