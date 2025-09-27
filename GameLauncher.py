@@ -3,6 +3,7 @@ from MessageOutput import MessageOutputContext, MessageOutputToTerminal
 from PlayerManager import PlayerManagerContext, PlayerManagerForHumanVsHumanOnTerminal 
 from Processing import Processing
 from Board import Board, BoardOutputContext, BoardOutputToTerminal
+from ResultOutput import ResultOutputContext, ResultOutputToTerminal
 
 class GameLauncher(ABC):
     @abstractmethod
@@ -16,10 +17,12 @@ class GameLauncherForHumanVsHumanOnTerminal(GameLauncher):
         processing = Processing()
         board = Board()
         board_output_context = BoardOutputContext()
+        result_output_context = ResultOutputContext()
 
         message_output_context.set_message_output(MessageOutputToTerminal())
         player_manager_context.set_method(PlayerManagerForHumanVsHumanOnTerminal())
         board_output_context.set_method(BoardOutputToTerminal())
+        result_output_context.set_method(ResultOutputToTerminal())
 
         # 名前入力
         message_output_context.execute_output_message("先攻（白）の名前を入力してください。")
@@ -53,12 +56,7 @@ class GameLauncherForHumanVsHumanOnTerminal(GameLauncher):
             now = (now + 1) % 2
         
         # 結果発表
-        if(result == 0):
-            message_output_context.execute_output_message(f"{player_manager_context.player_manager.first_player.name}さんの勝利です。")
-        elif(result == 1):
-            message_output_context.execute_output_message(f"{player_manager_context.player_manager.second_player.name}さんの勝利です。")
-        else:
-            message_output_context.execute_output_message("引き分けです。")            
+        result_output_context.execute_output(result, player_manager_context)
 
 class GameLauncherContext:
     def __init__(self):
