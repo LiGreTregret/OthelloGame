@@ -22,14 +22,6 @@ class TerminalMode(GameMode):
         board_output_context.set_method(BoardOutputToTerminal())
         result_output_context.set_method(ResultOutputToTerminal())
 
-        # 名前入力
-        message_output_context.execute_output_message("先攻（白）の名前を入力してください。")
-        first_player_name = str(input())
-        player_manager.register_first_player(0, first_player_name)
-        message_output_context.execute_output_message("後攻（黒）の名前を入力してください。")
-        second_player_name = str(input())
-        player_manager.register_second_player(1, second_player_name)
-
         # ゲーム開始
         message_output_context.execute_output_message("ゲームを開始します。")
         board_output_context.execute_output_board(board)
