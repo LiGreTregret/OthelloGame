@@ -3,7 +3,7 @@ from ModeSelector import ModeSelectorContext, ModeSelectorForHumanVsHumanOnTermi
 from GameMode import GameModeContext, TerminalMode
 
 class GameLauncher:
-    def play():
+    def play(self):
         # 定数
         MESSAGE = 0
         MODE_SELECTOR = 1
@@ -11,22 +11,25 @@ class GameLauncher:
 
         # インスタンスの辞書
         instance_dict = {
-            0 : {MESSAGE:MessageOutputToTerminal(), MODE_SELECTOR:ModeSelectorForHumanVsHumanOnTerminal(), GAME_MODE:TerminalMode()}
+            # ターミナルで2人プレイ
+            0 : {MESSAGE :      MessageOutputToTerminal(),
+                 MODE_SELECTOR: ModeSelectorForHumanVsHumanOnTerminal(),
+                 GAME_MODE:     TerminalMode()}
         }
 
         # メッセージだけ先にインスタンス化
         message_output_context = MessageOutputContext()
-        message_output_context.message_output(instance_dict[0][MESSAGE])
+        message_output_context.set_message_output(instance_dict[0][MESSAGE])
 
         # モード選択
         message_output_context.execute_output_message("遊ぶゲームのモードを選択してください。")
         message_output_context.execute_output_message("0 : ターミナルで2人プレイ")
-        mode = int(input())
-        while(mode not in instance_dict.keys):
+        mode = int(input("> "))
+        while(mode not in instance_dict.keys()):
             message_output_context.execute_output_message("選択した数字は不正です。選択しなおしてください。")
             message_output_context.execute_output_message("遊ぶゲームのモードを選択してください。")
             message_output_context.execute_output_message("0 : ターミナルで2人プレイ")
-            mode = int(input())
+            mode = int(input("> "))
 
         # 残り2つをインスタンス化
         mode_selector_context = ModeSelectorContext()
