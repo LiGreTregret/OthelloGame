@@ -15,18 +15,18 @@ class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
         # インスタンス
         message_output_context = MessageOutputContext()
         self.player_manager_context.set_method(PlayerManagerForHumanVsHuman())
-        message_output_context.set_message_output(MessageOutputToTerminal)
+        message_output_context.set_message_output(MessageOutputToTerminal())
 
         # 名前入力
         message_output_context.execute_output_message("1人目の名前を入力してください。")
-        player1_name = str(input())
+        player1_name = str(input("> "))
         message_output_context.execute_output_message("2人目の名前を入力してください。")
-        player2_name = str(input())
+        player2_name = str(input("> "))
         
         # 石選択
         message_output_context.execute_output_message("白の石を使うプレイヤーの数字を選んでください。")
         message_output_context.execute_output_message(f"0:{player1_name} 1:{player2_name}")
-        white = int(input())
+        white = int(input("数字 > "))
         if(white == 0):
             player1_color = 0
             player2_color = 1
@@ -35,9 +35,9 @@ class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
             player2_color = 0
         
         # 先攻選択
-        message_output_context("先攻のプレイヤーの数字を選んでください")
+        message_output_context.execute_output_message("先攻のプレイヤーの数字を選んでください")
         message_output_context.execute_output_message(f"0:{player1_name} 1:{player2_name}")
-        first = int(input())
+        first = int(input("数字 > "))
 
         # プレイヤー登録
         if(first == 0):
