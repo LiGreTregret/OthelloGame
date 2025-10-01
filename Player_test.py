@@ -2,7 +2,7 @@ from Player import PlayerContext, HumanPlayerFromTerminal
 from Board import Board, BoardOutputContext, BoardOutputToTerminal
 
 class TestPlayer:
-    def test_put(self):
+    def t_put(self):
         player_context = PlayerContext()
         board = Board()
         board_output_context = BoardOutputContext()
@@ -17,4 +17,4 @@ class TestPlayer:
 
 if __name__ == '__main__':
     test_player = TestPlayer()
-    test_player.test_put()
+    test_player.t_put()
