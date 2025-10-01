@@ -35,6 +35,7 @@ class GameLauncher:
         mode_selector_context = ModeSelectorContext()
         game_mode_context = GameModeContext()
 
+        # Strategy選択
         message_output_context.set_message_output(instance_dict[mode][MESSAGE])
         mode_selector_context.set_method(instance_dict[mode][MODE_SELECTOR])
         game_mode_context.set_mode(instance_dict[mode][GAME_MODE])
