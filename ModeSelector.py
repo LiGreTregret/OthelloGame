@@ -7,7 +7,7 @@ class ModeSelector(ABC):
     def set_player(self):
         pass
 
-class ModeSelectorForHumanVsHumanOnTerminal:
+class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
     def __init__(self):
         self.player_manager_context = PlayerManagerContext()
 
