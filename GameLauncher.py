@@ -17,18 +17,21 @@ class GameLauncher:
                  GAME_MODE:     TerminalMode()}
         }
 
+        # モード選択目次
+        MODE_INDEX = "0 : ターミナルで2人プレイ"
+
         # メッセージだけ先にインスタンス化
         message_output_context = MessageOutputContext()
         message_output_context.set_message_output(instance_dict[0][MESSAGE])
 
         # モード選択
         message_output_context.execute_output_message("遊ぶゲームのモードを選択してください。")
-        message_output_context.execute_output_message("0 : ターミナルで2人プレイ")
+        message_output_context.execute_output_message(MODE_INDEX)
         mode = int(input("> "))
         while(mode not in instance_dict.keys()):
             message_output_context.execute_output_message("選択した数字は不正です。選択しなおしてください。")
             message_output_context.execute_output_message("遊ぶゲームのモードを選択してください。")
-            message_output_context.execute_output_message("0 : ターミナルで2人プレイ")
+            message_output_context.execute_output_message(MODE_INDEX)
             mode = int(input("> "))
 
         # 残り2つをインスタンス化
