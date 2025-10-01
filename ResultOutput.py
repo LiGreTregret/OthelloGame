@@ -13,11 +13,16 @@ class ResultOutputToTerminal(ResultOutput):
         message_output_context = MessageOutputContext()
         message_output_context.set_message_output(MessageOutputToTerminal())
 
-        # 出力文字列設定
+        if(player_manager.first_player.color == 0):
+            player_names = [player_manager.first_player.name, player_manager.second_player.name]
+        else:
+            player_names = [player_manager.second_player.name, player_manager.first_player.name]
+
+        # 出力
         if(result == 0):
-            message_output_context.execute_output_message(f"{player_manager.first_player.name}さんの勝利です。")
+            message_output_context.execute_output_message(f"{player_names[0]}さんの勝利です。")
         elif(result == 1):
-            message_output_context.execute_output_message(f"{player_manager.second_player.name}さんの勝利です。")
+            message_output_context.execute_output_message(f"{player_names[1]}さんの勝利です。")
         elif(result == 2):
             message_output_context.execute_output_message("引き分けです。")
         else:
