@@ -55,8 +55,8 @@ class GameModeContext:
     def set_mode(self, game_mode: GameMode):
         self.game_mode = game_mode
     
-    def execute_game(self):
+    def execute_game(self, player_manager: PlayerManager):
         if self.game_mode is not None:
-            self.game_mode.game()
+            self.game_mode.game(player_manager)
         else:
             print("No method set up")
