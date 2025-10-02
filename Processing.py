@@ -100,5 +100,12 @@ class Processing:
                     if(num > 0): self.putable_coordinates.append([i, j, num])
                     self.clear_flippable_coordinates()
 
-        if(len(self.putable_coordinates)): return True
+    def putable(self, color, board: Board):
+        self.find_putable(color, board)
+        l = len(self.putable_coordinates)
+        self.clear_putable_coordinates()
+        
+        if(l): return True
         else: return False
+
+        
