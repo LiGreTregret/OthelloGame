@@ -87,12 +87,12 @@ class Processing:
     def clear_flippable_coordinates(self):
         self.flippable_coordinates.clear()
     
-    def putable(self, color, board:Board):
+    def putable(self, color, board:Board, clear = True):
         for i in range(8):
             for j in range(8):
                 if(board.board[i][j] == -1): self.find_flippable(i, j, color, board)
         num = len(self.flippable_coordinates)
-        self.clear_flippable_coordinates()
+        if(clear): self.clear_flippable_coordinates()
 
         if(num): return True
         else: return False
