@@ -54,6 +54,7 @@ class RandomComputerPlayerFromTerminal(Player):
         l = len(processing.putable_coordinates)
         if(l == 0):
             message_output_context.execute_output_message("置ける場所がありません。")
+            return board
 
         random.seed()
         select = random.randrange(l)
@@ -75,8 +76,9 @@ class PlayerContext:
     def set_method(self, player: Player):
         self.player = player
     
-    def execute_put(self, board: Board):
+    def execute_put(self, board: Board) -> Board:
         if self.player is not None:
-            self.player.put(board)
+            return self.player.put(board)
         else:
             print("No method set up")
+            return board
