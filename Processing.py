@@ -104,8 +104,6 @@ class Processing:
         self.find_putable(color, board)
         l = len(self.putable_coordinates)
         self.clear_putable_coordinates()
-        
+
         if(l): return True
         else: return False
-
-        
