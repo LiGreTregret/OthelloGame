@@ -4,6 +4,7 @@ from collections import deque
 class Processing:
     def __init__(self):
         self.flippable_coordinates = deque()
+        self.putable_coordinates = deque()
 
     def is_inside_board(self, x, y) -> bool:
         return ((0 <= x < 8) and (0 <= y < 8))
@@ -86,13 +87,18 @@ class Processing:
     
     def clear_flippable_coordinates(self):
         self.flippable_coordinates.clear()
+
+    def clear_putable_coordinates(self):
+        self.putable_coordinates.clear()
     
-    def putable(self, color, board:Board, clear = True):
+    def find_putable(self, color, board:Board):
         for i in range(8):
             for j in range(8):
-                if(board.board[i][j] == -1): self.find_flippable(i, j, color, board)
-        num = len(self.flippable_coordinates)
-        if(clear): self.clear_flippable_coordinates()
+                if(board.board[i][j] == -1):
+                    self.find_flippable(i, j, color, board)
+                    num = len(self.flippable_coordinates)
+                    if(num > 0): self.putable_coordinates.append([i, j, num])
+                    self.clear_flippable_coordinates()
 
-        if(num): return True
+        if(len(self.putable_coordinates)): return True
         else: return False
