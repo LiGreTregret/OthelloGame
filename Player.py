@@ -48,7 +48,7 @@ class RandomComputerPlayerFromTerminal(Player):
     def put(self, board: Board) -> Board:
         processing = Processing()
         message_output_context = MessageOutputContext()
-        message_output_context.set_message_output(MessageOutputToTerminal)
+        message_output_context.set_message_output(MessageOutputToTerminal())
 
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
