@@ -46,6 +46,44 @@ class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
             self.player_manager.register_first_player(player2_color, player2_name, PM.HUMAN_T)
             self.player_manager.register_second_player(player1_color, player1_name, PM.HUMAN_T)
 
+class ModeSelectorForVsRandomComOnTerminal(ModeSelector):
+    def __init__(self):
+        self.player_manager = PM()
+
+    def set_player(self):
+        # インスタンス
+        message_output_context = MessageOutputContext()
+        message_output_context.set_message_output(MessageOutputToTerminal())
+
+        # 名前入力
+        message_output_context.execute_output_message("あなたの名前を入力してください。")
+        player1_name = str(input("> "))
+        player2_name = "COM"
+        
+        # 石選択
+        message_output_context.execute_output_message("白の石を使うプレイヤーの数字を選んでください。")
+        message_output_context.execute_output_message(f"0:{player1_name} 1:{player2_name}")
+        white = int(input("数字 > "))
+        if(white == 0):
+            player1_color = 0
+            player2_color = 1
+        else:
+            player1_color = 1
+            player2_color = 0
+        
+        # 先攻選択
+        message_output_context.execute_output_message("先攻のプレイヤーの数字を選んでください")
+        message_output_context.execute_output_message(f"0:{player1_name} 1:{player2_name}")
+        first = int(input("数字 > "))
+
+        # プレイヤー登録
+        if(first == 0):
+            self.player_manager.register_first_player(player1_color, player1_name, PM.HUMAN_T)
+            self.player_manager.register_second_player(player2_color, player2_name, PM.RCOM_T)
+        else:
+            self.player_manager.register_first_player(player2_color, player2_name, PM.RCOM_T)
+            self.player_manager.register_second_player(player1_color, player1_name, PM.HUMAN_T)
+
 class ModeSelectorContext:
     def __init__(self):
         self.mode_selector = None
