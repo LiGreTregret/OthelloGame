@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from PlayerManager import PlayerManagerContext, PlayerManagerForHumanVsHuman
+from PlayerManager import PlayerManager as PM
 from MessageOutput import MessageOutputContext, MessageOutputToTerminal
 
 class ModeSelector(ABC):
@@ -9,12 +9,11 @@ class ModeSelector(ABC):
 
 class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
     def __init__(self):
-        self.player_manager_context = PlayerManagerContext()
+        self.player_manager = PM()
 
     def set_player(self):
         # インスタンス
         message_output_context = MessageOutputContext()
-        self.player_manager_context.set_method(PlayerManagerForHumanVsHuman())
         message_output_context.set_message_output(MessageOutputToTerminal())
 
         # 名前入力
@@ -41,11 +40,11 @@ class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
 
         # プレイヤー登録
         if(first == 0):
-            self.player_manager_context.execute_register_first_player(player1_color, player1_name)
-            self.player_manager_context.execute_register_second_player(player2_color, player2_name)
+            self.player_manager.register_first_player(player1_color, player1_name, PM.HUMAN_T)
+            self.player_manager.register_second_player(player2_color, player2_name, PM.HUMAN_T)
         else:
-            self.player_manager_context.execute_register_first_player(player2_color, player2_name)
-            self.player_manager_context.execute_register_second_player(player1_color, player1_name)
+            self.player_manager.register_first_player(player2_color, player2_name, PM.HUMAN_T)
+            self.player_manager.register_second_player(player1_color, player1_name, PM.HUMAN_T)
 
 class ModeSelectorContext:
     def __init__(self):
