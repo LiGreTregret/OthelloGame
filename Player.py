@@ -60,13 +60,15 @@ class RandomComputerPlayerFromTerminal(Player):
         select = random.randrange(l)
         for _ in range(select+1): place = processing.putable_coordinates.pop()
         x, y = place[0], place[1]
+        sleep(0.2)
         processing.find_flippable(x, y, self.color, board)
         if(processing.is_valid_put()):
             board = processing.put(x, y, self.color, board)
             board = processing.flip(board)
         else:
             message_output_context.execute_output_message("そこには置けません。")
-
+        sleep(0.2)
+        
         return board
 
 class PlayerContext:
