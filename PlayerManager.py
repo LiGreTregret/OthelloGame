@@ -18,7 +18,3 @@ class PlayerManager:
 
     def register_second_player(self, color, name, key):
         self.second_player = PlayerManager.player_dict[key](color, name)
-    
-    def switch(self):
-        if(self.first_player != None and self.second_player != None):
-            self.first_player, self.second_player = self.second_player, self.first_player
