@@ -45,7 +45,7 @@ class GameLauncher:
 
         # ゲーム進行
         mode_selector_context.execute_set_player()
-        game_mode_context.execute_game(mode_selector_context.mode_selector.player_manager_context.player_manager)
+        game_mode_context.execute_game(mode_selector_context.mode_selector.player_manager)
 
 if __name__ == "__main__":
     game_launcher = GameLauncher()
