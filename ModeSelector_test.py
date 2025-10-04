@@ -1,4 +1,6 @@
-from ModeSelector import ModeSelectorContext, ModeSelectorForHumanVsHumanOnTerminal
+from ModeSelector import ModeSelectorContext, \
+                         ModeSelectorForHumanVsHumanOnTerminal, \
+                         ModeSelectorForVsRandomComOnTerminal
 
 class TestModeSelector:
     def t_set_player(self):
