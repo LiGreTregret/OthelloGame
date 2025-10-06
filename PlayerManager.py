@@ -1,12 +1,16 @@
-from Player import HumanPlayerFromTerminal, RandomComputerPlayerFromTerminal
+from Player import HumanPlayerFromTerminal, RandomComputerPlayerFromTerminal, MostComputerPlayerFromTerminal, LeastComputerPlayerFromTerminal
 
 class PlayerManager:
     HUMAN_T = 0
     RCOM_T = 1
+    MCOM_T = 2
+    LCOM_T = 3
 
     player_dict = {
         HUMAN_T : HumanPlayerFromTerminal,
-        RCOM_T : RandomComputerPlayerFromTerminal
+        RCOM_T : RandomComputerPlayerFromTerminal,
+        MCOM_T : MostComputerPlayerFromTerminal,
+        LCOM_T : LeastComputerPlayerFromTerminal
     }
 
     def __init__(self):
