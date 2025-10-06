@@ -46,7 +46,7 @@ class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
             self.player_manager.register_first_player(player2_color, player2_name, PM.HUMAN_T)
             self.player_manager.register_second_player(player1_color, player1_name, PM.HUMAN_T)
 
-class ModeSelectorForVsRandomComOnTerminal(ModeSelector):
+class ModeSelectorForVsComOnTerminal(ModeSelector):
     def __init__(self):
         self.player_manager = PM()
 
@@ -59,6 +59,19 @@ class ModeSelectorForVsRandomComOnTerminal(ModeSelector):
         message_output_context.execute_output_message("あなたの名前を入力してください。")
         player1_name = str(input("> "))
         player2_name = "COM"
+
+        # COMタイプ選択
+        COM_INDEX = (
+            "1 : ランダム\n"
+            "2 : 1番多くひっくり返せる場所に置く\n"
+            "3 : 1番少なくひっくり返せる場所に置く"
+        )
+        message_output_context.execute_output_message("対戦するコンピュータのタイプを選択してください。")
+        message_output_context.execute_output_message(COM_INDEX)
+        player2_comtype = int(input("> "))
+        while(not(1 <= player2_comtype <= 3)):
+            message_output_context.execute_output_message("選択した数字は不正です。選択しなおしてください。")
+            player2_comtype = int(input("> "))
         
         # 石選択
         message_output_context.execute_output_message("白の石を使うプレイヤーの数字を選んでください。")
@@ -79,9 +92,9 @@ class ModeSelectorForVsRandomComOnTerminal(ModeSelector):
         # プレイヤー登録
         if(first == 0):
             self.player_manager.register_first_player(player1_color, player1_name, PM.HUMAN_T)
-            self.player_manager.register_second_player(player2_color, player2_name, PM.RCOM_T)
+            self.player_manager.register_second_player(player2_color, player2_name, player2_comtype)
         else:
-            self.player_manager.register_first_player(player2_color, player2_name, PM.RCOM_T)
+            self.player_manager.register_first_player(player2_color, player2_name, player2_comtype)
             self.player_manager.register_second_player(player1_color, player1_name, PM.HUMAN_T)
 
 class ModeSelectorContext:
