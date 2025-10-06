@@ -1,7 +1,7 @@
 from MessageOutput import MessageOutputContext, MessageOutputToTerminal
 from ModeSelector import ModeSelectorContext, \
                          ModeSelectorForHumanVsHumanOnTerminal as MSHvHT, \
-                         ModeSelectorForVsRandomComOnTerminal as MSvRCT
+                         ModeSelectorForVsComOnTerminal as MSvCT
 from GameMode import GameModeContext, TerminalMode
 
 class GameLauncher:
@@ -18,14 +18,14 @@ class GameLauncher:
                  MODE_SELECTOR: MSHvHT(),
                  GAME_MODE:     TerminalMode()},
             1 : {MESSAGE :      MessageOutputToTerminal(),
-                 MODE_SELECTOR: MSvRCT(),
+                 MODE_SELECTOR: MSvCT(),
                  GAME_MODE:     TerminalMode()}
         }
 
         # モード選択目次
         MODE_INDEX = (
             "0 : ターミナルで2人プレイ\n"
-            "1 : ターミナルでランダムに置くCOMと対戦"
+            "1 : ターミナルでCOMと対戦"
         )
 
         # メッセージだけ先にインスタンス化
