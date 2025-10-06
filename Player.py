@@ -71,6 +71,70 @@ class RandomComputerPlayerFromTerminal(Player):
         
         return board
 
+class MostComputerPlayerFromTerminal(Player):
+    def __init__(self, color, name):
+        super().__init__(color, name)
+    
+    def put(self, board: Board) -> Board:
+        processing = Processing()
+        message_output_context = MessageOutputContext()
+        message_output_context.set_message_output(MessageOutputToTerminal())
+
+        processing.find_putable(self.color, board)
+        l = len(processing.putable_coordinates)
+        if(l == 0):
+            message_output_context.execute_output_message("置ける場所がありません。")
+            return board
+
+        m = [-1, -1, 0]
+        for _ in range(l):
+            c = processing.putable_coordinates.pop()
+            if(c[2] > m[2]): m = c
+
+        x, y = m[0], m[1]
+        sleep(0.2)
+        processing.find_flippable(x, y, self.color, board)
+        if(processing.is_valid_put()):
+            board = processing.put(x, y, self.color, board)
+            board = processing.flip(board)
+        else:
+            message_output_context.execute_output_message("そこには置けません。")
+        sleep(0.2)
+        
+        return board
+    
+class LeastComputerPlayerFromTerminal(Player):
+    def __init__(self, color, name):
+        super().__init__(color, name)
+    
+    def put(self, board: Board) -> Board:
+        processing = Processing()
+        message_output_context = MessageOutputContext()
+        message_output_context.set_message_output(MessageOutputToTerminal())
+
+        processing.find_putable(self.color, board)
+        l = len(processing.putable_coordinates)
+        if(l == 0):
+            message_output_context.execute_output_message("置ける場所がありません。")
+            return board
+
+        m = [-1, -1, 100]
+        for _ in range(l):
+            c = processing.putable_coordinates.pop()
+            if(c[2] < m[2]): m = c
+
+        x, y = m[0], m[1]
+        sleep(0.2)
+        processing.find_flippable(x, y, self.color, board)
+        if(processing.is_valid_put()):
+            board = processing.put(x, y, self.color, board)
+            board = processing.flip(board)
+        else:
+            message_output_context.execute_output_message("そこには置けません。")
+        sleep(0.2)
+        
+        return board
+
 class PlayerContext:
     def __init__(self):
         self.player = None
