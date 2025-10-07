@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import tkinter as tk
 
 class Board:
     def __init__(self):
@@ -7,7 +8,8 @@ class Board:
         self.board[3][4] = 1
         self.board[4][3] = 1
         self.board[4][4] = 0
-        
+
+###########################################################################
 
 class BoardOutput(ABC):
     @abstractmethod
@@ -24,16 +26,16 @@ class BoardOutputToTerminal(BoardOutput):
         print(" y12345678 ")
         print("x+--------+")
 
-        for i in range(8):
+        for x in range(8):
             # 左枠
-            print(f'{i+1}|', end='')
+            print(f'{x+1}|', end='')
             
             # 中身
             buf = []
-            for j in range(8):
-                if board.board[i][j] == 1:
+            for y in range(8):
+                if board.board[x][y] == 1:
                     stone = BLACK_STONE
-                elif board.board[i][j] == 0:
+                elif board.board[x][y] == 0:
                     stone = WHITE_STONE
                 else:
                     stone = BLANK
@@ -44,6 +46,47 @@ class BoardOutputToTerminal(BoardOutput):
             
         # 下枠
         print(" +--------+")
+
+class BoardOutputToGUI(BoardOutput):
+    def __init__(self, parent_frame):
+        self.root = parent_frame
+        self.canvases = [[None]*8 for _ in range(8)]
+        self.cell_size = 50
+        self._create_board_ui()
+    
+    def _create_board_ui(self):
+        for x in range(8):
+            for y in range(8):
+                c = tk.Canvas(
+                        self.root, width=self.cell_size, height=self.cell_size, 
+                        bg="green", highlightthickness=1, highlightbackground="black"
+                    )
+                c.grid(row=x, column=y)
+                c.bind("<Button-1>", lambda e, x=x, y=y: self.on_click(x, y))
+                self.canvases[x][y] = c
+    
+    def on_click(self, x, y):
+        print(f"Clicked: ({x}, {y})")
+
+    def draw_stone(self, x, y, color):
+        c = self.canvases[x][y]
+        margin = 5
+        c.create_oval(
+            margin, margin, 
+            self.cell_size-margin, self.cell_size-margin,
+            fill=color
+        )
+    
+    def output_board(self, board: Board):
+        for x in range(8):
+            for y in range(8):
+                c = self.canvases[x][y]
+                c.delete("stone")
+                value = board.board[x][y]
+                if(value == 1):
+                    self.draw_stone(x, y, "black")
+                elif(value == 0):
+                    self.draw_stone(x, y, "white")
 
 class BoardOutputContext:
     def __init__(self):
