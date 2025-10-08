@@ -1,6 +1,7 @@
 from PlayerManager import PlayerManager as PM
-from ResultOutput import ResultOutputContext, ResultOutputToTerminal
-from Board import Board
+from MessageOutput import MessageOutputToTerminal, MessageOutputToGUI
+from ResultOutput import ResultOutputContext, ResultMessageOutput
+import tkinter as tk
 
 class TestResultOutput:
     def test_result_output_to_terminal(self):
@@ -8,22 +9,55 @@ class TestResultOutput:
         player_manager.register_first_player(0, "White", PM.HUMAN_T)
         player_manager.register_second_player(1, "Black", PM.HUMAN_T)
 
+        message_output = MessageOutputToTerminal()
+        result_output = ResultMessageOutput(player_manager, message_output)
+
         result_output_context = ResultOutputContext()
-        result_output_context.set_method(ResultOutputToTerminal())
+        result_output_context.set_method(result_output)
 
         # 「エラー」と出力
-        result_output_context.execute_output(3, player_manager)
+        result_output_context.execute_output(3)
 
         # 「Whiteさんの勝ちです。」と出力
-        result_output_context.execute_output(0, player_manager)
+        result_output_context.execute_output(0)
 
         # 「Blackさんの勝ちです。」と出力
-        result_output_context.execute_output(1, player_manager)
+        result_output_context.execute_output(1)
 
         # 「同点です。」と出力
-        result_output_context.execute_output(2, player_manager)
+        result_output_context.execute_output(2)
+    
+    def test_result_output_to_gui(self):
+        player_manager = PM()
+        player_manager.register_first_player(0, "White", PM.HUMAN_T)
+        player_manager.register_second_player(1, "Black", PM.HUMAN_T)
 
+        root = tk.Tk()
+        root.title("MessageOutputToGUIのテスト")
+
+        message_output = MessageOutputToGUI(root)
+        result_output = ResultMessageOutput(player_manager, message_output)
+
+        result_output_context = ResultOutputContext()
+        result_output_context.set_method(result_output)
+
+        # 「エラー」と出力
+        result_output_context.execute_output(3)
+
+        # 「Whiteさんの勝ちです。」と出力
+        root.after(1000, lambda: result_output_context.execute_output(0))
+
+        # 「Blackさんの勝ちです。」と出力
+        root.after(2000, lambda: result_output_context.execute_output(1))
+
+        # 「同点です。」と出力
+        root.after(3000, lambda: result_output_context.execute_output(2))
+
+        root.after(4000, root.destroy)
+
+        root.mainloop()
 
 if __name__ == "__main__":
     test_result_output = TestResultOutput()
     test_result_output.test_result_output_to_terminal()
+    test_result_output.test_result_output_to_gui()

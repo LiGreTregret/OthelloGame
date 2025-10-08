@@ -1,22 +1,29 @@
 from abc import ABC, abstractmethod
 from PlayerManager import PlayerManager
-from MessageOutput import MessageOutputContext, MessageOutputToTerminal
+from MessageOutput import MessageOutput, MessageOutputContext
 
 class ResultOutput(ABC):
     @abstractmethod
 
-    def output_result(self, result, player_manager: PlayerManager):
+    def __init__(self, player_manager: PlayerManager, message_output: MessageOutput=None):
         pass
 
-class ResultOutputToTerminal(ResultOutput):
-    def output_result(self, result, player_manager: PlayerManager):
-        message_output_context = MessageOutputContext()
-        message_output_context.set_message_output(MessageOutputToTerminal())
+    def output_result(self, result):
+        pass
 
-        if(player_manager.first_player.color == 0):
-            player_names = [player_manager.first_player.name, player_manager.second_player.name]
+class ResultMessageOutput(ResultOutput):
+    def __init__(self, player_manager: PlayerManager, message_output: MessageOutput=None):
+        self.player_manager = player_manager
+        self.message_output = message_output
+
+    def output_result(self, result):
+        message_output_context = MessageOutputContext()
+        message_output_context.set_message_output(self.message_output)
+
+        if(self.player_manager.first_player.color == 0):
+            player_names = [self.player_manager.first_player.name, self.player_manager.second_player.name]
         else:
-            player_names = [player_manager.second_player.name, player_manager.first_player.name]
+            player_names = [self.player_manager.second_player.name, self.player_manager.first_player.name]
 
         # 出力
         if(result == 0):
@@ -35,8 +42,8 @@ class ResultOutputContext:
     def set_method(self, result_output: ResultOutput):
         self.result_output = result_output
     
-    def execute_output(self, result, player_manager: PlayerManager):
+    def execute_output(self, result):
         if self.result_output is not None:
-            self.result_output.output_result(result, player_manager)
+            self.result_output.output_result(result)
         else:
             print("No method set up")
