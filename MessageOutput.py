@@ -13,7 +13,7 @@ class MessageOutputToTerminal(MessageOutput):
 class MessageOutputToGUI(MessageOutput):
     def __init__(self, root):
         self.label = tk.Label(root, text="", font=("Arial", 10))
-        self.label.pack(pady=10)
+        self.label.pack(pady=5)
 
     def output_message(self, message):
         self.label.config(text=message)
