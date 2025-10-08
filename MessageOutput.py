@@ -1,3 +1,4 @@
+import tkinter as tk
 from abc import ABC, abstractmethod
 
 class MessageOutput(ABC):
@@ -8,6 +9,14 @@ class MessageOutput(ABC):
 class MessageOutputToTerminal(MessageOutput):
     def output_message(self, message):
         print(message)
+
+class MessageOutputToGUI(MessageOutput):
+    def __init__(self, root):
+        self.label = tk.Label(root, text="", font=("Arial", 10))
+        self.label.pack(pady=10)
+
+    def output_message(self, message):
+        self.label.config(text=message)
 
 class MessageOutputContext:
     def __init__(self):
