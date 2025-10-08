@@ -6,8 +6,8 @@ class TestGameMode:
         player_manager= PM()
         game_mode_context = GameModeContext()
         
-        player_manager.register_first_player(0, "White", PM.RCOM_T)
-        player_manager.register_second_player(1, "Black", PM.RCOM_T)
+        player_manager.register_first_player(0, "White", PM.MCOM_T)
+        player_manager.register_second_player(1, "Black", PM.LCOM_T)
 
         game_mode_context.set_mode(TerminalMode())
         game_mode_context.execute_game(player_manager)

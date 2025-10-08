@@ -3,7 +3,7 @@ from MessageOutput import MessageOutputContext, MessageOutputToTerminal
 from PlayerManager import PlayerManager
 from Processing import Processing
 from Board import Board, BoardOutputContext, BoardOutputToTerminal
-from ResultOutput import ResultOutputContext, ResultOutputToTerminal
+from ResultOutput import ResultOutputContext, ResultMessageOutput
 
 class GameMode(ABC):
     @abstractmethod
@@ -12,15 +12,15 @@ class GameMode(ABC):
 
 class TerminalMode(GameMode):
     def game(self, player_manager: PlayerManager):
-        message_output_context = MessageOutputContext()
         processing = Processing()
         board = Board()
-        board_output_context = BoardOutputContext()
-        result_output_context = ResultOutputContext()
 
-        message_output_context.set_message_output(MessageOutputToTerminal())
+        board_output_context = BoardOutputContext()
         board_output_context.set_method(BoardOutputToTerminal())
-        result_output_context.set_method(ResultOutputToTerminal())
+
+        message_output = MessageOutputToTerminal()
+        message_output_context = MessageOutputContext()
+        message_output_context.set_message_output(message_output)
 
         # ゲーム開始
         message_output_context.execute_output_message("ゲームを開始します。")
@@ -46,7 +46,9 @@ class TerminalMode(GameMode):
             now = (now + 1) % 2
         
         # 結果発表
-        result_output_context.execute_output(result, player_manager)
+        result_output_context = ResultOutputContext()
+        result_output_context.set_method(ResultMessageOutput(player_manager, message_output))
+        result_output_context.execute_output(result)
 
 class GameModeContext:
     def __init__(self):
