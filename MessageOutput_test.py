@@ -1,5 +1,6 @@
 import tkinter as tk
 from MessageOutput import MessageOutputToTerminal, MessageOutputToGUI, MessageOutputContext
+from time import sleep
 
 # "Test"が出力されるか確認
 class MessageOutputTest:
@@ -17,7 +18,7 @@ class MessageOutputTest:
         message_output_gui = MessageOutputToGUI(root)
         message_output_context.set_message_output(message_output_gui)
 
-        message_output_context.execute_output_message("Test")
+        message_output_context.execute_output_message("Test", 1)
         root.mainloop()
 
 if __name__ == "__main__":
