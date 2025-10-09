@@ -1,16 +1,20 @@
-from Player import HumanPlayerFromTerminal, RandomComputerPlayerFromTerminal, MostComputerPlayerFromTerminal, LeastComputerPlayerFromTerminal
+from Player import HumanPlayerFromTerminal, \
+                   HumanPlayerFromGUI, \
+                   RandomComputerPlayer, \
+                   MostComputerPlayer, \
+                   LeastComputerPlayer
 
-class PlayerManager:
+class PlayerManagerForTerminal:
     HUMAN_T = 0
-    RCOM_T = 1
-    MCOM_T = 2
-    LCOM_T = 3
+    RCOM = 1
+    MCOM = 2
+    LCOM = 3
 
     player_dict = {
         HUMAN_T : HumanPlayerFromTerminal,
-        RCOM_T : RandomComputerPlayerFromTerminal,
-        MCOM_T : MostComputerPlayerFromTerminal,
-        LCOM_T : LeastComputerPlayerFromTerminal
+        RCOM : RandomComputerPlayer,
+        MCOM : MostComputerPlayer,
+        LCOM : LeastComputerPlayer
     }
 
     def __init__(self):
@@ -18,7 +22,7 @@ class PlayerManager:
         self.second_player = None
     
     def register_first_player(self, color, name, key):
-        self.first_player = PlayerManager.player_dict[key](color, name)
+        self.first_player = PlayerManagerForTerminal.player_dict[key](color, name)
 
     def register_second_player(self, color, name, key):
-        self.second_player = PlayerManager.player_dict[key](color, name)
+        self.second_player = PlayerManagerForTerminal.player_dict[key](color, name)
