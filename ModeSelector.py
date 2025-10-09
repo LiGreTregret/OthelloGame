@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from PlayerManager import PlayerManager as PM
+from PlayerManager import PlayerManagerForTerminal as PMT
 from MessageOutput import MessageOutputContext, MessageOutputToTerminal
 
 class ModeSelector(ABC):
@@ -9,7 +9,7 @@ class ModeSelector(ABC):
 
 class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
     def __init__(self):
-        self.player_manager = PM()
+        self.player_manager = PMT()
 
     def set_player(self):
         # インスタンス
@@ -40,15 +40,15 @@ class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
 
         # プレイヤー登録
         if(first == 0):
-            self.player_manager.register_first_player(player1_color, player1_name, PM.HUMAN_T)
-            self.player_manager.register_second_player(player2_color, player2_name, PM.HUMAN_T)
+            self.player_manager.register_first_player(player1_color, player1_name, PMT.HUMAN_T)
+            self.player_manager.register_second_player(player2_color, player2_name, PMT.HUMAN_T)
         else:
-            self.player_manager.register_first_player(player2_color, player2_name, PM.HUMAN_T)
-            self.player_manager.register_second_player(player1_color, player1_name, PM.HUMAN_T)
+            self.player_manager.register_first_player(player2_color, player2_name, PMT.HUMAN_T)
+            self.player_manager.register_second_player(player1_color, player1_name, PMT.HUMAN_T)
 
 class ModeSelectorForVsComOnTerminal(ModeSelector):
     def __init__(self):
-        self.player_manager = PM()
+        self.player_manager = PMT()
 
     def set_player(self):
         # インスタンス
@@ -91,11 +91,11 @@ class ModeSelectorForVsComOnTerminal(ModeSelector):
 
         # プレイヤー登録
         if(first == 0):
-            self.player_manager.register_first_player(player1_color, player1_name, PM.HUMAN_T)
+            self.player_manager.register_first_player(player1_color, player1_name, PMT.HUMAN_T)
             self.player_manager.register_second_player(player2_color, player2_name, player2_comtype)
         else:
             self.player_manager.register_first_player(player2_color, player2_name, player2_comtype)
-            self.player_manager.register_second_player(player1_color, player1_name, PM.HUMAN_T)
+            self.player_manager.register_second_player(player1_color, player1_name, PMT.HUMAN_T)
 
 class ModeSelectorContext:
     def __init__(self):
