@@ -1,4 +1,5 @@
-from Player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayerFromTerminal
+from Player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayer
+from MessageOutput import MessageOutputToTerminal, MessageOutputToGUI
 from InputController import InputControllerGUI
 from Board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
 import tkinter as tk
@@ -14,7 +15,7 @@ class TestPlayer:
 
         instance_dict = {
             0 : HumanPlayerFromTerminal(0, "White"),
-            1 : RandomComputerPlayerFromTerminal(0, "White")
+            1 : RandomComputerPlayer(0, "White", MessageOutputToTerminal())
         }
 
         # 置けないときのテスト用
@@ -47,7 +48,8 @@ class TestPlayer:
         input_controller = InputControllerGUI(board_output.canvases)
 
         instance_dict = {
-            0 : HumanPlayerFromGUI(0, "White", input_controller, frame_message, frame_board)
+            0 : HumanPlayerFromGUI(0, "White", input_controller, frame_message, frame_board),
+            1 : RandomComputerPlayer(0, "White", MessageOutputToGUI)
         }
 
         # 置けないときのテスト用
@@ -65,5 +67,5 @@ class TestPlayer:
 
 if __name__ == '__main__':
     test_player = TestPlayer()
-    test_player.t_put()
+    # test_player.t_put()
     test_player.g_put()

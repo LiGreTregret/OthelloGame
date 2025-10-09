@@ -1,28 +1,31 @@
 from abc import ABC, abstractmethod
 from Board import Board
 from Processing import Processing
-from MessageOutput import MessageOutputContext, MessageOutputToTerminal, MessageOutputToGUI
+from MessageOutput import MessageOutputContext, MessageOutput, MessageOutputToTerminal, MessageOutputToGUI
 from InputController import InputControllerGUI
 from time import sleep
 import random
 
 class Player(ABC):
     @abstractmethod
-    def __init__(self, color, name):
+    def __init__(self, color, name, message_output: MessageOutput):
         self.color = color
         self.name = name
+        self.message_output = message_output
 
     def put():
         pass
 
 class HumanPlayerFromTerminal(Player):
-    def __init__(self, color, name):
-        super().__init__(color, name)
+    def __init__(self, color, name, message_output=None):
+        self.color = color
+        self.name = name
+        self.message_output = MessageOutputToTerminal()
     
     def put(self, board: Board) -> Board:
         processing = Processing()
         message_output_context = MessageOutputContext()
-        message_output_context.set_message_output(MessageOutputToTerminal())
+        message_output_context.set_message_output(self.message_output)
 
         if(not(processing.putable(self.color, board))):
             message_output_context.execute_output_message("置ける場所がありません。")
@@ -43,16 +46,18 @@ class HumanPlayerFromTerminal(Player):
         return board
 
 class HumanPlayerFromGUI(Player):
-    def __init__(self, color, name, input_controller: InputControllerGUI, frame_message, frame_board):
-        super().__init__(color, name)
+    def __init__(self, color, name, input_controller: InputControllerGUI, frame_message, frame_board, message_output=None):
+        self.color = color
+        self.name = name
         self.input_controller = input_controller
         self.frame_message = frame_message
         self.frame_board = frame_board
+        self.message_output = MessageOutputToGUI(frame_message)
     
     def put(self, board: Board) -> Board:
         processing = Processing()
         message_output_context = MessageOutputContext()
-        message_output_context.set_message_output(MessageOutputToGUI(self.frame_message))
+        message_output_context.set_message_output(self.message_output)
 
         if(not(processing.putable(self.color, board))):
             message_output_context.execute_output_message("置ける場所がありません。")
@@ -71,14 +76,14 @@ class HumanPlayerFromGUI(Player):
             sleep(0.2)
         return board
     
-class RandomComputerPlayerFromTerminal(Player):
-    def __init__(self, color, name):
-        super().__init__(color, name)
+class RandomComputerPlayer(Player):
+    def __init__(self, color, name, message_output):
+        super().__init__(color, name, message_output)
     
     def put(self, board: Board) -> Board:
         processing = Processing()
         message_output_context = MessageOutputContext()
-        message_output_context.set_message_output(MessageOutputToTerminal())
+        message_output_context.set_message_output(self.message_output)
 
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
@@ -101,14 +106,14 @@ class RandomComputerPlayerFromTerminal(Player):
         
         return board
 
-class MostComputerPlayerFromTerminal(Player):
-    def __init__(self, color, name):
-        super().__init__(color, name)
+class MostComputerPlayer(Player):
+    def __init__(self, color, name, message_output):
+        super().__init__(color, name, message_output)
     
     def put(self, board: Board) -> Board:
         processing = Processing()
         message_output_context = MessageOutputContext()
-        message_output_context.set_message_output(MessageOutputToTerminal())
+        message_output_context.set_message_output(self.message_output)
 
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
@@ -133,14 +138,14 @@ class MostComputerPlayerFromTerminal(Player):
         
         return board
     
-class LeastComputerPlayerFromTerminal(Player):
-    def __init__(self, color, name):
-        super().__init__(color, name)
+class LeastComputerPlayer(Player):
+    def __init__(self, color, name, message_output):
+        super().__init__(color, name, message_output)
     
     def put(self, board: Board) -> Board:
         processing = Processing()
         message_output_context = MessageOutputContext()
-        message_output_context.set_message_output(MessageOutputToTerminal())
+        message_output_context.set_message_output(self.message_output)
 
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
