@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from Board import Board
 from Processing import Processing
-from MessageOutput import MessageOutputContext, MessageOutputToTerminal
+from MessageOutput import MessageOutputContext, MessageOutputToTerminal, MessageOutputToGUI
+from InputController import InputControllerGUI
 from time import sleep
 import random
 
@@ -38,6 +39,35 @@ class HumanPlayerFromTerminal(Player):
                 break
             else:
                 message_output_context.execute_output_message("そこには置けません。")
+            sleep(0.2)
+        return board
+
+class HumanPlayerFromGUI(Player):
+    def __init__(self, color, name, input_controller: InputControllerGUI, frame_message, frame_board):
+        super().__init__(color, name)
+        self.input_controller = input_controller
+        self.frame_message = frame_message
+        self.frame_board = frame_board
+    
+    def put(self, board: Board) -> Board:
+        processing = Processing()
+        message_output_context = MessageOutputContext()
+        message_output_context.set_message_output(MessageOutputToGUI(self.frame_message))
+
+        if(not(processing.putable(self.color, board))):
+            message_output_context.execute_output_message("置ける場所がありません。")
+            return board
+
+        while(1):
+            x, y = self.input_controller.wait_for_click(self.frame_board)
+            sleep(0.2)
+            processing.find_flippable(x, y, self.color, board)
+            if(processing.is_valid_put()):
+                board = processing.put(x, y, self.color, board)
+                board = processing.flip(board)
+                break
+            else:
+                message_output_context.execute_output_message("そこには置けません。", 1)
             sleep(0.2)
         return board
     
