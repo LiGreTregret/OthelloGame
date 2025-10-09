@@ -62,11 +62,7 @@ class BoardOutputToGUI(BoardOutput):
                         bg="green", highlightthickness=1, highlightbackground="black"
                     )
                 c.grid(row=x, column=y)
-                c.bind("<Button-1>", lambda e, x=x, y=y: self.on_click(x, y))
                 self.canvases[x][y] = c
-    
-    def on_click(self, x, y):
-        print(f"Clicked: ({x}, {y})")
 
     def draw_stone(self, x, y, color):
         c = self.canvases[x][y]
