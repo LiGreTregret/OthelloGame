@@ -1,4 +1,5 @@
 from PlayerManager import PlayerManager as PM
+from Player import HumanPlayerFromTerminal
 from MessageOutput import MessageOutputToTerminal, MessageOutputToGUI
 from ResultOutput import ResultOutputContext, ResultMessageOutput
 import tkinter as tk
@@ -6,8 +7,11 @@ import tkinter as tk
 class TestResultOutput:
     def test_result_output_to_terminal(self):
         player_manager = PM()
-        player_manager.register_first_player(0, "White", PM.HUMAN_T)
-        player_manager.register_second_player(1, "Black", PM.HUMAN_T)
+
+        first_player = HumanPlayerFromTerminal(0, "White")
+        second_player = HumanPlayerFromTerminal(1, "Black")
+        player_manager.register_first_player(first_player)
+        player_manager.register_second_player(second_player)
 
         message_output = MessageOutputToTerminal()
         result_output = ResultMessageOutput(player_manager, message_output)
@@ -29,8 +33,11 @@ class TestResultOutput:
     
     def test_result_output_to_gui(self):
         player_manager = PM()
-        player_manager.register_first_player(0, "White", PM.HUMAN_T)
-        player_manager.register_second_player(1, "Black", PM.HUMAN_T)
+
+        first_player = HumanPlayerFromTerminal(0, "White")
+        second_player = HumanPlayerFromTerminal(1, "Black")
+        player_manager.register_first_player(first_player)
+        player_manager.register_second_player(second_player)
 
         root = tk.Tk()
         root.title("MessageOutputToGUIのテスト")
