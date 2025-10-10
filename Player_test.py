@@ -67,5 +67,5 @@ class TestPlayer:
 
 if __name__ == '__main__':
     test_player = TestPlayer()
-    # test_player.t_put()
+    test_player.t_put()
     test_player.g_put()

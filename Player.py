@@ -8,16 +8,11 @@ import random
 
 class Player(ABC):
     @abstractmethod
-    def __init__(self, color, name, message_output: MessageOutput):
-        self.color = color
-        self.name = name
-        self.message_output = message_output
-
     def put():
         pass
 
 class HumanPlayerFromTerminal(Player):
-    def __init__(self, color, name, message_output=None):
+    def __init__(self, color, name):
         self.color = color
         self.name = name
         self.message_output = MessageOutputToTerminal()
@@ -46,7 +41,7 @@ class HumanPlayerFromTerminal(Player):
         return board
 
 class HumanPlayerFromGUI(Player):
-    def __init__(self, color, name, input_controller: InputControllerGUI, frame_message, frame_board, message_output=None):
+    def __init__(self, color, name, input_controller: InputControllerGUI, frame_message, frame_board):
         self.color = color
         self.name = name
         self.input_controller = input_controller
@@ -78,7 +73,9 @@ class HumanPlayerFromGUI(Player):
     
 class RandomComputerPlayer(Player):
     def __init__(self, color, name, message_output):
-        super().__init__(color, name, message_output)
+        self.color = color
+        self.name = name
+        self.message_output = message_output
     
     def put(self, board: Board) -> Board:
         processing = Processing()
@@ -108,7 +105,9 @@ class RandomComputerPlayer(Player):
 
 class MostComputerPlayer(Player):
     def __init__(self, color, name, message_output):
-        super().__init__(color, name, message_output)
+        self.color = color
+        self.name = name
+        self.message_output = message_output
     
     def put(self, board: Board) -> Board:
         processing = Processing()
@@ -140,7 +139,9 @@ class MostComputerPlayer(Player):
     
 class LeastComputerPlayer(Player):
     def __init__(self, color, name, message_output):
-        super().__init__(color, name, message_output)
+        self.color = color
+        self.name = name
+        self.message_output = message_output
     
     def put(self, board: Board) -> Board:
         processing = Processing()
