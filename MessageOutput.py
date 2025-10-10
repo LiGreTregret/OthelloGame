@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class MessageOutput(ABC):
     @abstractmethod
-    def output_message(self, message, duration_s):
+    def output_message(self, message, duration_s=None):
         pass
 
 class MessageOutputToTerminal(MessageOutput):
@@ -11,8 +11,8 @@ class MessageOutputToTerminal(MessageOutput):
         print(message)
 
 class MessageOutputToGUI(MessageOutput):
-    def __init__(self, root):
-        self.label = tk.Label(root, text="", font=("Arial", 10))
+    def __init__(self, frame_message):
+        self.label = tk.Label(frame_message, text="", font=("Arial", 10))
         self.label.pack(pady=5)
         self.default_text = ""
 
