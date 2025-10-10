@@ -48,8 +48,8 @@ class BoardOutputToTerminal(BoardOutput):
         print(" +--------+")
 
 class BoardOutputToGUI(BoardOutput):
-    def __init__(self, parent_frame):
-        self.root = parent_frame
+    def __init__(self, frame_board):
+        self.frame_board = frame_board
         self.canvases = [[None]*8 for _ in range(8)]
         self.cell_size = 50
         self._create_board_ui()
