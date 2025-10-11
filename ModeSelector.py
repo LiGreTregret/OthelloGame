@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from PlayerManager import PlayerManagerForTerminal as PMT
+from PlayerManager import PlayerManager
+from Player import HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer
 from MessageOutput import MessageOutputContext, MessageOutputToTerminal
 
 class ModeSelector(ABC):
@@ -9,7 +10,7 @@ class ModeSelector(ABC):
 
 class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
     def __init__(self):
-        self.player_manager = PMT()
+        self.player_manager = PlayerManager()
 
     def set_player(self):
         # インスタンス
@@ -39,21 +40,24 @@ class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
         first = int(input("数字 > "))
 
         # プレイヤー登録
+        player1 = HumanPlayerFromTerminal(player1_color, player1_name)
+        player2 = HumanPlayerFromTerminal(player2_color, player2_name)
         if(first == 0):
-            self.player_manager.register_first_player(player1_color, player1_name, PMT.HUMAN_T)
-            self.player_manager.register_second_player(player2_color, player2_name, PMT.HUMAN_T)
+            self.player_manager.register_first_player(player1)
+            self.player_manager.register_second_player(player2)
         else:
-            self.player_manager.register_first_player(player2_color, player2_name, PMT.HUMAN_T)
-            self.player_manager.register_second_player(player1_color, player1_name, PMT.HUMAN_T)
+            self.player_manager.register_first_player(player2)
+            self.player_manager.register_second_player(player1)
 
 class ModeSelectorForVsComOnTerminal(ModeSelector):
     def __init__(self):
-        self.player_manager = PMT()
+        self.player_manager = PlayerManager()
 
     def set_player(self):
         # インスタンス
+        message_output = MessageOutputToTerminal()
         message_output_context = MessageOutputContext()
-        message_output_context.set_message_output(MessageOutputToTerminal())
+        message_output_context.set_message_output(message_output)
 
         # 名前入力
         message_output_context.execute_output_message("あなたの名前を入力してください。")
@@ -62,10 +66,17 @@ class ModeSelectorForVsComOnTerminal(ModeSelector):
 
         # COMタイプ選択
         COM_INDEX = (
-            "1 : ランダム\n"
-            "2 : 1番多くひっくり返せる場所に置く\n"
-            "3 : 1番少なくひっくり返せる場所に置く"
+            "0 : ランダム\n"
+            "1 : 1番多くひっくり返せる場所に置く\n"
+            "2 : 1番少なくひっくり返せる場所に置く"
         )
+
+        COM_CLASS = {
+            0 : RandomComputerPlayer,
+            1 : MostComputerPlayer,
+            2 : LeastComputerPlayer
+        }
+
         message_output_context.execute_output_message("対戦するコンピュータのタイプを選択してください。")
         message_output_context.execute_output_message(COM_INDEX)
         player2_comtype = int(input("> "))
@@ -90,12 +101,14 @@ class ModeSelectorForVsComOnTerminal(ModeSelector):
         first = int(input("数字 > "))
 
         # プレイヤー登録
+        player1 = HumanPlayerFromTerminal(player1_name, player2_name)
+        player2 = COM_CLASS[player2_comtype](player2_color, player2_name, message_output)
         if(first == 0):
-            self.player_manager.register_first_player(player1_color, player1_name, PMT.HUMAN_T)
-            self.player_manager.register_second_player(player2_color, player2_name, player2_comtype)
+            self.player_manager.register_first_player(player1)
+            self.player_manager.register_second_player(player2)
         else:
-            self.player_manager.register_first_player(player2_color, player2_name, player2_comtype)
-            self.player_manager.register_second_player(player1_color, player1_name, PMT.HUMAN_T)
+            self.player_manager.register_first_player(player2)
+            self.player_manager.register_second_player(player1)
 
 class ModeSelectorContext:
     def __init__(self):
