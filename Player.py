@@ -52,7 +52,7 @@ class HumanPlayerFromGUI(Player):
         message_output_context.set_message_output(self.message_output)
 
         if(not(processing.putable(self.color, board))):
-            message_output_context.execute_output_message("置ける場所がありません。")
+            message_output_context.execute_output_message("置ける場所がありません。", 0.5)
             return board
 
         while(1):
@@ -80,7 +80,7 @@ class RandomComputerPlayer(Player):
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
         if(l == 0):
-            message_output_context.execute_output_message("置ける場所がありません。")
+            message_output_context.execute_output_message("置ける場所がありません。", 0.5)
             return board
 
         random.seed()
@@ -110,7 +110,7 @@ class MostComputerPlayer(Player):
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
         if(l == 0):
-            message_output_context.execute_output_message("置ける場所がありません。")
+            message_output_context.execute_output_message("置ける場所がありません。", 0.5)
             return board
 
         m = [-1, -1, 0]
@@ -142,7 +142,7 @@ class LeastComputerPlayer(Player):
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
         if(l == 0):
-            message_output_context.execute_output_message("置ける場所がありません。")
+            message_output_context.execute_output_message("置ける場所がありません。", 0.5)
             return board
 
         m = [-1, -1, 100]
