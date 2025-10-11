@@ -46,9 +46,10 @@ class TestPlayer:
         board_output_context.execute_output_board(board)
 
         input_controller = InputControllerGUI(board_output.canvases)
+        message_output = MessageOutputToGUI(frame_message)
 
         instance_dict = {
-            0 : HumanPlayerFromGUI(0, "White", input_controller, frame_message, frame_board),
+            0 : HumanPlayerFromGUI(0, "White", input_controller, frame_message, frame_board, message_output),
             1 : RandomComputerPlayer(0, "White", MessageOutputToGUI)
         }
 
