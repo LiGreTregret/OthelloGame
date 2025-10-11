@@ -28,7 +28,8 @@ class HumanPlayerFromTerminal(Player):
         while(1):
             x, y = map(int, input("(上からx番目) (左からy番目) : ").split())
             x, y = x-1, y-1
-            processing.find_flippable(x, y, self.color, board)
+            if(processing.is_blank(x, y, board)):
+                processing.find_flippable(x, y, self.color, board)
             if(processing.is_valid_put()):
                 board = processing.put(x, y, self.color, board)
                 board = processing.flip(board)
@@ -52,18 +53,19 @@ class HumanPlayerFromGUI(Player):
         message_output_context.set_message_output(self.message_output)
 
         if(not(processing.putable(self.color, board))):
-            message_output_context.execute_output_message("置ける場所がありません。", 0.5)
+            message_output_context.execute_output_message("置ける場所がありません。")
             return board
 
         while(1):
             x, y = self.input_controller.wait_for_click(self.frame_board)
-            processing.find_flippable(x, y, self.color, board)
+            if(processing.is_blank(x, y, board)):
+                processing.find_flippable(x, y, self.color, board)
             if(processing.is_valid_put()):
                 board = processing.put(x, y, self.color, board)
                 board = processing.flip(board)
                 break
             else:
-                message_output_context.execute_output_message("そこには置けません。")
+                message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
         return board
     
 class RandomComputerPlayer(Player):
@@ -80,7 +82,7 @@ class RandomComputerPlayer(Player):
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
         if(l == 0):
-            message_output_context.execute_output_message("置ける場所がありません。", 0.5)
+            message_output_context.execute_output_message("置ける場所がありません。")
             return board
 
         random.seed()
@@ -92,7 +94,7 @@ class RandomComputerPlayer(Player):
             board = processing.put(x, y, self.color, board)
             board = processing.flip(board)
         else:
-            message_output_context.execute_output_message("そこには置けません。")
+            message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
         
         return board
 
@@ -110,7 +112,7 @@ class MostComputerPlayer(Player):
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
         if(l == 0):
-            message_output_context.execute_output_message("置ける場所がありません。", 0.5)
+            message_output_context.execute_output_message("置ける場所がありません。")
             return board
 
         m = [-1, -1, 0]
@@ -124,7 +126,7 @@ class MostComputerPlayer(Player):
             board = processing.put(x, y, self.color, board)
             board = processing.flip(board)
         else:
-            message_output_context.execute_output_message("そこには置けません。")
+            message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
         
         return board
     
@@ -142,7 +144,7 @@ class LeastComputerPlayer(Player):
         processing.find_putable(self.color, board)
         l = len(processing.putable_coordinates)
         if(l == 0):
-            message_output_context.execute_output_message("置ける場所がありません。", 0.5)
+            message_output_context.execute_output_message("置ける場所がありません。")
             return board
 
         m = [-1, -1, 100]
@@ -156,7 +158,7 @@ class LeastComputerPlayer(Player):
             board = processing.put(x, y, self.color, board)
             board = processing.flip(board)
         else:
-            message_output_context.execute_output_message("そこには置けません。")
+            message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
         
         return board
 
