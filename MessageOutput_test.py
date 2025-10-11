@@ -18,7 +18,8 @@ class MessageOutputTest:
         message_output_gui = MessageOutputToGUI(root)
         message_output_context.set_message_output(message_output_gui)
 
-        message_output_context.execute_output_message("Test", 1)
+        message_output_context.execute_output_message("Test")
+        root.after(1000, lambda: message_output_context.execute_output_message("TEST", 1))
         root.mainloop()
 
 if __name__ == "__main__":

@@ -14,12 +14,13 @@ class MessageOutputToGUI(MessageOutput):
     def __init__(self, frame_message):
         self.label = tk.Label(frame_message, text="", font=("Arial", 10))
         self.label.pack(pady=5)
-        self.default_text = ""
+        self.current_text = ""
 
     def output_message(self, message, duration_s=None):
+        self.current_text = self.label.cget("text")
         self.label.config(text=message)
         if(duration_s is not None):
-            self.label.after(int(duration_s*1000), lambda: self.label.config(text=self.default_text))
+            self.label.after(int(duration_s*1000), lambda: self.label.config(text=self.current_text))
 
 class MessageOutputContext:
     def __init__(self):
