@@ -19,7 +19,7 @@ class MessageOutputToGUI(MessageOutput):
     def output_message(self, message, duration_s=None):
         self.label.config(text=message)
         if(duration_s is not None):
-            self.label.after(duration_s*1000, lambda: self.label.config(text=self.default_text))
+            self.label.after(int(duration_s*1000), lambda: self.label.config(text=self.default_text))
 
 class MessageOutputContext:
     def __init__(self):
