@@ -11,11 +11,12 @@ class ModeSelector(ABC):
 class ModeSelectorForHumanVsHumanOnTerminal(ModeSelector):
     def __init__(self):
         self.player_manager = PlayerManager()
+        self.message_output = MessageOutputToTerminal()
 
     def set_player(self):
         # インスタンス
         message_output_context = MessageOutputContext()
-        message_output_context.set_message_output(MessageOutputToTerminal())
+        message_output_context.set_message_output(self.message_output)
 
         # 名前入力
         message_output_context.execute_output_message("1人目の名前を入力してください。")
@@ -80,7 +81,7 @@ class ModeSelectorForVsComOnTerminal(ModeSelector):
         message_output_context.execute_output_message("対戦するコンピュータのタイプを選択してください。")
         message_output_context.execute_output_message(COM_INDEX)
         player2_comtype = int(input("> "))
-        while(not(1 <= player2_comtype <= 3)):
+        while(player2_comtype not in COM_CLASS.keys()):
             message_output_context.execute_output_message("選択した数字は不正です。選択しなおしてください。")
             player2_comtype = int(input("> "))
         
@@ -101,7 +102,7 @@ class ModeSelectorForVsComOnTerminal(ModeSelector):
         first = int(input("数字 > "))
 
         # プレイヤー登録
-        player1 = HumanPlayerFromTerminal(player1_name, player2_name)
+        player1 = HumanPlayerFromTerminal(player1_color, player1_name)
         player2 = COM_CLASS[player2_comtype](player2_color, player2_name, message_output)
         if(first == 0):
             self.player_manager.register_first_player(player1)

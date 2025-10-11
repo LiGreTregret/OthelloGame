@@ -5,14 +5,14 @@ from MessageOutput import MessageOutput, MessageOutputContext
 class ResultOutput(ABC):
     @abstractmethod
 
-    def __init__(self, player_manager: PlayerManager, message_output: MessageOutput=None):
+    def __init__(self, player_manager: PlayerManager, message_output: MessageOutput):
         pass
 
     def output_result(self, result):
         pass
 
 class ResultMessageOutput(ResultOutput):
-    def __init__(self, player_manager: PlayerManager, message_output: MessageOutput=None):
+    def __init__(self, player_manager: PlayerManager, message_output: MessageOutput):
         self.player_manager = player_manager
         self.message_output = message_output
 

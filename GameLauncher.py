@@ -1,10 +1,16 @@
+from abc import ABC, abstractmethod
 from MessageOutput import MessageOutputContext, MessageOutputToTerminal
 from ModeSelector import ModeSelectorContext, \
                          ModeSelectorForHumanVsHumanOnTerminal as MSHvHT, \
                          ModeSelectorForVsComOnTerminal as MSvCT
 from GameMode import GameModeContext, TerminalMode
 
-class GameLauncher:
+class GameLauncher(ABC):
+    @abstractmethod
+    def play(self):
+        pass
+
+class GameLauncherForTerminal(GameLauncher):
     def play(self):
         # 定数
         MESSAGE = 0
@@ -55,6 +61,21 @@ class GameLauncher:
         mode_selector_context.execute_set_player()
         game_mode_context.execute_game(mode_selector_context.mode_selector.player_manager)
 
+class GameLauncherContext:
+    def __init__(self):
+        self.game_launcher = None
+
+    def set_method(self, game_launcher: GameLauncher):
+        self.game_launcher = game_launcher
+    
+    def execute_play(self):
+        if self.game_launcher is not None:
+            self.game_launcher.play()
+        else:
+            print("No method set up")
+
 if __name__ == "__main__":
-    game_launcher = GameLauncher()
-    game_launcher.play()
+    game_launcher = GameLauncherForTerminal()
+    game_launcher_context = GameLauncherContext()
+    game_launcher_context.set_method(game_launcher)
+    game_launcher_context.execute_play()

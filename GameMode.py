@@ -1,24 +1,25 @@
 from abc import ABC, abstractmethod
-from MessageOutput import MessageOutput, MessageOutputContext
+from MessageOutput import MessageOutput, MessageOutputToTerminal, MessageOutputContext
 from PlayerManager import PlayerManager
 from Processing import Processing
-from Board import Board, BoardOutput, BoardOutputContext
+from Board import Board, BoardOutput, BoardOutputToTerminal, BoardOutputContext
 from ResultOutput import ResultOutputContext, ResultMessageOutput
 from time import sleep
 
 class GameMode(ABC):
     @abstractmethod
-    def game(self, player_manager: PlayerManager, message_output: MessageOutput, board_output: BoardOutput):
+    def game(self, player_manager: PlayerManager):
         pass
 
 class TerminalMode(GameMode):
-    def game(self, player_manager: PlayerManager, message_output: MessageOutput, board_output: BoardOutput):
+    def game(self, player_manager: PlayerManager):
         processing = Processing()
         board = Board()
 
         board_output_context = BoardOutputContext()
-        board_output_context.set_method(board_output)
+        board_output_context.set_method(BoardOutputToTerminal())
 
+        message_output = MessageOutputToTerminal()
         message_output_context = MessageOutputContext()
         message_output_context.set_message_output(message_output)
 
@@ -52,10 +53,11 @@ class TerminalMode(GameMode):
         result_output_context.execute_output(result)
 
 class GUIMode(GameMode):
-    def game(self, player_manager: PlayerManager, message_output: MessageOutput, board_output: BoardOutput):
+    def game(self, player_manager: PlayerManager):
         processing = Processing()
         board = Board()
 
+        message_output = messageoutput
         message_output_context = MessageOutputContext()
         message_output_context.set_message_output(message_output)
 
@@ -98,8 +100,8 @@ class GameModeContext:
     def set_mode(self, game_mode: GameMode):
         self.game_mode = game_mode
     
-    def execute_game(self, player_manager: PlayerManager, message_output: MessageOutput, board_output: BoardOutput):
+    def execute_game(self, player_manager: PlayerManager):
         if self.game_mode is not None:
-            self.game_mode.game(player_manager, message_output, board_output)
+            self.game_mode.game(player_manager)
         else:
             print("No method set up")
