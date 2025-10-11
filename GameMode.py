@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
-from MessageOutput import MessageOutput, MessageOutputContext, MessageOutputToTerminal, MessageOutputToGUI
+from MessageOutput import MessageOutput, MessageOutputContext
 from PlayerManager import PlayerManager
 from Processing import Processing
-from Board import Board, BoardOutput, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
+from Board import Board, BoardOutput, BoardOutputContext
 from ResultOutput import ResultOutputContext, ResultMessageOutput
-import tkinter as tk
+from time import sleep
 
 class GameMode(ABC):
     @abstractmethod
@@ -41,6 +41,7 @@ class TerminalMode(GameMode):
             name = now_player.name
             message_output_context.execute_output_message(f"{name}さんの番です。石を置いてください。")
             board = now_player.put(board)
+            sleep(0.3)
             board_output_context.execute_output_board(board)
 
             now = (now + 1) % 2
