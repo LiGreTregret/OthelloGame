@@ -75,6 +75,8 @@ class GameLauncherForHvHonTerminal(GameLauncher):
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output))
 
+        game_launcher_component = GameLauncherComponent()
+
         # 名前入力
         message_output_context.execute_output_message("1人目の名前を入力してください。")
         player1_name = str(input("> "))
@@ -152,6 +154,8 @@ class GameLauncherForHvConTerminal(GameLauncher):
 
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output))
+
+        game_launcher_component = GameLauncherComponent()
 
         # 名前入力
         message_output_context.execute_output_message("あなたの名前を入力してください。")
