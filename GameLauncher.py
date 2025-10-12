@@ -10,22 +10,23 @@ from time import sleep
 import tkinter as tk
 
 class GameLauncherComponent:
-    COLOR = {
-            0 : "白",
-            1 : "黒"
-        }
-    
-    COM_INDEX = (
-            "0 : ランダム\n"
-            "1 : 1番多くひっくり返せる場所に置く\n"
-            "2 : 1番少なくひっくり返せる場所に置く"
-        )
+    def __init__(self):
+        self.COLOR = {
+                0 : "白",
+                1 : "黒"
+            }
+        
+        self.COM_INDEX = (
+                "0 : ランダム\n"
+                "1 : 1番多くひっくり返せる場所に置く\n"
+                "2 : 1番少なくひっくり返せる場所に置く"
+            )
 
-    COM_CLASS = {
-        0 : RandomComputerPlayer,
-        1 : MostComputerPlayer,
-        2 : LeastComputerPlayer
-    }
+        self.COM_CLASS = {
+            0 : RandomComputerPlayer,
+            1 : MostComputerPlayer,
+            2 : LeastComputerPlayer
+        }
 
     # GUIゲーム進行メソッド
     def progress(self, processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context):
@@ -479,7 +480,7 @@ class GameLauncherContext:
             print("No method set up")
 
 if __name__ == "__main__":
-    game_launcher = GameLauncherForCvConGUI()
+    game_launcher = GameLauncherForHvConGUI()
     game_launcher_context = GameLauncherContext()
     game_launcher_context.set_method(game_launcher)
     game_launcher_context.execute_play()
