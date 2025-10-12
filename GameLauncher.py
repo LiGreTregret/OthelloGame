@@ -9,6 +9,48 @@ from ResultOutput import ResultOutputContext, ResultMessageOutput
 from time import sleep
 import tkinter as tk
 
+class GameLauncherComponent:
+    COLOR = {
+            0 : "白",
+            1 : "黒"
+        }
+    
+    COM_INDEX = (
+            "0 : ランダム\n"
+            "1 : 1番多くひっくり返せる場所に置く\n"
+            "2 : 1番少なくひっくり返せる場所に置く"
+        )
+
+    COM_CLASS = {
+        0 : RandomComputerPlayer,
+        1 : MostComputerPlayer,
+        2 : LeastComputerPlayer
+    }
+
+    # GUIゲーム進行メソッド
+    def progress(self, processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context):
+        # 終了判定
+        result = processing.judge_result(board)
+        if result != -1:
+            result_output_context.execute_output(result)
+            return
+        
+        # 石を置く
+        if now == 0:
+            now_player = player_manager.first_player
+        else:
+            now_player = player_manager.second_player
+        color = now_player.color
+        name = now_player.name
+        message_output_context_game.execute_output_message(f"{name}さんの番です。石({self.COLOR[color]})を置いてください。")
+
+        board = now_player.put(board)
+        board_output.frame_board.after(500, lambda: board_output_context.execute_output_board(board))
+
+        now = (now + 1) % 2
+
+        board_output.frame_board.after(500, lambda: self.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context))
+
 class GameLauncher(ABC):
     @abstractmethod
     def play(self):
@@ -17,11 +59,6 @@ class GameLauncher(ABC):
 class GameLauncherForHvHonTerminal(GameLauncher):
     def play(self):
         # インスタンス化など前準備
-        COLOR = {
-            0 : "白",
-            1 : "黒"
-        }
-
         player_manager = PlayerManager()
 
         message_output = MessageOutputToTerminal()
@@ -85,7 +122,7 @@ class GameLauncherForHvHonTerminal(GameLauncher):
                 now_player = player_manager.first_player
             else:
                 now_player = player_manager.second_player
-            color = COLOR[now_player.color]
+            color = game_launcher_component.COLOR[now_player.color]
             name = now_player.name
             message_output_context.execute_output_message(f"{name}さんの番です。石({color})を置いてください。")
             board = now_player.put(board)
@@ -100,11 +137,6 @@ class GameLauncherForHvHonTerminal(GameLauncher):
 class GameLauncherForHvConTerminal(GameLauncher):
     def play(self):
         # インスタンス化など前準備
-        COLOR = {
-            0 : "白",
-            1 : "黒"
-        }
-
         player_manager = PlayerManager()
 
         message_output = MessageOutputToTerminal()
@@ -126,22 +158,10 @@ class GameLauncherForHvConTerminal(GameLauncher):
         player2_name = "COM"
 
         # COMタイプ選択
-        COM_INDEX = (
-            "0 : ランダム\n"
-            "1 : 1番多くひっくり返せる場所に置く\n"
-            "2 : 1番少なくひっくり返せる場所に置く"
-        )
-
-        COM_CLASS = {
-            0 : RandomComputerPlayer,
-            1 : MostComputerPlayer,
-            2 : LeastComputerPlayer
-        }
-
         message_output_context.execute_output_message("対戦するコンピュータのタイプを選択してください。")
-        message_output_context.execute_output_message(COM_INDEX)
+        message_output_context.execute_output_message(game_launcher_component.COM_INDEX)
         player2_comtype = int(input("> "))
-        while(player2_comtype not in COM_CLASS.keys()):
+        while(player2_comtype not in game_launcher_component.COM_CLASS.keys()):
             message_output_context.execute_output_message("選択した数字は不正です。選択しなおしてください。")
             player2_comtype = int(input("> "))
         
@@ -163,7 +183,7 @@ class GameLauncherForHvConTerminal(GameLauncher):
 
         # プレイヤー登録
         player1 = HumanPlayerFromTerminal(player1_color, player1_name)
-        player2 = COM_CLASS[player2_comtype](player2_color, player2_name, message_output)
+        player2 = game_launcher_component.COM_CLASS[player2_comtype](player2_color, player2_name, message_output)
         if(first == 0):
             player_manager.register_first_player(player1)
             player_manager.register_second_player(player2)
@@ -187,7 +207,7 @@ class GameLauncherForHvConTerminal(GameLauncher):
                 now_player = player_manager.first_player
             else:
                 now_player = player_manager.second_player
-            color = COLOR[now_player.color]
+            color = game_launcher_component.COLOR[now_player.color]
             name = now_player.name
             message_output_context.execute_output_message(f"{name}さんの番です。石({color})を置いてください。")
             board = now_player.put(board)
@@ -209,12 +229,7 @@ class GameLauncherForHvHonGUI(GameLauncher):
         frame_board = tk.Frame(root)
         frame_board.pack(side="bottom")
 
-        # インスタンス化など前準備
-        COLOR = {
-            0 : "白",
-            1 : "黒"
-        }
-
+        # インスタンス化
         player_manager = PlayerManager()
 
         message_output_resister = MessageOutputToTerminal()
@@ -237,6 +252,8 @@ class GameLauncherForHvHonGUI(GameLauncher):
 
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output_game))
+
+        game_launcher_component = GameLauncherComponent()
 
         # 名前入力
         message_output_context_resister.execute_output_message("1人目の名前を入力してください。")
@@ -274,33 +291,9 @@ class GameLauncherForHvHonGUI(GameLauncher):
         message_output_context_game.execute_output_message("ゲームを開始します。")
 
         now = 0
-        board_output.frame_board.after(1500, lambda: self.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, COLOR, board_output, board_output_context))
+        board_output.frame_board.after(1500, lambda: game_launcher_component.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context))
         
         root.mainloop()
-
-    # ゲーム進行関数
-    def progress(self, processing, board, result_output_context, now, player_manager, message_output_context_game, COLOR, board_output, board_output_context):
-        # 終了判定
-        result = processing.judge_result(board)
-        if result != -1:
-            result_output_context.execute_output(result)
-            return
-        
-        # 石を置く
-        if now == 0:
-            now_player = player_manager.first_player
-        else:
-            now_player = player_manager.second_player
-        color = now_player.color
-        name = now_player.name
-        message_output_context_game.execute_output_message(f"{name}さんの番です。石({COLOR[color]})を置いてください。")
-
-        board = now_player.put(board)
-        board_output.frame_board.after(500, lambda: board_output_context.execute_output_board(board))
-
-        now = (now + 1) % 2
-
-        board_output.frame_board.after(500, lambda: self.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, COLOR, board_output, board_output_context))
 
 class GameLauncherForHvConGUI(GameLauncher):
     def play(self):
@@ -312,12 +305,7 @@ class GameLauncherForHvConGUI(GameLauncher):
         frame_board = tk.Frame(root)
         frame_board.pack(side="bottom")
 
-        # インスタンス化など前準備
-        COLOR = {
-            0 : "白",
-            1 : "黒"
-        }
-
+        # インスタンス化
         player_manager = PlayerManager()
 
         message_output_resister = MessageOutputToTerminal()
@@ -341,28 +329,18 @@ class GameLauncherForHvConGUI(GameLauncher):
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output_game))
 
+        game_launcher_component = GameLauncherComponent()
+
         # 名前入力
         message_output_context_resister.execute_output_message("あなたの名前を入力してください。")
         player1_name = str(input("> "))
         player2_name = "COM"
 
         # COMタイプ選択
-        COM_INDEX = (
-            "0 : ランダム\n"
-            "1 : 1番多くひっくり返せる場所に置く\n"
-            "2 : 1番少なくひっくり返せる場所に置く"
-        )
-
-        COM_CLASS = {
-            0 : RandomComputerPlayer,
-            1 : MostComputerPlayer,
-            2 : LeastComputerPlayer
-        }
-
         message_output_context_resister.execute_output_message("対戦するコンピュータのタイプを選択してください。")
-        message_output_context_resister.execute_output_message(COM_INDEX)
+        message_output_context_resister.execute_output_message(game_launcher_component.COM_INDEX)
         player2_comtype = int(input("> "))
-        while(player2_comtype not in COM_CLASS.keys()):
+        while(player2_comtype not in game_launcher_component.COM_CLASS.keys()):
             message_output_context_resister.execute_output_message("選択した数字は不正です。選択しなおしてください。")
             player2_comtype = int(input("> "))
         
@@ -384,7 +362,7 @@ class GameLauncherForHvConGUI(GameLauncher):
 
         # プレイヤー登録
         player1 = HumanPlayerFromGUI(player1_color, player1_name, input_controller, frame_message, frame_board, message_output_game)
-        player2 = COM_CLASS[player2_comtype](player2_color, player2_name, message_output_game)
+        player2 = game_launcher_component.COM_CLASS[player2_comtype](player2_color, player2_name, message_output_game)
         if(first == 0):
             player_manager.register_first_player(player1)
             player_manager.register_second_player(player2)
@@ -396,33 +374,9 @@ class GameLauncherForHvConGUI(GameLauncher):
         message_output_context_game.execute_output_message("ゲームを開始します。")
 
         now = 0
-        board_output.frame_board.after(1500, lambda: self.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, COLOR, board_output, board_output_context))
+        board_output.frame_board.after(1500, lambda: game_launcher_component.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context))
         
         root.mainloop()
-
-    # ゲーム進行関数
-    def progress(self, processing, board, result_output_context, now, player_manager, message_output_context_game, COLOR, board_output, board_output_context):
-        # 終了判定
-        result = processing.judge_result(board)
-        if result != -1:
-            result_output_context.execute_output(result)
-            return
-        
-        # 石を置く
-        if now == 0:
-            now_player = player_manager.first_player
-        else:
-            now_player = player_manager.second_player
-        color = now_player.color
-        name = now_player.name
-        message_output_context_game.execute_output_message(f"{name}さんの番です。石({COLOR[color]})を置いてください。")
-
-        board = now_player.put(board)
-        board_output.frame_board.after(500, lambda: board_output_context.execute_output_board(board))
-
-        now = (now + 1) % 2
-
-        board_output.frame_board.after(500, lambda: self.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, COLOR, board_output, board_output_context))
 
 class GameLauncherForCvConGUI(GameLauncher):
     def play(self):
@@ -434,12 +388,7 @@ class GameLauncherForCvConGUI(GameLauncher):
         frame_board = tk.Frame(root)
         frame_board.pack(side="bottom")
 
-        # インスタンス化など前準備
-        COLOR = {
-            0 : "白",
-            1 : "黒"
-        }
-
+        # インスタンス化
         player_manager = PlayerManager()
 
         message_output_resister = MessageOutputToTerminal()
@@ -461,34 +410,24 @@ class GameLauncherForCvConGUI(GameLauncher):
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output_game))
 
+        game_launcher_component = GameLauncherComponent()
+
         # 名前入力
         player1_name = "COM1"
         player2_name = "COM2"
 
         # COMタイプ選択
-        COM_INDEX = (
-            "0 : ランダム\n"
-            "1 : 1番多くひっくり返せる場所に置く\n"
-            "2 : 1番少なくひっくり返せる場所に置く"
-        )
-
-        COM_CLASS = {
-            0 : RandomComputerPlayer,
-            1 : MostComputerPlayer,
-            2 : LeastComputerPlayer
-        }
-
         message_output_context_resister.execute_output_message("COM1のタイプを選択してください。")
-        message_output_context_resister.execute_output_message(COM_INDEX)
+        message_output_context_resister.execute_output_message(game_launcher_component.COM_INDEX)
         player1_comtype = int(input("> "))
-        while(player1_comtype not in COM_CLASS.keys()):
+        while(player1_comtype not in game_launcher_component.COM_CLASS.keys()):
             message_output_context_resister.execute_output_message("選択した数字は不正です。選択しなおしてください。")
             player1_comtype = int(input("> "))
         
         message_output_context_resister.execute_output_message("COM2コンピュータのタイプを選択してください。")
-        message_output_context_resister.execute_output_message(COM_INDEX)
+        message_output_context_resister.execute_output_message(game_launcher_component.COM_INDEX)
         player2_comtype = int(input("> "))
-        while(player2_comtype not in COM_CLASS.keys()):
+        while(player2_comtype not in game_launcher_component.COM_CLASS.keys()):
             message_output_context_resister.execute_output_message("選択した数字は不正です。選択しなおしてください。")
             player2_comtype = int(input("> "))
         
@@ -509,8 +448,8 @@ class GameLauncherForCvConGUI(GameLauncher):
         first = int(input("数字 > "))
 
         # プレイヤー登録
-        player1 = COM_CLASS[player2_comtype](player1_color, player1_name, message_output_game)
-        player2 = COM_CLASS[player2_comtype](player2_color, player2_name, message_output_game)
+        player1 = game_launcher_component.COM_CLASS[player2_comtype](player1_color, player1_name, message_output_game)
+        player2 = game_launcher_component.COM_CLASS[player2_comtype](player2_color, player2_name, message_output_game)
         if(first == 0):
             player_manager.register_first_player(player1)
             player_manager.register_second_player(player2)
@@ -522,33 +461,9 @@ class GameLauncherForCvConGUI(GameLauncher):
         message_output_context_game.execute_output_message("ゲームを開始します。")
 
         now = 0
-        board_output.frame_board.after(1500, lambda: self.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, COLOR, board_output, board_output_context))
+        board_output.frame_board.after(1500, lambda: game_launcher_component.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context))
         
         root.mainloop()
-
-    # ゲーム進行関数
-    def progress(self, processing, board, result_output_context, now, player_manager, message_output_context_game, COLOR, board_output, board_output_context):
-        # 終了判定
-        result = processing.judge_result(board)
-        if result != -1:
-            result_output_context.execute_output(result)
-            return
-        
-        # 石を置く
-        if now == 0:
-            now_player = player_manager.first_player
-        else:
-            now_player = player_manager.second_player
-        color = now_player.color
-        name = now_player.name
-        message_output_context_game.execute_output_message(f"{name}さんの番です。石({COLOR[color]})を置いてください。")
-
-        board = now_player.put(board)
-        board_output.frame_board.after(500, lambda: board_output_context.execute_output_board(board))
-
-        now = (now + 1) % 2
-
-        board_output.frame_board.after(500, lambda: self.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, COLOR, board_output, board_output_context))
 
 class GameLauncherContext:
     def __init__(self):
