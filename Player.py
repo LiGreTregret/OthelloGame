@@ -3,6 +3,7 @@ from Board import Board
 from Processing import Processing
 from MessageOutput import MessageOutputContext, MessageOutput, MessageOutputToTerminal, MessageOutputToGUI
 from InputController import InputControllerGUI
+from PutableHighlighter import PutableHighlighter
 import random
 
 class Player(ABC):
@@ -49,6 +50,7 @@ class HumanPlayerFromGUI(Player):
     
     def put(self, board: Board) -> Board:
         processing = Processing()
+        putable_highlighter = PutableHighlighter(self.frame_board)
         message_output_context = MessageOutputContext()
         message_output_context.set_message_output(self.message_output)
 
@@ -56,6 +58,7 @@ class HumanPlayerFromGUI(Player):
             message_output_context.execute_output_message("置ける場所がありません。")
             return board
 
+        putable_highlighter.highlight(self.color, board)
         while(1):
             x, y = self.input_controller.wait_for_click(self.frame_board)
             if(processing.is_blank(x, y, board)):
@@ -66,6 +69,7 @@ class HumanPlayerFromGUI(Player):
                 break
             else:
                 message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
+        putable_highlighter.clear()
         return board
     
 class RandomComputerPlayer(Player):
