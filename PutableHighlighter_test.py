@@ -9,7 +9,7 @@ class PutableHighLighterTest:
         board_output = BoardOutputToGUI(root)
         board_output.output_board(board)
 
-        putable_highlighter = PutableHighlighter(board_output.canvases)
+        putable_highlighter = PutableHighlighter(board_output.frame_board)
 
         root.after(1000, lambda: putable_highlighter.highlight(0, board))
         root.after(2000, lambda: putable_highlighter.clear())
