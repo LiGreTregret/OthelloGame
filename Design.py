@@ -2,12 +2,17 @@ import tkinter as tk
 
 class GUIGameDesign:
     def __init__(self):
+        # root作成
         self.root = tk.Tk()
         self.root.title("オセロゲーム")
+
+        # メッセージ作成
         self.frame_message = tk.Frame(self.root)
         self.frame_message.pack(side="top")
         self.label = tk.Label(self.frame_message, text="", font=("Arial", 10))
         self.label.pack(pady=5)
+
+        # 盤面作成
         self.frame_board = tk.Frame(self.root)
         self.frame_board.pack(side="bottom")
         self.canvases = [[None]*8 for _ in range(8)]
