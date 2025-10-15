@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from Design import GUIGameDesign
 from PlayerManager import PlayerManager
 from Player import HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI
 from Board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
@@ -7,7 +8,6 @@ from Processing import Processing
 from MessageOutput import MessageOutputContext, MessageOutputToTerminal, MessageOutputToGUI
 from ResultOutput import ResultOutputContext, ResultMessageOutput
 from time import sleep
-import tkinter as tk
 
 class GameLauncherComponent:
     def __init__(self):
@@ -29,7 +29,7 @@ class GameLauncherComponent:
         }
 
     # GUIゲーム進行メソッド
-    def progress(self, processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context):
+    def progress(self, processing, board, result_output_context, now, player_manager, message_output_context_game, board_output_context, gui_game_design):
         # 終了判定
         result = processing.judge_result(board)
         if result != -1:
@@ -46,11 +46,11 @@ class GameLauncherComponent:
         message_output_context_game.execute_output_message(f"{name}さんの番です。石({self.COLOR[color]})を置いてください。")
 
         board = now_player.put(board)
-        board_output.frame_board.after(500, lambda: board_output_context.execute_output_board(board))
+        gui_game_design.frame_board.after(500, lambda: board_output_context.execute_output_board(board))
 
         now = (now + 1) % 2
 
-        board_output.frame_board.after(500, lambda: self.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context))
+        gui_game_design.frame_board.after(500, lambda: self.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output_context, gui_game_design))
 
 class GameLauncher(ABC):
     @abstractmethod
@@ -227,12 +227,7 @@ class GameLauncherForHvConTerminal(GameLauncher):
 class GameLauncherForHvHonGUI(GameLauncher):
     def play(self):
         # GUI作成
-        root = tk.Tk()
-        root.title("2人プレイ")
-        frame_message = tk.Frame(root)
-        frame_message.pack(side="top")
-        frame_board = tk.Frame(root)
-        frame_board.pack(side="bottom")
+        gui_game_design = GUIGameDesign()
 
         # インスタンス化
         player_manager = PlayerManager()
@@ -241,7 +236,7 @@ class GameLauncherForHvHonGUI(GameLauncher):
         message_output_context_resister = MessageOutputContext()
         message_output_context_resister.set_message_output(message_output_resister)
 
-        message_output_game = MessageOutputToGUI(frame_message)
+        message_output_game = MessageOutputToGUI(gui_game_design)
         message_output_context_game = MessageOutputContext()
         message_output_context_game.set_message_output(message_output_game)
         
@@ -249,11 +244,11 @@ class GameLauncherForHvHonGUI(GameLauncher):
 
         board = Board()
 
-        board_output = BoardOutputToGUI(frame_board)
+        board_output = BoardOutputToGUI(gui_game_design)
         board_output_context = BoardOutputContext()
         board_output_context.set_method(board_output)
 
-        input_controller = InputControllerGUI(board_output.canvases)
+        input_controller = InputControllerGUI(gui_game_design)
 
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output_game))
@@ -283,8 +278,8 @@ class GameLauncherForHvHonGUI(GameLauncher):
         first = int(input("数字 > "))
 
         # プレイヤー登録
-        player1 = HumanPlayerFromGUI(player1_color, player1_name, input_controller, frame_message, frame_board, message_output_game)
-        player2 = HumanPlayerFromGUI(player2_color, player2_name, input_controller, frame_message, frame_board, message_output_game)
+        player1 = HumanPlayerFromGUI(player1_color, player1_name, input_controller, gui_game_design, message_output_game)
+        player2 = HumanPlayerFromGUI(player2_color, player2_name, input_controller, gui_game_design, message_output_game)
         if(first == 0):
             player_manager.register_first_player(player1)
             player_manager.register_second_player(player2)
@@ -296,19 +291,14 @@ class GameLauncherForHvHonGUI(GameLauncher):
         message_output_context_game.execute_output_message("ゲームを開始します。")
 
         now = 0
-        board_output.frame_board.after(1500, lambda: game_launcher_component.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context))
+        gui_game_design.frame_board.after(1500, lambda: game_launcher_component.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output_context, gui_game_design))
         
-        root.mainloop()
+        gui_game_design.root.mainloop()
 
 class GameLauncherForHvConGUI(GameLauncher):
     def play(self):
         # GUI作成
-        root = tk.Tk()
-        root.title("コンピュータと対戦")
-        frame_message = tk.Frame(root)
-        frame_message.pack(side="top")
-        frame_board = tk.Frame(root)
-        frame_board.pack(side="bottom")
+        gui_game_design = GUIGameDesign()
 
         # インスタンス化
         player_manager = PlayerManager()
@@ -317,7 +307,7 @@ class GameLauncherForHvConGUI(GameLauncher):
         message_output_context_resister = MessageOutputContext()
         message_output_context_resister.set_message_output(message_output_resister)
 
-        message_output_game = MessageOutputToGUI(frame_message)
+        message_output_game = MessageOutputToGUI(gui_game_design)
         message_output_context_game = MessageOutputContext()
         message_output_context_game.set_message_output(message_output_game)
         
@@ -325,11 +315,11 @@ class GameLauncherForHvConGUI(GameLauncher):
 
         board = Board()
 
-        board_output = BoardOutputToGUI(frame_board)
+        board_output = BoardOutputToGUI(gui_game_design)
         board_output_context = BoardOutputContext()
         board_output_context.set_method(board_output)
 
-        input_controller = InputControllerGUI(board_output.canvases)
+        input_controller = InputControllerGUI(gui_game_design)
 
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output_game))
@@ -366,7 +356,7 @@ class GameLauncherForHvConGUI(GameLauncher):
         first = int(input("数字 > "))
 
         # プレイヤー登録
-        player1 = HumanPlayerFromGUI(player1_color, player1_name, input_controller, frame_message, frame_board, message_output_game)
+        player1 = HumanPlayerFromGUI(player1_color, player1_name, input_controller, gui_game_design, message_output_game)
         player2 = game_launcher_component.COM_CLASS[player2_comtype](player2_color, player2_name, message_output_game)
         if(first == 0):
             player_manager.register_first_player(player1)
@@ -379,19 +369,14 @@ class GameLauncherForHvConGUI(GameLauncher):
         message_output_context_game.execute_output_message("ゲームを開始します。")
 
         now = 0
-        board_output.frame_board.after(1500, lambda: game_launcher_component.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context))
+        gui_game_design.frame_board.after(1500, lambda: game_launcher_component.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output_context, gui_game_design))
         
-        root.mainloop()
+        gui_game_design.root.mainloop()
 
 class GameLauncherForCvConGUI(GameLauncher):
     def play(self):
         # GUI作成
-        root = tk.Tk()
-        root.title("コンピュータ同士の対戦")
-        frame_message = tk.Frame(root)
-        frame_message.pack(side="top")
-        frame_board = tk.Frame(root)
-        frame_board.pack(side="bottom")
+        gui_game_design = GUIGameDesign()
 
         # インスタンス化
         player_manager = PlayerManager()
@@ -400,7 +385,7 @@ class GameLauncherForCvConGUI(GameLauncher):
         message_output_context_resister = MessageOutputContext()
         message_output_context_resister.set_message_output(message_output_resister)
 
-        message_output_game = MessageOutputToGUI(frame_message)
+        message_output_game = MessageOutputToGUI(gui_game_design)
         message_output_context_game = MessageOutputContext()
         message_output_context_game.set_message_output(message_output_game)
         
@@ -408,7 +393,7 @@ class GameLauncherForCvConGUI(GameLauncher):
 
         board = Board()
 
-        board_output = BoardOutputToGUI(frame_board)
+        board_output = BoardOutputToGUI(gui_game_design)
         board_output_context = BoardOutputContext()
         board_output_context.set_method(board_output)
 
@@ -466,9 +451,9 @@ class GameLauncherForCvConGUI(GameLauncher):
         message_output_context_game.execute_output_message("ゲームを開始します。")
 
         now = 0
-        board_output.frame_board.after(1500, lambda: game_launcher_component.progress(processing, board, result_output_context, now, player_manager, message_output_context_game, board_output, board_output_context))
+        gui_game_design.frame_board.after(1500, lambda: game_launcher_component.progress(processing, board, result_output_context, now, player_manager, message_output_context_game,  board_output_context, gui_game_design))
         
-        root.mainloop()
+        gui_game_design.root.mainloop()
 
 class GameLauncherContext:
     def __init__(self):
@@ -484,7 +469,7 @@ class GameLauncherContext:
             print("No method set up")
 
 if __name__ == "__main__":
-    game_launcher = GameLauncherForHvConGUI()
+    game_launcher = GameLauncherForCvConGUI()
     game_launcher_context = GameLauncherContext()
     game_launcher_context.set_method(game_launcher)
     game_launcher_context.execute_play()
