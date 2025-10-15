@@ -1,4 +1,4 @@
-import tkinter as tk
+from Design import GUIGameDesign
 from abc import ABC, abstractmethod
 
 class MessageOutput(ABC):
@@ -11,9 +11,8 @@ class MessageOutputToTerminal(MessageOutput):
         print(message)
 
 class MessageOutputToGUI(MessageOutput):
-    def __init__(self, frame_message):
-        self.label = tk.Label(frame_message, text="", font=("Arial", 10))
-        self.label.pack(pady=5)
+    def __init__(self, gui_game_design: GUIGameDesign):
+        self.label = gui_game_design.label
 
     def output_message(self, message, duration_s=None, current_text=""):
         if(current_text == ""):
