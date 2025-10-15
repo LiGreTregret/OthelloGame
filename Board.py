@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from Design import GUIGameDesign
 import tkinter as tk
 
 class Board:
@@ -48,21 +49,9 @@ class BoardOutputToTerminal(BoardOutput):
         print(" +--------+")
 
 class BoardOutputToGUI(BoardOutput):
-    def __init__(self, frame_board):
-        self.frame_board = frame_board
-        self.canvases = [[None]*8 for _ in range(8)]
-        self.cell_size = 50
-        self._create_board_ui()
-    
-    def _create_board_ui(self):
-        for x in range(8):
-            for y in range(8):
-                c = tk.Canvas(
-                        self.frame_board, width=self.cell_size, height=self.cell_size, 
-                        bg="green", highlightthickness=1, highlightbackground="black"
-                    )
-                c.grid(row=x, column=y)
-                self.canvases[x][y] = c
+    def __init__(self, gui_game_design: GUIGameDesign):
+        self.canvases = gui_game_design.canvases
+        self.cell_size = gui_game_design.cell_size
 
     def draw_stone(self, x, y, color):
         c = self.canvases[x][y]
