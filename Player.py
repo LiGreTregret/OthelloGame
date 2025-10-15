@@ -3,6 +3,7 @@ from Board import Board
 from Processing import Processing
 from MessageOutput import MessageOutputContext, MessageOutput, MessageOutputToTerminal, MessageOutputToGUI
 from InputController import InputControllerGUI
+from Design import GUIGameDesign
 from PutableHighlighter import PutableHighlighter
 import random
 
@@ -40,12 +41,12 @@ class HumanPlayerFromTerminal(Player):
         return board
 
 class HumanPlayerFromGUI(Player):
-    def __init__(self, color, name, input_controller: InputControllerGUI, frame_message, frame_board, message_output: MessageOutput):
+    def __init__(self, color, name, input_controller: InputControllerGUI, gui_game_design: GUIGameDesign, message_output: MessageOutput):
         self.color = color
         self.name = name
         self.input_controller = input_controller
-        self.frame_message = frame_message
-        self.frame_board = frame_board
+        self.frame_message = gui_game_design.frame_message
+        self.frame_board = gui_game_design.frame_board
         self.message_output = message_output
     
     def put(self, board: Board) -> Board:

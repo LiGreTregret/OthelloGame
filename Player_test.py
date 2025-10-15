@@ -2,7 +2,7 @@ from Player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, R
 from MessageOutput import MessageOutputToTerminal, MessageOutputToGUI
 from InputController import InputControllerGUI
 from Board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
-import tkinter as tk
+from Design import GUIGameDesign
 
 class TestPlayer:
     def t_put(self):
@@ -31,25 +31,21 @@ class TestPlayer:
             print("keyが不正です。")
         
     def g_put(self):
-        root = tk.Tk()
-        frame_message = tk.Frame(root)
-        frame_message.pack(side="top")
-        frame_board = tk.Frame(root)
-        frame_board.pack(side="bottom")
+        gui_game_design = GUIGameDesign()
 
         player_context = PlayerContext()
         board = Board()
         
-        board_output = BoardOutputToGUI(frame_board)
+        board_output = BoardOutputToGUI(gui_game_design)
         board_output_context = BoardOutputContext()
         board_output_context.set_method(board_output)
         board_output_context.execute_output_board(board)
 
-        input_controller = InputControllerGUI(board_output.canvases)
-        message_output = MessageOutputToGUI(frame_message)
+        input_controller = InputControllerGUI(gui_game_design)
+        message_output = MessageOutputToGUI(gui_game_design)
 
         instance_dict = {
-            0 : HumanPlayerFromGUI(0, "White", input_controller, frame_message, frame_board, message_output),
+            0 : HumanPlayerFromGUI(0, "White", input_controller, gui_game_design, message_output),
             1 : RandomComputerPlayer(0, "White", MessageOutputToGUI)
         }
 
@@ -62,7 +58,7 @@ class TestPlayer:
             player_context.set_method(instance_dict[key])
             board = player_context.execute_put(board)
             board_output_context.execute_output_board(board)
-            root.mainloop()
+            gui_game_design.root.mainloop()
         else:
             print("keyが不正です。")
 
