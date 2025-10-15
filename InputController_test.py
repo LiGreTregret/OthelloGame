@@ -1,7 +1,6 @@
 from Design import GUIGameDesign
 from Board import Board, BoardOutputToGUI, BoardOutputContext
 from InputController import InputControllerGUI
-import tkinter as tk
 
 class TestInputController:
     def test_on_click(self):
