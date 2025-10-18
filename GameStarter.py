@@ -51,7 +51,6 @@ class GameStarterForHvHonGUI:
         self.P1C = "p1_color"
         self.P2C = "p2_color"
 
-
     def start(self, player_dict: dict):
         # GUI作成
         gui_game_design = GUIGameDesign()
@@ -174,7 +173,7 @@ class GameStarterForCvConGUI:
         self.P1C = "p1_color"
         self.P2C = "p2_color"
 
-    def play(self, player_dict: dict):
+    def start(self, player_dict: dict):
         # GUI作成
         gui_game_design = GUIGameDesign()
 
