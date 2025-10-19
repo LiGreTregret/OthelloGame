@@ -1,4 +1,4 @@
-from Design import GUIGameDesign
+from GameDesign import GUIGameDesign
 from abc import ABC, abstractmethod
 
 class MessageOutput(ABC):

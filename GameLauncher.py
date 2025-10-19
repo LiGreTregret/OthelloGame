@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from Design import GUIGameDesign
+from GameDesign import GUIGameDesign
 from PlayerManager import PlayerManager
 from Player import HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI
 from Board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
@@ -469,7 +469,7 @@ class GameLauncherContext:
             print("No method set up")
 
 if __name__ == "__main__":
-    game_launcher = GameLauncherForCvConGUI()
+    game_launcher = GameLauncherForHvConGUI()
     game_launcher_context = GameLauncherContext()
     game_launcher_context.set_method(game_launcher)
     game_launcher_context.execute_play()

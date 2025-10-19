@@ -1,4 +1,4 @@
-from Design import GUIGameDesign
+from GameDesign import GUIGameDesign
 from PlayerManager import PlayerManager
 from Player import RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI
 from Board import Board, BoardOutputContext, BoardOutputToGUI

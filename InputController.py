@@ -1,4 +1,4 @@
-from Design import GUIGameDesign
+from GameDesign import GUIGameDesign
 
 class InputControllerGUI:
     def __init__(self, gui_game_design: GUIGameDesign):

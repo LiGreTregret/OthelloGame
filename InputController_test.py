@@ -1,4 +1,4 @@
-from Design import GUIGameDesign
+from GameDesign import GUIGameDesign
 from Board import Board, BoardOutputToGUI, BoardOutputContext
 from InputController import InputControllerGUI
 

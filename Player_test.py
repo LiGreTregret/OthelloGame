@@ -2,7 +2,7 @@ from Player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, R
 from MessageOutput import MessageOutputToTerminal, MessageOutputToGUI
 from InputController import InputControllerGUI
 from Board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
-from Design import GUIGameDesign
+from GameDesign import GUIGameDesign
 
 class TestPlayer:
     def t_put(self):

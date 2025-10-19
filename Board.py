@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from Design import GUIGameDesign
-import tkinter as tk
+from GameDesign import GUIGameDesign
 
 class Board:
     def __init__(self):

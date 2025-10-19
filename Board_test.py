@@ -1,5 +1,5 @@
 from Board import Board, BoardOutputToTerminal, BoardOutputToGUI, BoardOutputContext
-from Design import GUIGameDesign
+from GameDesign import GUIGameDesign
 
 class BoardOutputTest:
     # 初期状態が出力されるか確認

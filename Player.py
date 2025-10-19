@@ -3,7 +3,7 @@ from Board import Board
 from Processing import Processing
 from MessageOutput import MessageOutputContext, MessageOutput, MessageOutputToTerminal, MessageOutputToGUI
 from InputController import InputControllerGUI
-from Design import GUIGameDesign
+from GameDesign import GUIGameDesign
 from PutableHighlighter import PutableHighlighter
 import random
 
