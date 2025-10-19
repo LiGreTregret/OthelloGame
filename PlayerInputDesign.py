@@ -1,34 +1,6 @@
+from GameStarter import GameStarterForHvHonGUI
 import tkinter as tk
 import tkinter.ttk as ttk
-
-class GUIGameDesign:
-    def __init__(self):
-        # root作成
-        self.root = tk.Tk()
-        self.root.title("オセロゲーム")
-
-        # メッセージ作成
-        self.frame_message = tk.Frame(self.root)
-        self.frame_message.pack(side="top")
-        self.label = tk.Label(self.frame_message, text="", font=("游ゴシック Medium", 10))
-        self.label.pack(pady=5)
-
-        # 盤面作成
-        self.frame_board = tk.Frame(self.root)
-        self.frame_board.pack(side="bottom")
-        self.canvases = [[None]*8 for _ in range(8)]
-        self.cell_size = 50
-        self._create_board_ui()
-    
-    def _create_board_ui(self):
-        for x in range(8):
-            for y in range(8):
-                c = tk.Canvas(
-                        self.frame_board, width=self.cell_size, height=self.cell_size, 
-                        bg="green", highlightthickness=1, highlightbackground="black"
-                    )
-                c.grid(row=x, column=y)
-                self.canvases[x][y] = c
 
 class GUIPlayerInputDesignForHvH:
     def __init__(self):
@@ -39,6 +11,7 @@ class GUIPlayerInputDesignForHvH:
 
         # 色リスト
         self.colors = ("白", "黒")
+        self.color_dict = {self.colors[i] : i for i in range(len(self.colors))}
 
         ## 先攻
         self.first_frame = tk.Frame(self.root)
@@ -59,7 +32,7 @@ class GUIPlayerInputDesignForHvH:
         self.second_color_combobox = ttk.Combobox(self.second_frame, height=2, state="readonly", textvariable=self.second_v, values=self.colors, width=2)
         
         ## スタートボタン
-        self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10))
+        self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10), command=self.set)
 
         # GUI作成
         self.first_frame.pack()
@@ -80,3 +53,21 @@ class GUIPlayerInputDesignForHvH:
 
         # mainloop
         self.root.mainloop()
+
+    def set(self):
+        game_starter_hvh = GameStarterForHvHonGUI()
+
+        self.first_name = self.first_name_entry.get()
+        self.first_color = self.color_dict[self.first_color_combobox.get()]
+        self.second_name = self.second_name_entry.get()
+        self.second_color = self.color_dict[self.second_color_combobox.get()]
+
+        player_dict = {
+            game_starter_hvh.P1N : self.first_name,
+            game_starter_hvh.P1C : self.first_color,
+            game_starter_hvh.P2N : self.second_name,
+            game_starter_hvh.P2C : self.second_color
+        }
+
+        self.root.destroy()
+        game_starter_hvh.start(player_dict)
