@@ -8,6 +8,25 @@ from MessageOutput import MessageOutputContext, MessageOutputToTerminal
 from ResultOutput import ResultOutputContext, ResultMessageOutput
 from time import sleep
 
+class GameLauncherComponent:
+    def __init__(self):
+        self.COLOR = {
+                0 : "白",
+                1 : "黒"
+            }
+        
+        self.COM_INDEX = (
+                "0 : ランダム\n"
+                "1 : 1番多くひっくり返せる場所に置く\n"
+                "2 : 1番少なくひっくり返せる場所に置く"
+            )
+
+        self.COM_CLASS = {
+            0 : RandomComputerPlayer,
+            1 : MostComputerPlayer,
+            2 : LeastComputerPlayer
+        }
+
 class GameLauncher(ABC):
     @abstractmethod
     def play(self):
