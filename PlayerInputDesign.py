@@ -61,16 +61,16 @@ class GUIPlayerInputDesignForHvH:
     def set(self):
         game_starter_hvh = GameStarterForHvHonGUI()
 
-        self.first_name = self.first_name_entry.get()
-        self.first_color = self.color_dict[self.first_color_combobox.get()]
-        self.second_name = self.second_name_entry.get()
-        self.second_color = self.color_dict[self.second_color_combobox.get()]
+        first_name = self.first_name_entry.get()
+        first_color = self.color_dict[self.first_color_combobox.get()]
+        second_name = self.second_name_entry.get()
+        second_color = self.color_dict[self.second_color_combobox.get()]
 
         player_dict = {
-            game_starter_hvh.P1N : self.first_name,
-            game_starter_hvh.P1C : self.first_color,
-            game_starter_hvh.P2N : self.second_name,
-            game_starter_hvh.P2C : self.second_color
+            game_starter_hvh.P1N : first_name,
+            game_starter_hvh.P1C : first_color,
+            game_starter_hvh.P2N : second_name,
+            game_starter_hvh.P2C : second_color
         }
 
         self.root.destroy()
@@ -152,18 +152,18 @@ class GUIPlayerInputDesignForHvC:
     def set(self):
         game_starter_hvc = GameStarterForHvConGUI()
 
-        self.human_name = self.human_name_entry.get()
-        self.human_color = self.color_dict[self.human_color_combobox.get()]
-        self.com_type = self.type_dict[self.com_type_combobox.get()]
-        self.com_color = self.color_dict[self.com_color_combobox.get()]
-        self.human_order = self.selected.get()
+        human_name = self.human_name_entry.get()
+        human_color = self.color_dict[self.human_color_combobox.get()]
+        com_type = self.type_dict[self.com_type_combobox.get()]
+        com_color = self.color_dict[self.com_color_combobox.get()]
+        human_order = self.selected.get()
 
         player_dict = {
-            game_starter_hvc.HN : self.human_name,
-            game_starter_hvc.HC : self.human_color,
-            game_starter_hvc.CT : self.com_type,
-            game_starter_hvc.CC : self.com_color,
-            game_starter_hvc.HO : self.human_order
+            game_starter_hvc.HN : human_name,
+            game_starter_hvc.HC : human_color,
+            game_starter_hvc.CT : com_type,
+            game_starter_hvc.CC : com_color,
+            game_starter_hvc.HO : human_order
         }
 
         self.root.destroy()
@@ -193,8 +193,8 @@ class GUIPlayerInputDesignForCvC:
         self.first_type_v = tk.StringVar()
         self.first_type_combobox = ttk.Combobox(self.first_frame, height=len(self.types), state="readonly", textvariable=self.first_type_v, values=self.types)
         self.first_color_label = tk.Label(self.first_frame, text="色", font=("游ゴシック Medium", 10))
-        self.first_v = tk.StringVar()
-        self.first_color_combobox = ttk.Combobox(self.first_frame, height=2, state="readonly", textvariable=self.first_v, values=self.colors, width=2)
+        self.first_color_v = tk.StringVar()
+        self.first_color_combobox = ttk.Combobox(self.first_frame, height=2, state="readonly", textvariable=self.first_color_v, values=self.colors, width=2)
 
         ## 後攻
         self.second_frame = tk.Frame(self.root)
@@ -203,8 +203,8 @@ class GUIPlayerInputDesignForCvC:
         self.second_type_v = tk.StringVar()
         self.second_type_combobox = ttk.Combobox(self.second_frame, height=len(self.types), state="readonly", textvariable=self.second_type_v, values=self.types)
         self.second_color_label = tk.Label(self.second_frame, text="色", font=("游ゴシック Medium", 10))
-        self.second_v = tk.StringVar()
-        self.second_color_combobox = ttk.Combobox(self.second_frame, height=2, state="readonly", textvariable=self.second_v, values=self.colors, width=2)
+        self.second_color_v = tk.StringVar()
+        self.second_color_combobox = ttk.Combobox(self.second_frame, height=2, state="readonly", textvariable=self.second_color_v, values=self.colors, width=2)
 
         ## スタートボタン
         self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10), command=self.set)
