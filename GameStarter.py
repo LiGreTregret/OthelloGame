@@ -14,10 +14,10 @@ class GameStarterComponent:
                 1 : "黒"
             }
 
-        self.COM_CLASS = {
-            0 : RandomComputerPlayer,
-            1 : MostComputerPlayer,
-            2 : LeastComputerPlayer
+        self.COM_TYPE = {
+            0 : [RandomComputerPlayer, "ランダム"],
+            1 : [MostComputerPlayer, "最多選択"],
+            2 : [LeastComputerPlayer, "最少選択"]
         }
 
     # GUIゲーム進行メソッド
@@ -150,7 +150,7 @@ class GameStarterForHvConGUI:
 
         # プレイヤー登録
         human_player = HumanPlayerFromGUI(human_player_color, human_player_name, input_controller, gui_game_design, message_output_game)
-        com_player = game_starter_component.COM_CLASS[com_player_comtype](com_player_color, com_player_name, message_output_game)
+        com_player = game_starter_component.COM_TYPE[com_player_comtype][0](com_player_color, com_player_name, message_output_game)
         if(human_player_order == 0):
             player_manager.register_first_player(human_player)
             player_manager.register_second_player(com_player)
@@ -210,8 +210,8 @@ class GameStarterForCvConGUI:
         player2_color = player_dict[self.P2C]
 
         # プレイヤー登録
-        player1 = game_launcher_component.COM_CLASS[player1_comtype](player1_color, player1_name, message_output_game)
-        player2 = game_launcher_component.COM_CLASS[player2_comtype](player2_color, player2_name, message_output_game)
+        player1 = game_launcher_component.COM_TYPE[player1_comtype][0](player1_color, player1_name, message_output_game)
+        player2 = game_launcher_component.COM_TYPE[player2_comtype][0](player2_color, player2_name, message_output_game)
         player_manager.register_first_player(player1)
         player_manager.register_second_player(player2)
 

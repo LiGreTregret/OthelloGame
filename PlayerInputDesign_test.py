@@ -1,8 +1,8 @@
-from PlayerInputDesign import GUIPlayerInputDesignForHvH
+from PlayerInputDesign import GUIPlayerInputDesignForHvH, GUIPlayerInputDesignForHvC
 
 class PlayerInputDesignTest:
     def test_player_input_design(self):
-        GUIPlayerInputDesignForHvH()
+        GUIPlayerInputDesignForHvC()
 
 
 if __name__ == "__main__":
