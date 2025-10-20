@@ -43,6 +43,7 @@ class GUIPlayerInputDesignForHvH:
         self.first_name_entry.pack(side=tk.LEFT, padx=2)
         self.first_color_label.pack(side=tk.LEFT)
         self.first_color_combobox.pack(side=tk.LEFT)
+        self.first_color_combobox.set(self.colors[0])
         
         self.second_frame.pack()
         self.second_label.pack(side=tk.TOP, anchor=tk.W, pady=2)
@@ -50,6 +51,7 @@ class GUIPlayerInputDesignForHvH:
         self.second_name_entry.pack(side=tk.LEFT, padx=2)
         self.second_color_label.pack(side=tk.LEFT)
         self.second_color_combobox.pack(side=tk.LEFT)
+        self.second_color_combobox.set(self.colors[1])
 
         self.start_button.pack(side=tk.TOP)
 
@@ -121,21 +123,23 @@ class GUIPlayerInputDesignForHvC:
         self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10), command=self.set)
 
         # GUI作成
-        self.human_frame.pack()
+        self.human_frame.pack(anchor=tk.W)
         self.human_label.pack(side=tk.TOP, anchor=tk.W, pady=2)
         self.human_name_label.pack(side=tk.LEFT, padx=2)
         self.human_name_entry.pack(side=tk.LEFT, padx=2)
         self.human_color_label.pack(side=tk.LEFT)
         self.human_color_combobox.pack(side=tk.LEFT)
+        self.human_color_combobox.set(self.colors[0])
         
-        self.com_frame.pack()
+        self.com_frame.pack(anchor=tk.W)
         self.com_label.pack(side=tk.TOP, anchor=tk.W, pady=2)
         self.com_type_label.pack(side=tk.LEFT, padx=2)
         self.com_type_combobox.pack(side=tk.LEFT, padx=2)
         self.com_color_label.pack(side=tk.LEFT)
         self.com_color_combobox.pack(side=tk.LEFT)
+        self.com_color_combobox.set(self.colors[1])
 
-        self.human_order_frame.pack()
+        self.human_order_frame.pack(anchor=tk.W)
         self.human_order_label.pack(side=tk.TOP, anchor=tk.W, pady=2)
         self.first_radiobutton.pack(side=tk.LEFT, padx=2)
         self.second_radiobutton.pack(side=tk.LEFT)
@@ -164,3 +168,116 @@ class GUIPlayerInputDesignForHvC:
 
         self.root.destroy()
         game_starter_hvc.start(player_dict)
+
+class GUIPlayerInputDesignForCvC:
+    def __init__(self):
+        game_starter_component = GameStarterComponent()
+
+        # 部品
+        ## root
+        self.root = tk.Tk()
+        self.root.title("プレイヤー設定")
+
+        # 色リスト
+        self.colors = tuple(game_starter_component.COLOR.values())
+        self.color_dict = {v: k for k, v in game_starter_component.COLOR.items()}
+
+        # COMタイプリスト
+        self.types = tuple(v[1] for v in game_starter_component.COM_TYPE.values())
+        self.type_dict = {v[1] : k for k, v in game_starter_component.COM_TYPE.items()}
+
+        ## 先攻
+        self.first_frame = tk.Frame(self.root)
+        self.first_label = tk.Label(self.first_frame, text="COM1", font=("游ゴシック Medium", 10))
+        self.first_type_label = tk.Label(self.first_frame, text="タイプ", font=("游ゴシック Medium", 10))
+        self.first_type_v = tk.StringVar()
+        self.first_type_combobox = ttk.Combobox(self.first_frame, height=len(self.types), state="readonly", textvariable=self.first_type_v, values=self.types)
+        self.first_color_label = tk.Label(self.first_frame, text="色", font=("游ゴシック Medium", 10))
+        self.first_v = tk.StringVar()
+        self.first_color_combobox = ttk.Combobox(self.first_frame, height=2, state="readonly", textvariable=self.first_v, values=self.colors, width=2)
+
+        ## 後攻
+        self.second_frame = tk.Frame(self.root)
+        self.second_label = tk.Label(self.second_frame, text="COM2", font=("游ゴシック Medium", 10))
+        self.second_type_label = tk.Label(self.second_frame, text="タイプ", font=("游ゴシック Medium", 10))
+        self.second_type_v = tk.StringVar()
+        self.second_type_combobox = ttk.Combobox(self.second_frame, height=len(self.types), state="readonly", textvariable=self.second_type_v, values=self.types)
+        self.second_color_label = tk.Label(self.second_frame, text="色", font=("游ゴシック Medium", 10))
+        self.second_v = tk.StringVar()
+        self.second_color_combobox = ttk.Combobox(self.second_frame, height=2, state="readonly", textvariable=self.second_v, values=self.colors, width=2)
+
+        ## スタートボタン
+        self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10), command=self.set)
+
+        # GUI作成
+        self.first_frame.pack()
+        self.first_label.pack(side=tk.TOP, anchor=tk.W, pady=2)
+        self.first_type_label.pack(side=tk.LEFT, padx=2)
+        self.first_type_combobox.pack(side=tk.LEFT, padx=2)
+        self.first_color_label.pack(side=tk.LEFT)
+        self.first_color_combobox.pack(side=tk.LEFT)
+        self.first_color_combobox.set(self.colors[0])
+
+        self.second_frame.pack()
+        self.second_label.pack(side=tk.TOP, anchor=tk.W, pady=2)
+        self.second_type_label.pack(side=tk.LEFT, padx=2)
+        self.second_type_combobox.pack(side=tk.LEFT, padx=2)
+        self.second_color_label.pack(side=tk.LEFT)
+        self.second_color_combobox.pack(side=tk.LEFT)
+        self.second_color_combobox.set(self.colors[1])
+
+        self.start_button.pack(side=tk.TOP)
+
+        # mainloop
+        self.root.mainloop()
+
+    def set(self):
+        game_starter_cvc = GameStarterForCvConGUI()
+
+        self.first_type = self.type_dict[self.first_type_combobox.get()]
+        self.first_color = self.color_dict[self.first_color_combobox.get()]
+        self.second_type = self.type_dict[self.second_type_combobox.get()]
+        self.second_color = self.color_dict[self.second_color_combobox.get()]
+
+        player_dict = {
+            game_starter_cvc.P1T : self.first_type,
+            game_starter_cvc.P1C : self.first_color,
+            game_starter_cvc.P2T : self.second_type,
+            game_starter_cvc.P2C : self.second_color
+        }
+
+        self.root.destroy()
+        game_starter_cvc.start(player_dict)
+
+class GUIModeDesign:
+    def __init__(self):
+        # root作成
+        self.root = tk.Tk()
+
+        # 幅
+        self.width = 20
+
+        # ボタン
+        self.hvh_button = tk.Button(self.root, text="2人プレイ", font=("游ゴシック Medium", 10), width=self.width, pady=5, command=self.raise_hvh)
+        self.hvc_button = tk.Button(self.root, text="コンピュータと対決", font=("游ゴシック Medium", 10), width=self.width, pady=5, command=self.raise_hvc)
+        self.cvc_button = tk.Button(self.root, text="コンピュータ同士の対決", font=("游ゴシック Medium", 10), width=self.width, pady=5, command=self.raise_cvc)
+
+        # GUI作成
+        self.hvh_button.pack()
+        self.hvc_button.pack()
+        self.cvc_button.pack()
+
+        # mainroop
+        self.root.mainloop()
+    
+    def raise_hvh(self):
+        self.root.destroy()
+        GUIPlayerInputDesignForHvH()
+    
+    def raise_hvc(self):
+        self.root.destroy()
+        GUIPlayerInputDesignForHvC()
+    
+    def raise_cvc(self):
+        self.root.destroy()
+        GUIPlayerInputDesignForCvC()

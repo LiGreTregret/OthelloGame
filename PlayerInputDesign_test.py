@@ -1,10 +1,9 @@
-from PlayerInputDesign import GUIPlayerInputDesignForHvH, GUIPlayerInputDesignForHvC
+from PlayerInputDesign import GUIModeDesign
 
 class PlayerInputDesignTest:
-    def test_player_input_design(self):
-        GUIPlayerInputDesignForHvC()
-
+    def test_mode_design(self):
+        GUIModeDesign()
 
 if __name__ == "__main__":
     design_test = PlayerInputDesignTest()
-    design_test.test_player_input_design()
+    design_test.test_mode_design()
