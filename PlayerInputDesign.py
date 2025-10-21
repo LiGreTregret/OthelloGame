@@ -36,6 +36,11 @@ class GUIPlayerInputDesignForHvH:
         ## スタートボタン
         self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10), command=self.set)
 
+        ## エラーメッセージ
+        self.error_shown = False
+        self.error_frame = tk.Frame(self.root)
+        self.error_label = tk.Label(self.error_frame, text="異なる色を指定してください", font=("游ゴシック Medium", 10), fg="red")
+
         # GUI作成
         self.first_frame.pack()
         self.first_label.pack(side=tk.TOP, anchor=tk.W, pady=2)
@@ -73,6 +78,13 @@ class GUIPlayerInputDesignForHvH:
             game_starter_hvh.P2C : second_color
         }
 
+        if(first_color == second_color):
+            if(not(self.error_shown)):
+                self.error_shown = True
+                self.error_frame.pack()
+                self.error_label.pack()
+            return
+        
         self.root.destroy()
         game_starter_hvh.start(player_dict)
 
@@ -121,6 +133,11 @@ class GUIPlayerInputDesignForHvC:
 
         ## スタートボタン
         self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10), command=self.set)
+        
+        ## エラーメッセージ
+        self.error_shown = False
+        self.error_frame = tk.Frame(self.root)
+        self.error_label = tk.Label(self.error_frame, text="異なる色を指定してください", font=("游ゴシック Medium", 10), fg="red")
 
         # GUI作成
         self.human_frame.pack(anchor=tk.W)
@@ -166,6 +183,13 @@ class GUIPlayerInputDesignForHvC:
             game_starter_hvc.HO : human_order
         }
 
+        if(human_color == com_color):
+            if(not(self.error_shown)):
+                self.error_shown = True
+                self.error_frame.pack()
+                self.error_label.pack()
+            return
+        
         self.root.destroy()
         game_starter_hvc.start(player_dict)
 
@@ -209,6 +233,11 @@ class GUIPlayerInputDesignForCvC:
         ## スタートボタン
         self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10), command=self.set)
 
+        ## エラーメッセージ
+        self.error_shown = False
+        self.error_frame = tk.Frame(self.root)
+        self.error_label = tk.Label(self.error_frame, text="異なる色を指定してください", font=("游ゴシック Medium", 10), fg="red")
+
         # GUI作成
         self.first_frame.pack()
         self.first_label.pack(side=tk.TOP, anchor=tk.W, pady=2)
@@ -234,18 +263,25 @@ class GUIPlayerInputDesignForCvC:
     def set(self):
         game_starter_cvc = GameStarterForCvConGUI()
 
-        self.first_type = self.type_dict[self.first_type_combobox.get()]
-        self.first_color = self.color_dict[self.first_color_combobox.get()]
-        self.second_type = self.type_dict[self.second_type_combobox.get()]
-        self.second_color = self.color_dict[self.second_color_combobox.get()]
+        first_type = self.type_dict[self.first_type_combobox.get()]
+        first_color = self.color_dict[self.first_color_combobox.get()]
+        second_type = self.type_dict[self.second_type_combobox.get()]
+        second_color = self.color_dict[self.second_color_combobox.get()]
 
         player_dict = {
-            game_starter_cvc.P1T : self.first_type,
-            game_starter_cvc.P1C : self.first_color,
-            game_starter_cvc.P2T : self.second_type,
-            game_starter_cvc.P2C : self.second_color
+            game_starter_cvc.P1T : first_type,
+            game_starter_cvc.P1C : first_color,
+            game_starter_cvc.P2T : second_type,
+            game_starter_cvc.P2C : second_color
         }
 
+        if(first_color == second_color):
+            if(not(self.error_shown)):
+                self.error_shown = True
+                self.error_frame.pack()
+                self.error_label.pack()
+            return
+        
         self.root.destroy()
         game_starter_cvc.start(player_dict)
 
