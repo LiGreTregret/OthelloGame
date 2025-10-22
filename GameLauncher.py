@@ -253,7 +253,7 @@ class GameLauncherContext:
             print("No method set up")
 
 if __name__ == "__main__":
-    game_launcher = GameLauncherForHvConTerminal()
+    game_launcher = GameLauncherOnGUI()
     game_launcher_context = GameLauncherContext()
     game_launcher_context.set_method(game_launcher)
     game_launcher_context.execute_play()
