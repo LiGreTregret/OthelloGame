@@ -12,9 +12,9 @@ class GUIPlayerInputDesignForHvH:
         self.root.title("プレイヤー設定")
 
         # 色リスト
-        self.colors = tuple(game_starter_component.COLOR.values())
-        self.color_dict = {v: k for k, v in game_starter_component.COLOR.items()}
-
+        self.colors = tuple(v[0] for v in game_starter_component.COLOR.values())
+        self.color_dict = {v[0] : k for k, v in game_starter_component.COLOR.items()}
+        
         ## 先攻
         self.first_frame = tk.Frame(self.root)
         self.first_label = tk.Label(self.first_frame, text="先攻", font=("游ゴシック Medium", 10))
@@ -98,8 +98,8 @@ class GUIPlayerInputDesignForHvC:
         self.root.title("プレイヤー設定")
 
         # 色リスト
-        self.colors = tuple(game_starter_component.COLOR.values())
-        self.color_dict = {v: k for k, v in game_starter_component.COLOR.items()}
+        self.colors = tuple(v[0] for v in game_starter_component.COLOR.values())
+        self.color_dict = {v[0] : k for k, v in game_starter_component.COLOR.items()}
 
         # COMタイプリスト
         self.types = tuple(v[1] for v in game_starter_component.COM_TYPE.values())
@@ -204,8 +204,8 @@ class GUIPlayerInputDesignForCvC:
         self.root.title("プレイヤー設定")
 
         # 色リスト
-        self.colors = tuple(game_starter_component.COLOR.values())
-        self.color_dict = {v: k for k, v in game_starter_component.COLOR.items()}
+        self.colors = tuple(v[0] for v in game_starter_component.COLOR.values())
+        self.color_dict = {v[0] : k for k, v in game_starter_component.COLOR.items()}
 
         # COMタイプリスト
         self.types = tuple(v[1] for v in game_starter_component.COM_TYPE.values())
