@@ -17,10 +17,16 @@ class BoardOutput(ABC):
         pass
 
 class BoardOutputToTerminal(BoardOutput):
+    def __init__(self, first_color: int, second_color: int):
+        self.first_color = first_color
+        self.second_color = second_color
+
     def output_board(self, board: Board):
         BLANK = ' '
         BLACK_STONE = '●'
         WHITE_STONE = '○'
+
+        stone_list = [WHITE_STONE, BLACK_STONE]
 
         # 上枠
         print(" y12345678 ")
@@ -33,10 +39,10 @@ class BoardOutputToTerminal(BoardOutput):
             # 中身
             buf = []
             for y in range(8):
-                if board.board[x][y] == 1:
-                    stone = BLACK_STONE
-                elif board.board[x][y] == 0:
-                    stone = WHITE_STONE
+                if board.board[x][y] == 0:
+                    stone = stone_list[self.first_color]
+                elif board.board[x][y] == 1:
+                    stone = stone_list[self.second_color]
                 else:
                     stone = BLANK
                 buf.append(stone)
@@ -48,7 +54,9 @@ class BoardOutputToTerminal(BoardOutput):
         print(" +--------+")
 
 class BoardOutputToGUI(BoardOutput):
-    def __init__(self, gui_game_design: GUIGameDesign):
+    def __init__(self, first_color: str, second_color:str, gui_game_design: GUIGameDesign):
+        self.first_color = first_color
+        self.second_color = second_color
         self.canvases = gui_game_design.canvases
         self.cell_size = gui_game_design.cell_size
 
@@ -67,10 +75,10 @@ class BoardOutputToGUI(BoardOutput):
                 c = self.canvases[x][y]
                 c.delete("stone")
                 value = board.board[x][y]
-                if(value == 1):
-                    self.draw_stone(x, y, "black")
+                if(value == 0):
+                    self.draw_stone(x, y, self.first_color)
                 elif(value == 0):
-                    self.draw_stone(x, y, "white")
+                    self.draw_stone(x, y, self.second_color)
 
 class BoardOutputContext:
     def __init__(self):
