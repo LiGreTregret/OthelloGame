@@ -10,7 +10,7 @@ class TestPlayer:
         board = Board()
         board_output_context = BoardOutputContext()
 
-        board_output_context.set_method(BoardOutputToTerminal())
+        board_output_context.set_method(BoardOutputToTerminal(0, 1))
         board_output_context.execute_output_board(board)
 
         instance_dict = {
@@ -36,7 +36,7 @@ class TestPlayer:
         player_context = PlayerContext()
         board = Board()
         
-        board_output = BoardOutputToGUI(gui_game_design)
+        board_output = BoardOutputToGUI("white", "black", gui_game_design)
         board_output_context = BoardOutputContext()
         board_output_context.set_method(board_output)
         board_output_context.execute_output_board(board)
@@ -64,5 +64,5 @@ class TestPlayer:
 
 if __name__ == '__main__':
     test_player = TestPlayer()
-    # test_player.t_put()
+    test_player.t_put()
     test_player.g_put()
