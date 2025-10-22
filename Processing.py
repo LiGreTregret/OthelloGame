@@ -15,23 +15,23 @@ class Processing:
         else:
             return False
 
-    def is_opponent(self, x, y, color, board:Board) -> bool:
+    def is_opponent(self, x, y, order, board:Board) -> bool:
         if(self.is_inside_board(x, y)):
             if(not(self.is_blank(x, y, board))):
-                return board.board[x][y] + color == 1
+                return board.board[x][y] + order == 1
         return False
     
-    def find_flippable_in_direction(self, x, y, dx, dy, color, board:Board) -> None:
+    def find_flippable_in_direction(self, x, y, dx, dy, order, board:Board) -> None:
         stack = deque()
         flippable = False
         
         x += dx
         y += dy
         while(self.is_inside_board(x, y)):
-            if(self.is_opponent(x, y, color, board)):
+            if(self.is_opponent(x, y, order, board)):
                 stack.append([x, y])
             else: 
-                if(board.board[x][y] == color):
+                if(board.board[x][y] == order):
                     flippable = True
                 break
             x += dx
@@ -41,18 +41,18 @@ class Processing:
             while(len(stack)):
                 self.flippable_coordinates.append(stack.popleft())
     
-    def find_flippable(self, x, y, color, board:Board) -> None:
+    def find_flippable(self, x, y, order, board:Board) -> None:
         dx = [1, 1, 0, -1, -1, -1, 0, 1]
         dy = [0, 1, 1, 1, 0, -1, -1, -1]
         for i in range(8): 
-            self.find_flippable_in_direction(x, y, dx[i], dy[i], color, board)
+            self.find_flippable_in_direction(x, y, dx[i], dy[i], order, board)
 
     def is_valid_put(self) -> bool:
         return len(self.flippable_coordinates)
     
-    def put(self, x, y, color, board:Board) -> Board: # 置けないときはもう1度置きなおしてもらうために、is_valid_put()とは別で
-        if(0 <= color <= 1):
-            board.board[x][y] = color
+    def put(self, x, y, order, board:Board) -> Board: # 置けないときはもう1度置きなおしてもらうために、is_valid_put()とは別で
+        if(0 <= order <= 1):
+            board.board[x][y] = order
         return board
     
     def flip_one(self, x, y, board:Board):
@@ -91,17 +91,17 @@ class Processing:
     def clear_putable_coordinates(self):
         self.putable_coordinates.clear()
     
-    def find_putable(self, color, board:Board):
+    def find_putable(self, order, board:Board):
         for i in range(8):
             for j in range(8):
                 if(board.board[i][j] == -1):
-                    self.find_flippable(i, j, color, board)
+                    self.find_flippable(i, j, order, board)
                     num = len(self.flippable_coordinates)
                     if(num > 0): self.putable_coordinates.append([i, j, num])
                     self.clear_flippable_coordinates()
 
-    def putable(self, color, board: Board):
-        self.find_putable(color, board)
+    def putable(self, order, board: Board):
+        self.find_putable(order, board)
         l = len(self.putable_coordinates)
         self.clear_putable_coordinates()
 
