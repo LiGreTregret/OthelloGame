@@ -3,7 +3,6 @@ from Player import HumanPlayerFromTerminal
 from MessageOutput import MessageOutputToTerminal, MessageOutputToGUI
 from ResultOutput import ResultOutputContext, ResultMessageOutput
 from GameDesign import GUIGameDesign
-import tkinter as tk
 
 class TestResultOutput:
     def test_result_output_to_terminal(self):
