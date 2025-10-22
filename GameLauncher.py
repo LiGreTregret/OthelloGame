@@ -143,7 +143,6 @@ class GameLauncherForHvConTerminal(GameLauncher):
         
         board = Board()
         board_output_context = BoardOutputContext()
-        board_output_context.set_method(BoardOutputToTerminal())
 
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output))
@@ -178,16 +177,34 @@ class GameLauncherForHvConTerminal(GameLauncher):
         message_output_context.execute_output_message("先攻のプレイヤーの数字を選んでください")
         message_output_context.execute_output_message(f"0:{player1_name} 1:{player2_name}")
         first = int(input("数字 > "))
+        if(first == 0):
+            player1_order = 0
+            player2_order = 1
+        else:
+            player1_order = 1
+            player2_order = 0
 
         # プレイヤー登録
-        player1 = HumanPlayerFromTerminal(player1_color, player1_name)
-        player2 = game_launcher_component.COM_CLASS[player2_comtype](player2_color, player2_name, message_output)
+        player1 = HumanPlayerFromTerminal(player1_order, player1_name)
+        player2 = game_launcher_component.COM_CLASS[player2_comtype](player2_order, player2_name, message_output)
         if(first == 0):
             player_manager.register_first_player(player1)
             player_manager.register_second_player(player2)
         else:
             player_manager.register_first_player(player2)
             player_manager.register_second_player(player1)
+        
+        # 色設定
+        if(first == 0):
+            first_color = player1_color
+            second_color = player2_color
+        else:
+            first_color = player2_color
+            second_color = player1_color
+        
+        # board_outputインスタンス化
+        board_output = BoardOutputToTerminal(first_color, second_color)
+        board_output_context.set_method(board_output)
 
         # ゲーム開始
         message_output_context.execute_output_message("ゲームを開始します。")
@@ -203,9 +220,10 @@ class GameLauncherForHvConTerminal(GameLauncher):
             # 石を置く
             if(now == 0):
                 now_player = player_manager.first_player
+                color = game_launcher_component.COLOR[first_color]
             else:
                 now_player = player_manager.second_player
-            color = game_launcher_component.COLOR[now_player.color]
+                color = game_launcher_component.COLOR[second_color]
             name = now_player.name
             message_output_context.execute_output_message(f"{name}さんの番です。石({color})を置いてください。")
             board = now_player.put(board)
@@ -235,7 +253,7 @@ class GameLauncherContext:
             print("No method set up")
 
 if __name__ == "__main__":
-    game_launcher = GameLauncherForHvHonTerminal()
+    game_launcher = GameLauncherForHvConTerminal()
     game_launcher_context = GameLauncherContext()
     game_launcher_context.set_method(game_launcher)
     game_launcher_context.execute_play()
