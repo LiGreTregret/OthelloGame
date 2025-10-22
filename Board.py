@@ -77,7 +77,7 @@ class BoardOutputToGUI(BoardOutput):
                 value = board.board[x][y]
                 if(value == 0):
                     self.draw_stone(x, y, self.first_color)
-                elif(value == 0):
+                elif(value == 1):
                     self.draw_stone(x, y, self.second_color)
 
 class BoardOutputContext:
