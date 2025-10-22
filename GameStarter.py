@@ -11,7 +11,17 @@ class GameStarterComponent:
     def __init__(self):
         self.COLOR = {
                 0 : ["白", "white"],
-                1 : ["黒", "black"]
+                1 : ["黒", "black"],
+                2 : ["赤", "red"],
+                3 : ["青", "blue"],
+                4 : ["黄", "yellow"],
+                5 : ["緑", "green"],
+                6 : ["紫", "purple"],
+                7 : ["黄緑", "green yellow"],
+                8 : ["オレンジ", "orange"],
+                9 : ["ピンク", "pink"],
+                10: ["藍", "navy"],
+                11: ["灰", "grey"]
             }
 
         self.COM_TYPE = {

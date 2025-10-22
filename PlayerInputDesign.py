@@ -22,7 +22,7 @@ class GUIPlayerInputDesignForHvH:
         self.first_name_entry = tk.Entry(self.first_frame)
         self.first_color_label = tk.Label(self.first_frame, text="色", font=("游ゴシック Medium", 10))
         self.first_v = tk.StringVar()
-        self.first_color_combobox = ttk.Combobox(self.first_frame, height=2, state="readonly", textvariable=self.first_v, values=self.colors, width=2)
+        self.first_color_combobox = ttk.Combobox(self.first_frame, state="readonly", textvariable=self.first_v, values=self.colors, width=5)
 
         ## 後攻
         self.second_frame = tk.Frame(self.root)
@@ -31,7 +31,7 @@ class GUIPlayerInputDesignForHvH:
         self.second_name_entry = tk.Entry(self.second_frame)
         self.second_color_label = tk.Label(self.second_frame, text="色", font=("游ゴシック Medium", 10))
         self.second_v = tk.StringVar()
-        self.second_color_combobox = ttk.Combobox(self.second_frame, height=len(self.colors), state="readonly", textvariable=self.second_v, values=self.colors, width=2)
+        self.second_color_combobox = ttk.Combobox(self.second_frame, height=len(self.colors), state="readonly", textvariable=self.second_v, values=self.colors, width=5)
         
         ## スタートボタン
         self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10), command=self.set)
@@ -112,7 +112,7 @@ class GUIPlayerInputDesignForHvC:
         self.human_name_entry = tk.Entry(self.human_frame)
         self.human_color_label = tk.Label(self.human_frame, text="色", font=("游ゴシック Medium", 10))
         self.human_v = tk.StringVar()
-        self.human_color_combobox = ttk.Combobox(self.human_frame, height=2, state="readonly", textvariable=self.human_v, values=self.colors, width=2)
+        self.human_color_combobox = ttk.Combobox(self.human_frame, state="readonly", textvariable=self.human_v, values=self.colors, width=5)
 
         ## COM
         self.com_frame = tk.Frame(self.root)
@@ -122,7 +122,7 @@ class GUIPlayerInputDesignForHvC:
         self.com_type_combobox = ttk.Combobox(self.com_frame, height=len(self.types), state="readonly", textvariable=self.com_type_v, values=self.types)
         self.com_color_label = tk.Label(self.com_frame, text="色", font=("游ゴシック Medium", 10))
         self.com_color_v = tk.StringVar()
-        self.com_color_combobox = ttk.Combobox(self.com_frame, height=len(self.colors), state="readonly", textvariable=self.com_color_v, values=self.colors, width=2)
+        self.com_color_combobox = ttk.Combobox(self.com_frame, height=len(self.colors), state="readonly", textvariable=self.com_color_v, values=self.colors, width=5)
         
         ## 順番
         self.human_order_frame = tk.Frame(self.root)
@@ -219,7 +219,7 @@ class GUIPlayerInputDesignForCvC:
         self.first_type_combobox = ttk.Combobox(self.first_frame, height=len(self.types), state="readonly", textvariable=self.first_type_v, values=self.types)
         self.first_color_label = tk.Label(self.first_frame, text="色", font=("游ゴシック Medium", 10))
         self.first_color_v = tk.StringVar()
-        self.first_color_combobox = ttk.Combobox(self.first_frame, height=2, state="readonly", textvariable=self.first_color_v, values=self.colors, width=2)
+        self.first_color_combobox = ttk.Combobox(self.first_frame, state="readonly", textvariable=self.first_color_v, values=self.colors, width=5)
 
         ## 後攻
         self.second_frame = tk.Frame(self.root)
@@ -229,7 +229,7 @@ class GUIPlayerInputDesignForCvC:
         self.second_type_combobox = ttk.Combobox(self.second_frame, height=len(self.types), state="readonly", textvariable=self.second_type_v, values=self.types)
         self.second_color_label = tk.Label(self.second_frame, text="色", font=("游ゴシック Medium", 10))
         self.second_color_v = tk.StringVar()
-        self.second_color_combobox = ttk.Combobox(self.second_frame, height=2, state="readonly", textvariable=self.second_color_v, values=self.colors, width=2)
+        self.second_color_combobox = ttk.Combobox(self.second_frame, state="readonly", textvariable=self.second_color_v, values=self.colors, width=5)
 
         ## スタートボタン
         self.start_button = tk.Button(self.root, text="スタート", font=("游ゴシック Medium", 10), command=self.set)
