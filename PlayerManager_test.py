@@ -5,10 +5,13 @@ from Player import (
     MostComputerPlayer as MCP,
     LeastComputerPlayer as LCP
 )
-from MessageOutput import MessageOutputToTerminal as MOT
-from Board import BoardOutputToGUI
+from MessageOutput import (
+    MessageOutputToTerminal as MOT,
+    MessageOutputToGUI as MOG
+)
 from InputController import InputControllerGUI as ICG
 from PlayerManager import PlayerManager as PM
+from GameDesign import GUIGameDesign
 import tkinter as tk
 
 class TestPlayerManager:
@@ -17,7 +20,7 @@ class TestPlayerManager:
         player_manager = PM()
 
         player_manager.register_first_player(player)
-        assert player_manager.first_player.color == 0
+        assert player_manager.first_player.order == 0
         assert player_manager.first_player.name == "White"
         
     def test_register_second_hpt(self):
@@ -25,43 +28,31 @@ class TestPlayerManager:
         player_manager = PM()
 
         player_manager.register_second_player(player)
-        assert player_manager.second_player.color == 0
+        assert player_manager.second_player.order == 0
         assert player_manager.second_player.name == "White"
     
     def test_register_first_hpg(self):
-        root = tk.Tk()
-        frame_message = tk.Frame(root)
-        frame_message.pack(side="top")
-        frame_board = tk.Frame(root)
-        frame_board.pack(side="bottom")
-
-        board_output = BoardOutputToGUI(frame_board)
-
-        input_controller = ICG(board_output.canvases)
+        gui_game_design = GUIGameDesign()
+        input_controller = ICG(gui_game_design)
+        message_output = MOG(gui_game_design)
         
-        player = HPG(0, "White", input_controller, frame_message, frame_board)
+        player = HPG(0, "White", input_controller, gui_game_design, message_output)
         player_manager = PM()
 
         player_manager.register_first_player(player)
-        assert player_manager.first_player.color == 0
+        assert player_manager.first_player.order == 0
         assert player_manager.first_player.name == "White"
         
     def test_register_second_hpg(self):
-        root = tk.Tk()
-        frame_message = tk.Frame(root)
-        frame_message.pack(side="top")
-        frame_board = tk.Frame(root)
-        frame_board.pack(side="bottom")
-
-        board_output = BoardOutputToGUI(frame_board)
-
-        input_controller = ICG(board_output.canvases)
+        gui_game_design = GUIGameDesign()
+        input_controller = ICG(gui_game_design)
+        message_output = MOG(gui_game_design)
         
-        player = HPG(0, "White", input_controller, frame_message, frame_board)
+        player = HPG(0, "White", input_controller, gui_game_design, message_output)
         player_manager = PM()
 
         player_manager.register_second_player(player)
-        assert player_manager.second_player.color == 0
+        assert player_manager.second_player.order == 0
         assert player_manager.second_player.name == "White"
     
     def test_register_first_rcp(self):
@@ -70,7 +61,7 @@ class TestPlayerManager:
         player_manager = PM()
 
         player_manager.register_first_player(player)
-        assert player_manager.first_player.color == 0
+        assert player_manager.first_player.order == 0
         assert player_manager.first_player.name == "White"
         assert player_manager.first_player.message_output == message_output
         
@@ -80,7 +71,7 @@ class TestPlayerManager:
         player_manager = PM()
 
         player_manager.register_second_player(player)
-        assert player_manager.second_player.color == 0
+        assert player_manager.second_player.order == 0
         assert player_manager.second_player.name == "White"
         assert player_manager.second_player.message_output == message_output
     
@@ -90,7 +81,7 @@ class TestPlayerManager:
         player_manager = PM()
 
         player_manager.register_first_player(player)
-        assert player_manager.first_player.color == 0
+        assert player_manager.first_player.order == 0
         assert player_manager.first_player.name == "White"
         assert player_manager.first_player.message_output == message_output
         
@@ -100,7 +91,7 @@ class TestPlayerManager:
         player_manager = PM()
 
         player_manager.register_second_player(player)
-        assert player_manager.second_player.color == 0
+        assert player_manager.second_player.order == 0
         assert player_manager.second_player.name == "White"
         assert player_manager.second_player.message_output == message_output
     
@@ -110,7 +101,7 @@ class TestPlayerManager:
         player_manager = PM()
 
         player_manager.register_first_player(player)
-        assert player_manager.first_player.color == 0
+        assert player_manager.first_player.order == 0
         assert player_manager.first_player.name == "White"
         assert player_manager.first_player.message_output == message_output
         
@@ -120,6 +111,6 @@ class TestPlayerManager:
         player_manager = PM()
 
         player_manager.register_second_player(player)
-        assert player_manager.second_player.color == 0
+        assert player_manager.second_player.order == 0
         assert player_manager.second_player.name == "White"
         assert player_manager.second_player.message_output == message_output
