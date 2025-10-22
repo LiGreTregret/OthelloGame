@@ -1,6 +1,5 @@
 from Board import Board
 from Processing import Processing
-import tkinter as tk
 
 class PutableHighlighter:
     def __init__(self, frame_board):

@@ -20,7 +20,7 @@ class ResultMessageOutput(ResultOutput):
         message_output_context = MessageOutputContext()
         message_output_context.set_message_output(self.message_output)
 
-        if(self.player_manager.first_player.color == 0):
+        if(self.player_manager.first_player.order == 0):
             player_names = [self.player_manager.first_player.name, self.player_manager.second_player.name]
         else:
             player_names = [self.player_manager.second_player.name, self.player_manager.first_player.name]
