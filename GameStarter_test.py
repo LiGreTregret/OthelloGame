@@ -20,7 +20,7 @@ class GameSterterTest:
 
         player_dict = {
             game_starter_hvc.HN : "White",
-            game_starter_hvc.CT : 0,
+            game_starter_hvc.CT : 3,
             game_starter_hvc.HC : 0,
             game_starter_hvc.CC : 1,
             game_starter_hvc.HO : 0
@@ -42,4 +42,4 @@ class GameSterterTest:
 
 if __name__ == "__main__":
     game_starter_test = GameSterterTest()
-    game_starter_test.test_cvc()
+    game_starter_test.test_hvc()

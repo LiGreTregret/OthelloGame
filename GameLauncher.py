@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from PlayerInputDesign import GUIModeDesign
 from PlayerManager import PlayerManager
-from Player import HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer
+from Player import HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, LMComputerPlayer
 from Board import Board, BoardOutputContext, BoardOutputToTerminal
 from Processing import Processing
 from MessageOutput import MessageOutputContext, MessageOutputToTerminal
@@ -18,13 +18,15 @@ class GameLauncherComponent:
         self.COM_INDEX = (
                 "0 : ランダム\n"
                 "1 : 1番多くひっくり返せる場所に置く\n"
-                "2 : 1番少なくひっくり返せる場所に置く"
+                "2 : 1番少なくひっくり返せる場所に置く\n"
+                "3 : 少なく->多く"
             )
 
         self.COM_CLASS = {
             0 : RandomComputerPlayer,
             1 : MostComputerPlayer,
-            2 : LeastComputerPlayer
+            2 : LeastComputerPlayer,
+            3 : LMComputerPlayer
         }
 
 class GameLauncher(ABC):
