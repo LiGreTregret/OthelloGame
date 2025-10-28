@@ -1,4 +1,4 @@
-from Player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayer
+from Player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayer, LMComputerPlayer
 from MessageOutput import MessageOutputToTerminal, MessageOutputToGUI
 from InputController import InputControllerGUI
 from Board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
@@ -46,7 +46,8 @@ class TestPlayer:
 
         instance_dict = {
             0 : HumanPlayerFromGUI(0, "White", input_controller, gui_game_design, message_output),
-            1 : RandomComputerPlayer(0, "White", MessageOutputToGUI)
+            1 : RandomComputerPlayer(0, "White", MessageOutputToGUI),
+            2 : LMComputerPlayer(0, "white", MessageOutputToGUI)
         }
 
         # 置けないときのテスト用
@@ -64,5 +65,5 @@ class TestPlayer:
 
 if __name__ == '__main__':
     test_player = TestPlayer()
-    test_player.t_put()
+    # test_player.t_put()
     test_player.g_put()

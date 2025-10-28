@@ -167,6 +167,35 @@ class LeastComputerPlayer(Player):
         
         return board
 
+class LMComputerPlayer(Player):
+    def __init__(self, order, name, message_output):
+        self.order = order
+        self.name = name
+        self.message_output = message_output
+    
+    def put(self, board: Board) -> Board:
+        processing = Processing()
+        message_output_context = MessageOutputContext()
+        message_output_context.set_message_output(self.message_output)
+        lcp = LeastComputerPlayer(self.order, self.name, self.message_output)
+        mcp = MostComputerPlayer(self.order, self.name, self.message_output)
+
+        processing.find_putable(self.order, board)
+        l = len(processing.putable_coordinates)
+        if(l == 0):
+            message_output_context.execute_output_message("置ける場所がありません。")
+            return board
+        
+        num_blank = 0
+        for i in range(8):
+            for j in range(8):
+                if(processing.is_blank(i, j, board)): num_blank += 1
+        
+        if(num_blank > 30): board = lcp.put(board)
+        else: board = mcp.put(board)
+
+        return board
+
 class PlayerContext:
     def __init__(self):
         self.player = None
