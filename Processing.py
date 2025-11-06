@@ -68,23 +68,6 @@ class Processing:
             self.flip_one(x, y, board)
         return board
     
-    def judge_result(self, board:Board):
-        stone = [0, 0]
-
-        for i in range(8):
-            for j in range(8):
-                if(board.board[i][j] != -1):
-                    stone[board.board[i][j]] += 1
-        
-        if(stone[0] + stone[1] == 64):
-            if(stone[0] > stone[1]): return 0
-            elif(stone[0] < stone[1]): return 1
-            else: return 2
-        else:   
-            if(stone[0] == 0): return 1
-            elif(stone[1] == 0): return 0
-            else: return -1
-    
     def clear_flippable_coordinates(self):
         self.flippable_coordinates.clear()
 
@@ -107,3 +90,21 @@ class Processing:
 
         if(l): return True
         else: return False
+
+    def judge_result(self, board:Board):
+        stone = [0, 0]
+
+        for i in range(8):
+            for j in range(8):
+                if(board.board[i][j] != -1):
+                    stone[board.board[i][j]] += 1
+        
+        first_putable = self.putable(0, board)
+        second_putable = self.putable(1, board)
+
+        if(first_putable == second_putable == False):
+            if(stone[0] > stone[1]): return 0
+            elif(stone[0] < stone[1]): return 1
+            else: return 2
+        else:   
+            return -1
