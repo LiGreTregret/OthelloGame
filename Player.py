@@ -196,6 +196,44 @@ class LMComputerPlayer(Player):
 
         return board
 
+class Lv1ComputerPlayer(Player):
+    def __init__(self, order, name, message_output):
+        self.order = order
+        self.name = name
+        self.message_output = message_output
+    
+    def is_corner(self, x, y) -> bool:
+        if((x == 0 or x == 7) and (y == 0 or y == 7)):
+            return True
+        else:
+            return False
+    
+    def put(self, board: Board) -> Board:
+        processing = Processing()
+        message_output_context = MessageOutputContext()
+        message_output_context.set_message_output(self.message_output)
+
+        processing.find_putable(self.order, board)
+        l = len(processing.putable_coordinates)
+        if(l == 0):
+            message_output_context.execute_output_message("置ける場所がありません。")
+            return board
+
+        m = [-1, -1, 100]
+        for _ in range(l):
+            c = processing.putable_coordinates.pop()
+            if(c[2] < m[2]): m = c
+
+        x, y = m[0], m[1]
+        processing.find_flippable(x, y, self.order, board)
+        if(processing.is_valid_put()):
+            board = processing.put(x, y, self.order, board)
+            board = processing.flip(board)
+        else:
+            message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
+        
+        return board
+
 class PlayerContext:
     def __init__(self):
         self.player = None
