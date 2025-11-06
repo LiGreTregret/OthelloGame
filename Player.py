@@ -6,6 +6,7 @@ from InputController import InputControllerGUI
 from GameDesign import GUIGameDesign
 from PutableHighlighter import PutableHighlighter
 import random
+from copy import deepcopy
 
 class Player(ABC):
     @abstractmethod
@@ -210,12 +211,21 @@ class Lv1ComputerPlayer(Player):
     
     def risk_to_give_corner(self, x, y, board: Board):
         processing = Processing()
-        board_buf = processing.put(x, y, self.order, board)
-        processing.find_putable(self.order, board_buf)
-        
-        putable_list = list(processing.putable_coordinates)
+        board_buf = deepcopy(board)
+
+        processing.find_flippable(x, y, self.order, board_buf)
+        if not processing.is_valid_put():
+            return False
+
+        board_buf = processing.put(x, y, self.order, board_buf)
+        board_buf = processing.flip(board_buf)
+
+        opponent = (self.order + 1) % 2
+        processing2 = Processing()
+        processing2.find_putable(opponent, board_buf)
+        putable_list = list(processing2.putable_coordinates)
         for v in putable_list:
-            if(self.is_corner(v[0], v[1])):
+            if self.is_corner(v[0], v[1]):
                 return True
         return False
     

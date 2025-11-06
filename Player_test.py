@@ -73,6 +73,16 @@ class TestPlayer:
         assert lv1_com_player.is_corner(3, 7) == False
         assert lv1_com_player.is_corner(7, 7) == True
 
+    def test_lv1_risk_to_give_corner(self):
+        message_output = MessageOutputToTerminal()
+        lv1_com_player = Lv1ComputerPlayer(0, "White", message_output)
+
+        board = Board()
+        board.board[0] = [-1, 1, 0, 1, 1, 1, -1, -1]
+
+        assert lv1_com_player.risk_to_give_corner(0, 0, board) == False
+        assert lv1_com_player.risk_to_give_corner(0, 6, board) == True
+
 if __name__ == '__main__':
     test_player = TestPlayer()
     # test_player.t_put()
