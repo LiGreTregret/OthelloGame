@@ -208,6 +208,17 @@ class Lv1ComputerPlayer(Player):
         else:
             return False
     
+    def risk_to_give_corner(self, x, y, board: Board):
+        processing = Processing()
+        board_buf = processing.put(x, y, self.order, board)
+        processing.find_putable(self.order, board_buf)
+        
+        putable_list = list(processing.putable_coordinates)
+        for v in putable_list:
+            if(self.is_corner(v[0], v[1])):
+                return True
+        return False
+    
     def put(self, board: Board) -> Board:
         processing = Processing()
         message_output_context = MessageOutputContext()
