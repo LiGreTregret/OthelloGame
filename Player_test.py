@@ -1,4 +1,4 @@
-from Player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayer, LMComputerPlayer
+from Player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayer, LMComputerPlayer, Lv1ComputerPlayer
 from MessageOutput import MessageOutputToTerminal, MessageOutputToGUI
 from InputController import InputControllerGUI
 from Board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
@@ -62,6 +62,16 @@ class TestPlayer:
             gui_game_design.root.mainloop()
         else:
             print("keyが不正です。")
+    
+    def test_lv1_is_corner(self):
+        message_output = MessageOutputToTerminal()
+        lv1_com_player = Lv1ComputerPlayer(0, "White", message_output)
+        
+        assert lv1_com_player.is_corner(0, 0) == True
+        assert lv1_com_player.is_corner(0, 1) == False
+        assert lv1_com_player.is_corner(0, 7) == True
+        assert lv1_com_player.is_corner(3, 7) == False
+        assert lv1_com_player.is_corner(7, 7) == True
 
 if __name__ == '__main__':
     test_player = TestPlayer()
