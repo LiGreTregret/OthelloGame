@@ -1,6 +1,6 @@
 from GameDesign import GUIGameDesign
 from PlayerManager import PlayerManager
-from Player import RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI, LMComputerPlayer
+from Player import RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI, LMComputerPlayer, Lv1ComputerPlayer
 from Board import Board, BoardOutputContext, BoardOutputToGUI
 from InputController import InputControllerGUI
 from Processing import Processing
@@ -28,7 +28,8 @@ class GameStarterComponent:
             0 : [RandomComputerPlayer, "ランダム"],
             1 : [MostComputerPlayer, "最多選択"],
             2 : [LeastComputerPlayer, "最少選択"],
-            3 : [LMComputerPlayer, "少から多"]
+            3 : [LMComputerPlayer, "少から多"],
+            4 : [Lv1ComputerPlayer, "Lv.1"]
         }
 
     # GUIゲーム進行メソッド
