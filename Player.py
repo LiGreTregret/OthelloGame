@@ -121,10 +121,10 @@ class MostComputerPlayer(Player):
             message_output_context.execute_output_message("置ける場所がありません。")
             return board
 
-        m = [-1, -1, 0]
+        m = (-1, -1, 0)
         for _ in range(l):
             c = processing.putable_coordinates.pop()
-            if(c[2] > m[2]): m = c
+            if(c[2] > m[2]): m = tuple(c)
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
@@ -153,10 +153,10 @@ class LeastComputerPlayer(Player):
             message_output_context.execute_output_message("置ける場所がありません。")
             return board
 
-        m = [-1, -1, 100]
+        m = (-1, -1, 100)
         for _ in range(l):
             c = processing.putable_coordinates.pop()
-            if(c[2] < m[2]): m = c
+            if(c[2] < m[2]): m = tuple(c)
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
@@ -240,24 +240,24 @@ class Lv1ComputerPlayer(Player):
             message_output_context.execute_output_message("置ける場所がありません。")
             return board
 
-        m = [-1, -1, 100]
+        m = (-1, -1, 100)
         found_corner = False
-        risk = True
+        no_risk = False
         for _ in range(l):
             c = processing.putable_coordinates.pop()
             if(c[2] < m[2]):
                 if(found_corner):
-                    if(self.is_corner(c[0], c[1])): m = c
+                    if(self.is_corner(c[0], c[1])): m = tuple(c)
                 else:
                     if(self.is_corner(c[0], c[1])):
-                        m = c
-                        risk = False
-                        if(not(found_corner)): found_corner = True
+                        m = tuple(c)
+                        no_risk = True
+                        found_corner = True
                     elif(self.risk_to_give_corner(c[0], c[1], board)):
-                        if(risk): m = c
+                        if(not(no_risk)): m = tuple(c)
                     else:
-                        m = c
-                        risk = False
+                        m = tuple(c)
+                        no_risk = True
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
@@ -280,23 +280,23 @@ class Lv1ComputerPlayer(Player):
             message_output_context.execute_output_message("置ける場所がありません。")
             return board
 
-        m = [-1, -1, 0]
+        m = (-1, -1, 0)
         found_corner = False
         risk = True
         for _ in range(l):
             c = processing.putable_coordinates.pop()
             if(c[2] > m[2]):
                 if(found_corner):
-                    if(self.is_corner(c[0], c[1])): m = c
+                    if(self.is_corner(c[0], c[1])): m = tuple(c)
                 else:
                     if(self.is_corner(c[0], c[1])):
-                        m = c
+                        m = tuple(c)
                         risk = False
                         if(not(found_corner)): found_corner = True
                     elif(self.risk_to_give_corner(c[0], c[1], board)):
-                        if(risk): m = c
+                        if(risk): m = tuple(c)
                     else:
-                        m = c
+                        m = tuple(c)
                         risk = False
 
         x, y = m[0], m[1]
