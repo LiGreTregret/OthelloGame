@@ -284,7 +284,7 @@ class Lv1ComputerPlayer(Player):
 
         m = (-1, -1, 0)
         found_corner = False
-        risk = True
+        no_risk = True
         for _ in range(l):
             c = processing.putable_coordinates.pop()
             if(c[2] > m[2]):
