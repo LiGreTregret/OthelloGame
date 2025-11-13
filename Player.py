@@ -253,11 +253,13 @@ class Lv1ComputerPlayer(Player):
                         m = tuple(c)
                         no_risk = True
                         found_corner = True
-                    elif(self.risk_to_give_corner(c[0], c[1], board)):
-                        if(not(no_risk)): m = tuple(c)
+                    elif(not(no_risk)):
+                        m = tuple(c)
+                        if(not(self.risk_to_give_corner(c[0], c[1], board))):
+                            no_risk = True
+                            if(self.is_corner(c[0], c[1])): found_corner = True
                     else:
                         m = tuple(c)
-                        no_risk = True
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
@@ -291,13 +293,15 @@ class Lv1ComputerPlayer(Player):
                 else:
                     if(self.is_corner(c[0], c[1])):
                         m = tuple(c)
-                        risk = False
-                        if(not(found_corner)): found_corner = True
-                    elif(self.risk_to_give_corner(c[0], c[1], board)):
-                        if(risk): m = tuple(c)
+                        no_risk = True
+                        found_corner = True
+                    elif(not(no_risk)):
+                        m = tuple(c)
+                        if(not(self.risk_to_give_corner(c[0], c[1], board))):
+                            no_risk = True
+                            if(self.is_corner(c[0], c[1])): found_corner = True
                     else:
                         m = tuple(c)
-                        risk = False
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
