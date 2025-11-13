@@ -224,12 +224,15 @@ class Lv1ComputerPlayer(Player):
         found_corner = False
         for _ in range(l):
             c = processing.putable_coordinates.pop()
-            if(c[2] < m[2]):
+            if(self.is_corner(c[0], c[1])):
                 if(found_corner):
-                    if(self.is_corner(c[0], c[1])): m = tuple(c)
+                    if(c[2] < m[2]): m = tuple(c)
                 else:
-                    if(self.is_corner(c[0], c[1])): found_corner = True
                     m = tuple(c)
+                    found_corner = True
+            else:
+                if(not(found_corner)):
+                    if(c[2] < m[2]): m = tuple(c)
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
@@ -256,12 +259,15 @@ class Lv1ComputerPlayer(Player):
         found_corner = False
         for _ in range(l):
             c = processing.putable_coordinates.pop()
-            if(c[2] > m[2]):
+            if(self.is_corner(c[0], c[1])):
                 if(found_corner):
-                    if(self.is_corner(c[0], c[1])): m = tuple(c)
+                    if(c[2] > m[2]): m = tuple(c)
                 else:
-                    if(self.is_corner(c[0], c[1])): found_corner = True
                     m = tuple(c)
+                    found_corner = True
+            else:
+                if(not(found_corner)):
+                    if(c[2] > m[2]): m = tuple(c)
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
