@@ -46,13 +46,14 @@ class TestPlayer:
 
         instance_dict = {
             0 : HumanPlayerFromGUI(0, "White", input_controller, gui_game_design, message_output),
-            1 : RandomComputerPlayer(0, "White", MessageOutputToGUI),
-            2 : LMComputerPlayer(0, "white", MessageOutputToGUI)
+            1 : RandomComputerPlayer(0, "White", MessageOutputToGUI(gui_game_design)),
+            2 : LMComputerPlayer(0, "white", MessageOutputToGUI(gui_game_design)),
+            3 : Lv1ComputerPlayer(0, "White", MessageOutputToGUI(gui_game_design))
         }
 
         # 置けないときのテスト用
-        # board.board[3][3] = 1
-        # board.board[4][4] = 1
+        board.board[3][3] = 1
+        board.board[4][4] = 1
 
         key = int(input("key : "))
         if(key in instance_dict.keys()):
