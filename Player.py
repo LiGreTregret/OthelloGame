@@ -256,7 +256,7 @@ class Lv1ComputerPlayer(Player):
         found_corner = False
         for _ in range(l):
             c = processing.putable_coordinates.pop()
-            if(c[2] < m[2]):
+            if(c[2] > m[2]):
                 if(found_corner):
                     if(self.is_corner(c[0], c[1])): m = tuple(c)
                 else:
