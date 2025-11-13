@@ -52,8 +52,8 @@ class TestPlayer:
         }
 
         # 置けないときのテスト用
-        board.board[3][3] = 1
-        board.board[4][4] = 1
+        # board.board[3][3] = 1
+        # board.board[4][4] = 1
 
         key = int(input("key : "))
         if(key in instance_dict.keys()):
