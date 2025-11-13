@@ -241,22 +241,23 @@ class Lv1ComputerPlayer(Player):
             return board
 
         m = [-1, -1, 100]
-        find_corner = False
+        found_corner = False
         risk = True
         for _ in range(l):
             c = processing.putable_coordinates.pop()
             if(c[2] < m[2]):
-                if(self.is_corner(c[0], c[1])):
-                    m = c
-                    risk = False
-                    if(not(find_corner)): find_corner = True
+                if(found_corner):
+                    if(self.is_corner(c[0], c[1])): m = c
                 else:
-                    if(self.risk_to_give_corner(c[0], c[1], board)):
+                    if(self.is_corner(c[0], c[1])):
+                        m = c
+                        risk = False
+                        if(not(found_corner)): found_corner = True
+                    elif(self.risk_to_give_corner(c[0], c[1], board)):
                         if(risk): m = c
                     else:
-                        if(not(find_corner)):
-                            m = c
-                            risk = False
+                        m = c
+                        risk = False
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
@@ -280,22 +281,23 @@ class Lv1ComputerPlayer(Player):
             return board
 
         m = [-1, -1, 0]
-        find_corner = False
+        found_corner = False
         risk = True
         for _ in range(l):
             c = processing.putable_coordinates.pop()
             if(c[2] > m[2]):
-                if(self.is_corner(c[0], c[1])):
-                    m = c
-                    risk = False
-                    if(not(find_corner)): find_corner = True
+                if(found_corner):
+                    if(self.is_corner(c[0], c[1])): m = c
                 else:
-                    if(self.risk_to_give_corner(c[0], c[1], board)):
+                    if(self.is_corner(c[0], c[1])):
+                        m = c
+                        risk = False
+                        if(not(found_corner)): found_corner = True
+                    elif(self.risk_to_give_corner(c[0], c[1], board)):
                         if(risk): m = c
                     else:
-                        if(not(find_corner)):
-                            m = c
-                            risk = False
+                        m = c
+                        risk = False
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
