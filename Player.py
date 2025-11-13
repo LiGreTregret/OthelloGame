@@ -229,7 +229,7 @@ class Lv1ComputerPlayer(Player):
                 return True
         return False
     
-    def put(self, board: Board) -> Board:
+    def select_least(self, board: Board):
         processing = Processing()
         message_output_context = MessageOutputContext()
         message_output_context.set_message_output(self.message_output)
@@ -241,9 +241,22 @@ class Lv1ComputerPlayer(Player):
             return board
 
         m = [-1, -1, 100]
+        find_corner = False
+        risk = True
         for _ in range(l):
             c = processing.putable_coordinates.pop()
-            if(c[2] < m[2]): m = c
+            if(c[2] < m[2]):
+                if(self.is_corner(c[0], c[1])):
+                    m = c
+                    risk = False
+                    if(not(find_corner)): find_corner = True
+                else:
+                    if(self.risk_to_give_corner(c[0], c[1], board)):
+                        if(risk): m = c
+                    else:
+                        if(not(find_corner)):
+                            m = c
+                            risk = False
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
@@ -253,6 +266,58 @@ class Lv1ComputerPlayer(Player):
         else:
             message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
         
+        return board
+    
+    def select_most(self, board: Board):
+        processing = Processing()
+        message_output_context = MessageOutputContext()
+        message_output_context.set_message_output(self.message_output)
+
+        processing.find_putable(self.order, board)
+        l = len(processing.putable_coordinates)
+        if(l == 0):
+            message_output_context.execute_output_message("置ける場所がありません。")
+            return board
+
+        m = [-1, -1, 0]
+        find_corner = False
+        risk = True
+        for _ in range(l):
+            c = processing.putable_coordinates.pop()
+            if(c[2] > m[2]):
+                if(self.is_corner(c[0], c[1])):
+                    m = c
+                    risk = False
+                    if(not(find_corner)): find_corner = True
+                else:
+                    if(self.risk_to_give_corner(c[0], c[1], board)):
+                        if(risk): m = c
+                    else:
+                        if(not(find_corner)):
+                            m = c
+                            risk = False
+
+        x, y = m[0], m[1]
+        processing.find_flippable(x, y, self.order, board)
+        if(processing.is_valid_put()):
+            board = processing.put(x, y, self.order, board)
+            board = processing.flip(board)
+        else:
+            message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
+        
+        return board
+    
+    def put(self, board: Board) -> Board:
+        processing = Processing()
+
+        num_blank = 0
+        for i in range(8):
+            for j in range(8):
+                if(processing.is_blank(i, j, board)): num_blank += 1
+        
+        if(num_blank > 30): board = self.select_least(board)
+        else: board = self.select_most(board)
+
         return board
 
 class PlayerContext:
