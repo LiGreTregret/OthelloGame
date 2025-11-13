@@ -209,26 +209,6 @@ class Lv1ComputerPlayer(Player):
         else:
             return False
     
-    def risk_to_give_corner(self, x, y, board: Board):
-        processing = Processing()
-        board_buf = deepcopy(board)
-
-        processing.find_flippable(x, y, self.order, board_buf)
-        if not processing.is_valid_put():
-            return False
-
-        board_buf = processing.put(x, y, self.order, board_buf)
-        board_buf = processing.flip(board_buf)
-
-        opponent = (self.order + 1) % 2
-        processing2 = Processing()
-        processing2.find_putable(opponent, board_buf)
-        putable_list = list(processing2.putable_coordinates)
-        for v in putable_list:
-            if self.is_corner(v[0], v[1]):
-                return True
-        return False
-    
     def select_least(self, board: Board):
         processing = Processing()
         message_output_context = MessageOutputContext()
@@ -242,24 +222,14 @@ class Lv1ComputerPlayer(Player):
 
         m = (-1, -1, 100)
         found_corner = False
-        no_risk = False
         for _ in range(l):
             c = processing.putable_coordinates.pop()
             if(c[2] < m[2]):
                 if(found_corner):
                     if(self.is_corner(c[0], c[1])): m = tuple(c)
                 else:
-                    if(self.is_corner(c[0], c[1])):
-                        m = tuple(c)
-                        no_risk = True
-                        found_corner = True
-                    elif(not(no_risk)):
-                        m = tuple(c)
-                        if(not(self.risk_to_give_corner(c[0], c[1], board))):
-                            no_risk = True
-                            if(self.is_corner(c[0], c[1])): found_corner = True
-                    else:
-                        m = tuple(c)
+                    m = tuple(c)
+                    if(self.is_corner(c[0], c[1])): found_corner = True
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
@@ -284,24 +254,14 @@ class Lv1ComputerPlayer(Player):
 
         m = (-1, -1, 0)
         found_corner = False
-        no_risk = True
         for _ in range(l):
             c = processing.putable_coordinates.pop()
-            if(c[2] > m[2]):
+            if(c[2] < m[2]):
                 if(found_corner):
                     if(self.is_corner(c[0], c[1])): m = tuple(c)
                 else:
-                    if(self.is_corner(c[0], c[1])):
-                        m = tuple(c)
-                        no_risk = True
-                        found_corner = True
-                    elif(not(no_risk)):
-                        m = tuple(c)
-                        if(not(self.risk_to_give_corner(c[0], c[1], board))):
-                            no_risk = True
-                            if(self.is_corner(c[0], c[1])): found_corner = True
-                    else:
-                        m = tuple(c)
+                    m = tuple(c)
+                    if(self.is_corner(c[0], c[1])): found_corner = True
 
         x, y = m[0], m[1]
         processing.find_flippable(x, y, self.order, board)
