@@ -18,7 +18,7 @@
 from abc import ABC, abstractmethod
 from Board import Board
 from Processing import Processing
-from MessageOutput import MessageOutputContext, MessageOutput, MessageOutputToTerminal, MessageOutputToGUI
+from MessageOutput import MessageOutputContext, MessageOutput, MessageOutputToTerminal
 from InputController import InputControllerGUI
 from GameDesign import GUIGameDesign
 from PutableHighlighter import PutableHighlighter
@@ -34,8 +34,19 @@ class HumanPlayerFromTerminal(Player):
         self.order = order
         self.name = name
         self.message_output = message_output
+        self.record_manager = None
+
+    def set_record_manager(self, record_manager) -> None:
+        """対戦記録マネージャを設定する"""
+        self.record_manager = record_manager
+    
+    def report_result(self, result: str) -> None:
+        """対戦結果を記録する"""
+        if self.record_manager is not None:
+            self.record_manager.update_result(self.name, result)
     
     def put(self, board: Board) -> Board:
+        """ターミナルから座標を受け取り石を置く"""
         processing = Processing()
         message_output_context = MessageOutputContext()
         message_output_context.set_message_output(self.message_output)
