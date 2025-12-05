@@ -1,3 +1,20 @@
+"""
+プレイヤーの基底クラスと具象実装を定義するモジュール
+- 抽象基底
+    + Player
+- 人間プレイヤー
+    + HumanPlayerFromTerminal
+    + HumanPlayerFromGUI
+- コンピュータプレイヤー
+    + RandomComputerPlayer
+    + MostComputerPlayer
+    + LeastComputerPlayer
+    + LMComputerPlayer
+    + Lv1ComputerPlayer
+- 具象実装
+    + PlayerContext
+"""
+
 from abc import ABC, abstractmethod
 from Board import Board
 from Processing import Processing
@@ -6,7 +23,6 @@ from InputController import InputControllerGUI
 from GameDesign import GUIGameDesign
 from PutableHighlighter import PutableHighlighter
 import random
-from copy import deepcopy
 
 class Player(ABC):
     @abstractmethod
