@@ -76,8 +76,19 @@ class HumanPlayerFromGUI(Player):
         self.frame_message = gui_game_design.frame_message
         self.frame_board = gui_game_design.frame_board
         self.message_output = message_output
+        self.record_manager = None
     
+    def set_record_manager(self, record_manager) -> None:
+        """対戦記録マネージャを設定する"""
+        self.record_manager = record_manager
+    
+    def report_result(self, result: str) -> None:
+        """対戦結果を記録する"""
+        if self.record_manager is not None:
+            self.record_manager.update_result(self.name, result)
+
     def put(self, board: Board) -> Board:
+        """GUIから座標を受け取り石を置く"""
         processing = Processing()
         putable_highlighter = PutableHighlighter(self.frame_board)
         message_output_context = MessageOutputContext()
