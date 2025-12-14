@@ -26,6 +26,7 @@ OthelloGame
 - その他ツール: GitHub
 
 ## インストール方法
+自分があまりわかっていないので、AIに書いてもらいました。
 
 1. リポジトリをクローン
 ```bash
@@ -45,15 +46,10 @@ source .venv/bin/activate  # macOS/Linux
 .venv\Scripts\activate     # Windows
 ```
 
-4. 必要なパッケージのインストール（現状は特になし）
-```bash
-pip install -r requirements.txt  # もし requirements.txt があれば
-```
-
 ## 使い方
 1. ゲームを起動
 ```bash
-python src/othello/main.py
+python src/othello/game_launcher.py
 ```
 
 2. 画面の指示に従ってプレイ
