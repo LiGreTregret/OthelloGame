@@ -3,18 +3,18 @@ import os
 from typing import Dict, Any, Optional
 
 class JSONStorage:
-    """JSONのファイルを操作する。プレイヤーごとの試合数・勝ち・負け・引き分けを記録する."""
+    """JSONのファイルを操作する。プレイヤーごとの試合数・勝ち・負け・引き分けを記録する"""
     def __init__(self, file_path: str = "PlayerRecordStorage.json"):
         self.file_path = file_path
 
     def exists(self) -> bool:
-        """記録ファイルが存在するかどうかを返す."""
+        """記録ファイルが存在するかどうかを返す"""
         return os.path.exists(self.file_path)
 
     def load(self) -> Dict[str, Dict[str, int]]:
         """
-        JSONファイルから全プレイヤーのレコードを読み込んで返す。
-        ファイルが無ければ空の辞書を返す。破損している場合は上書きして空辞書を返す。
+        JSONファイルから全プレイヤーのレコードを読み込んで返す
+        ファイルが無ければ空の辞書を返す。破損している場合は上書きして空辞書を返す
         レコード形式:
           {
             "player_name": {"matches": int, "wins": int, "losses": int, "draws": int},
@@ -29,7 +29,6 @@ class JSONStorage:
                 data = json.load(f)
             if not isinstance(data, dict):
                 return {}
-            # 型の整合性を最低限担保（欠けているキーは0で埋める）
             normalized: Dict[str, Dict[str, int]] = {}
             for name, rec in data.items():
                 if not isinstance(rec, dict):
@@ -42,7 +41,6 @@ class JSONStorage:
                 }
             return normalized
         except (json.JSONDecodeError, ValueError):
-            # 破損ファイルは上書きでリセットする
             try:
                 with open(self.file_path, "w", encoding="utf-8") as f:
                     json.dump({}, f, ensure_ascii=False, indent=2)
@@ -51,8 +49,7 @@ class JSONStorage:
             return {}
 
     def save(self, records: Dict[str, Dict[str, int]]) -> None:
-        """辞書をJSONファイルに保存する（整形して書き込む）。"""
-        # 簡易的に安全な上書きを行う（上書き失敗の可能性を低減）
+        """辞書をJSONファイルに保存する（整形して書き込む）"""
         tmp_path = f"{self.file_path}.tmp"
         with open(tmp_path, "w", encoding="utf-8") as f:
             json.dump(records, f, ensure_ascii=False, indent=2)
