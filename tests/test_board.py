@@ -21,4 +21,4 @@ class BoardOutputTest:
 if __name__ == "__main__":
     board_output_test = BoardOutputTest()
     board_output_test.test_to_terminal()
-    board_output_test.test_to_gui() 
+    board_output_test.test_to_gui()
