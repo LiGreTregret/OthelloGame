@@ -1,4 +1,4 @@
-from src.othello.Board import Board, BoardOutputToTerminal, BoardOutputToGUI, BoardOutputContext
+from src.othello.board import Board, BoardOutputToTerminal, BoardOutputToGUI, BoardOutputContext
 from src.othello.game_design import GUIGameDesign
 
 class BoardOutputTest:
