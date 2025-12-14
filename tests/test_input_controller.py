@@ -1,5 +1,5 @@
 from src.othello.game_design import GUIGameDesign
-from src.othello.Board import Board, BoardOutputToGUI, BoardOutputContext
+from src.othello.board import Board, BoardOutputToGUI, BoardOutputContext
 from src.othello.input_controller import InputControllerGUI
 
 class TestInputController:

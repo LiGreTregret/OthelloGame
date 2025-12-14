@@ -1,4 +1,4 @@
-from src.othello.Board import Board
+from src.othello.board import Board
 from collections import deque
 
 class Processing:
