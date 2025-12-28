@@ -80,7 +80,7 @@ class PlayerRecordManager:
         if storage is not None:
             self.storage = storage
         else:
-            self.storage = JSONStorage(storage_path or "PlayerRecordStorage.json")
+            self.storage = JSONStorage(storage_path or "data/PlayerRecordStorage.json")
         self.records: Dict[str, PlayerRecord] = {}
         self.load()
 

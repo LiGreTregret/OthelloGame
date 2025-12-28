@@ -4,7 +4,7 @@ from typing import Dict, Any, Optional
 
 class JSONStorage:
     """JSONのファイルを操作する。プレイヤーごとの試合数・勝ち・負け・引き分けを記録する"""
-    def __init__(self, file_path: str = "PlayerRecordStorage.json"):
+    def __init__(self, file_path: str = "data/PlayerRecordStorage.json"):
         self.file_path = file_path
 
     def exists(self) -> bool:
