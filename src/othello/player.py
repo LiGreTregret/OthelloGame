@@ -16,12 +16,12 @@
 """
 
 from abc import ABC, abstractmethod
-from src.othello.board import Board
-from src.othello.processing import Processing
-from src.othello.message_output import MessageOutputContext, MessageOutput, MessageOutputToTerminal
-from src.othello.input_controller import InputControllerGUI
-from src.othello.game_design import GUIGameDesign
-from src.othello.putable_highlighter import PutableHighlighter
+from board import Board
+from processing import Processing
+from message_output import MessageOutputContext, MessageOutput, MessageOutputToTerminal
+from input_controller import InputControllerGUI
+from game_design import GUIGameDesign
+from putable_highlighter import PutableHighlighter
 import random
 
 class Player(ABC):

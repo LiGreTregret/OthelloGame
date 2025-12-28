@@ -1,4 +1,4 @@
-from src.othello.game_design import GUIGameDesign
+from game_design import GUIGameDesign
 
 class InputControllerGUI:
     def __init__(self, gui_game_design: GUIGameDesign):

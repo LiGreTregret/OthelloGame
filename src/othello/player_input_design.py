@@ -1,4 +1,4 @@
-from src.othello.game_starter import GameStarterComponent, GameStarterForHvHonGUI, GameStarterForHvConGUI, GameStarterForCvConGUI
+from game_starter import GameStarterComponent, GameStarterForHvHonGUI, GameStarterForHvConGUI, GameStarterForCvConGUI
 import tkinter as tk
 import tkinter.ttk as ttk
 

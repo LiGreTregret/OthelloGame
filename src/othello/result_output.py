@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from src.othello.player_manager import PlayerManager
-from src.othello.message_output import MessageOutput, MessageOutputContext
+from player_manager import PlayerManager
+from message_output import MessageOutput, MessageOutputContext
 
 class ResultOutput(ABC):
     @abstractmethod

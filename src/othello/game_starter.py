@@ -1,12 +1,12 @@
-from src.othello.game_design import GUIGameDesign
-from src.othello.player_manager import PlayerManager
-from src.othello.player import RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI, LMComputerPlayer, Lv1ComputerPlayer
-from src.othello.board import Board, BoardOutputContext, BoardOutputToGUI
-from src.othello.input_controller import InputControllerGUI
-from src.othello.processing import Processing
-from src.othello.message_output import MessageOutputContext, MessageOutputToGUI
-from src.othello.result_output import ResultOutputContext, ResultMessageOutput
-from src.othello.storage import JSONStorage
+from game_design import GUIGameDesign
+from player_manager import PlayerManager
+from player import RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI, LMComputerPlayer, Lv1ComputerPlayer
+from board import Board, BoardOutputContext, BoardOutputToGUI
+from input_controller import InputControllerGUI
+from processing import Processing
+from message_output import MessageOutputContext, MessageOutputToGUI
+from result_output import ResultOutputContext, ResultMessageOutput
+from storage import JSONStorage
 
 class GameStarterComponent:
     def __init__(self):

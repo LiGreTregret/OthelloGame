@@ -1,5 +1,5 @@
-from src.othello.board import Board
-from src.othello.processing import Processing
+from board import Board
+from processing import Processing
 
 class PutableHighlighter:
     def __init__(self, frame_board):

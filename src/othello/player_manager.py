@@ -1,4 +1,4 @@
-from src.othello.player import Player
+from player import Player
 
 class PlayerManager:
     def __init__(self):
