@@ -6,6 +6,7 @@ from src.othello.input_controller import InputControllerGUI
 from src.othello.processing import Processing
 from src.othello.message_output import MessageOutputContext, MessageOutputToGUI
 from src.othello.result_output import ResultOutputContext, ResultMessageOutput
+from src.othello.storage import JSONStorage
 
 class GameStarterComponent:
     def __init__(self):
@@ -37,9 +38,20 @@ class GameStarterComponent:
         # 終了判定
         result = processing.judge_result(board)
         if result != -1:
+            try:
+                storage = JSONStorage()
+                if result == 2:
+                    winner = None
+                elif result == 0:
+                    winner = player_manager.first_player.name
+                else:
+                    winner = player_manager.second_player.name
+                storage.record_match(player_manager.first_player.name, player_manager.second_player.name, winner)
+            except Exception:
+                pass
             result_output_context.execute_output(result)
             return
-        
+
         # 石を置く
         if(now == 0):
             now_player = player_manager.first_player
