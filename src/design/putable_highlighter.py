@@ -1,5 +1,5 @@
-from board.board import Board
-from board.processing import Processing
+from src.board.board import Board
+from src.board.processing import Processing
 
 class PutableHighlighter:
     def __init__(self, frame_board):
