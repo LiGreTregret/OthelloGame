@@ -1,4 +1,4 @@
-from board.board import Board
+from src.board.board import Board
 from collections import deque
 
 class Processing:
