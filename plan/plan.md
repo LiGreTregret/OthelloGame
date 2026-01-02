@@ -1,0 +1,6 @@
+- SoundPlayer実装
+- GameStarterComponent見直し
+- テスト作り直し
+- exe化
+- include改善
+- ファイル整理(Board, Playerなど)
