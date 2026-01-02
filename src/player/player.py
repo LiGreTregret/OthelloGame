@@ -16,12 +16,12 @@
 """
 
 from abc import ABC, abstractmethod
-from board.board import Board
-from processing import Processing
-from message_output import MessageOutputContext, MessageOutput, MessageOutputToTerminal
-from input_controller import InputControllerGUI
-from design.game_design import GUIGameDesign
-from putable_highlighter import PutableHighlighter
+from src.board.board import Board
+from src.board.processing import Processing
+from src.message.message_output import MessageOutputContext, MessageOutput, MessageOutputToTerminal
+from src.controller.input_controller import InputControllerGUI
+from src.design.game_design import GUIGameDesign
+from src.design.putable_highlighter import PutableHighlighter
 import random
 
 class Player(ABC):
