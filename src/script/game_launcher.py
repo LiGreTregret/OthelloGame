@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from src.design.player_input_design import GUIModeDesign
-from src.player.player_manager import PlayerManager, HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, LMComputerPlayer
+from src.player.player_manager import PlayerManager
+from src.player.player import HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, LMComputerPlayer
 from src.board.board import Board, BoardOutputContext, BoardOutputToTerminal
 from src.board.processing import Processing
 from src.message.message_output import MessageOutputContext, MessageOutputToTerminal
