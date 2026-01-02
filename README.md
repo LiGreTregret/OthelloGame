@@ -50,7 +50,7 @@ source .venv/bin/activate  # macOS/Linux
 ## 使い方
 1. ゲームを起動
 ```bash
-python src/othello/game_launcher.py
+python -m src.script.game_launcher
 ```
 
 2. 画面の指示に従ってプレイ
