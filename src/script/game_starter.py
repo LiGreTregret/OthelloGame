@@ -1,12 +1,12 @@
-from design.game_design import GUIGameDesign
-from player.player_manager import PlayerManager
-from player import RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI, LMComputerPlayer, Lv1ComputerPlayer
-from board.board import Board, BoardOutputContext, BoardOutputToGUI
-from input_controller import InputControllerGUI
-from board.processing import Processing
-from message_output import MessageOutputContext, MessageOutputToGUI
-from result_output import ResultOutputContext, ResultMessageOutput
-from storage import JSONStorage
+from src.design.game_design import GUIGameDesign
+from src.player.player_manager import PlayerManager
+from src.player.player import RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI, LMComputerPlayer, Lv1ComputerPlayer
+from src.board.board import Board, BoardOutputContext, BoardOutputToGUI
+from src.controller.input_controller import InputControllerGUI
+from src.board.processing import Processing
+from src.message.message_output import MessageOutputContext, MessageOutputToGUI
+from src.result.result_output import ResultOutputContext, ResultMessageOutput
+from src.record.storage import JSONStorage
 
 class GameStarterComponent:
     def __init__(self):
