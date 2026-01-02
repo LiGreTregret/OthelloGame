@@ -3,7 +3,7 @@ from typing import List, Dict, Optional
 import json
 import os
 
-from .storage import JSONStorage
+from src.record.storage import JSONStorage
 
 
 class PlayerRecord:
