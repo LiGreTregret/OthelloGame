@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from game_design import GUIGameDesign
+from src.design.game_design import GUIGameDesign
 
 class Board:
     def __init__(self):
