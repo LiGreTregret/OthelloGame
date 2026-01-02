@@ -16,11 +16,11 @@
 """
 
 from abc import ABC, abstractmethod
-from board import Board
+from board.board import Board
 from processing import Processing
 from message_output import MessageOutputContext, MessageOutput, MessageOutputToTerminal
 from input_controller import InputControllerGUI
-from game_design import GUIGameDesign
+from design.game_design import GUIGameDesign
 from putable_highlighter import PutableHighlighter
 import random
 

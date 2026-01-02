@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from player_manager import PlayerManager
+from player.player_manager import PlayerManager
 from message_output import MessageOutput, MessageOutputContext
 
 class ResultOutput(ABC):

@@ -1,9 +1,9 @@
-from game_design import GUIGameDesign
-from player_manager import PlayerManager
+from design.game_design import GUIGameDesign
+from player.player_manager import PlayerManager
 from player import RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI, LMComputerPlayer, Lv1ComputerPlayer
-from board import Board, BoardOutputContext, BoardOutputToGUI
+from board.board import Board, BoardOutputContext, BoardOutputToGUI
 from input_controller import InputControllerGUI
-from processing import Processing
+from board.processing import Processing
 from message_output import MessageOutputContext, MessageOutputToGUI
 from result_output import ResultOutputContext, ResultMessageOutput
 from storage import JSONStorage

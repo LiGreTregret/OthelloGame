@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
-from player_input_design import GUIModeDesign
-from player_manager import PlayerManager
+from design.player_input_design import GUIModeDesign
+from player.player_manager import PlayerManager
 from player import HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, LMComputerPlayer
-from board import Board, BoardOutputContext, BoardOutputToTerminal
-from processing import Processing
+from board.board import Board, BoardOutputContext, BoardOutputToTerminal
+from board.processing import Processing
 from message_output import MessageOutputContext, MessageOutputToTerminal
 from result_output import ResultOutputContext, ResultMessageOutput
 from time import sleep
