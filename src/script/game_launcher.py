@@ -1,11 +1,10 @@
 from abc import ABC, abstractmethod
-from design.player_input_design import GUIModeDesign
-from player.player_manager import PlayerManager
-from player import HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, LMComputerPlayer
-from board.board import Board, BoardOutputContext, BoardOutputToTerminal
-from board.processing import Processing
-from message_output import MessageOutputContext, MessageOutputToTerminal
-from result_output import ResultOutputContext, ResultMessageOutput
+from src.design.player_input_design import GUIModeDesign
+from src.player.player_manager import PlayerManager, HumanPlayerFromTerminal, RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, LMComputerPlayer
+from src.board.board import Board, BoardOutputContext, BoardOutputToTerminal
+from src.board.processing import Processing
+from src.message.message_output import MessageOutputContext, MessageOutputToTerminal
+from src.result.result_output import ResultOutputContext, ResultMessageOutput
 from time import sleep
 
 class GameLauncherComponent:
