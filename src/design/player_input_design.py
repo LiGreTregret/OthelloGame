@@ -1,4 +1,4 @@
-from game_starter import GameStarterComponent, GameStarterForHvHonGUI, GameStarterForHvConGUI, GameStarterForCvConGUI
+from src.script.game_starter import GameStarterComponent, GameStarterForHvHonGUI, GameStarterForHvConGUI, GameStarterForCvConGUI
 import tkinter as tk
 import tkinter.ttk as ttk
 
