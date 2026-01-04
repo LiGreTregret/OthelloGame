@@ -14,10 +14,39 @@ class GUIGameDesign:
 
         # 盤面作成
         self.frame_board = tk.Frame(self.root)
-        self.frame_board.pack(side="bottom")
+        self.frame_board.pack(side="bottom", fill="both", expand=True)
+        self.frame_board.bind("<Configure>", self._on_frame_board_configure)
+
         self.canvases = [[None]*8 for _ in range(8)]
-        self.cell_size = 50
+
+        self._cell_size: float = 50.0
+        self._stone_margin: float = 5.0
+
         self._create_board_ui()
+
+    @property
+    def cell_size(self) -> float:
+        return self._cell_size
+
+    @property
+    def stone_margin(self) -> float:
+        return self._stone_margin
+
+    def _on_frame_board_configure(self, event):
+        """「frame_boardの<Configure>」イベントでキャンバスをスケーリングする。"""
+
+        if event.widget is not self.frame_board:
+            return
+
+        prev_cell_size = self._cell_size
+        self._cell_size = min(event.width, event.height) / 8
+        scale_ratio = self._cell_size / prev_cell_size
+        self._stone_margin *= scale_ratio
+
+        for row in self.canvases:
+            for cell_canvas in row:
+                cell_canvas.config(width=self._cell_size, height=self._cell_size)
+                cell_canvas.scale("stone", 0, 0, scale_ratio, scale_ratio)
     
     def _create_board_ui(self):
         for x in range(8):
