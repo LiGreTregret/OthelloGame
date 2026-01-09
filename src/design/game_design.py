@@ -20,6 +20,7 @@ class GUIGameDesign:
         self.canvases = [[None]*8 for _ in range(8)]
 
         self._cell_size: float = 50.0
+        self._cell_border_size: int = 1
         self._stone_margin: float = 5.0
 
         self._create_board_ui()
@@ -39,7 +40,7 @@ class GUIGameDesign:
             return
 
         prev_cell_size = self._cell_size
-        self._cell_size = min(event.width, event.height) / 8
+        self._cell_size = min(event.width, event.height) / 8 - (self._cell_border_size * 2)
         scale_ratio = self._cell_size / prev_cell_size
         self._stone_margin *= scale_ratio
 
@@ -56,7 +57,7 @@ class GUIGameDesign:
                         width=self.cell_size,
                         height=self.cell_size, 
                         bg="green",
-                        highlightthickness=1,
+                        highlightthickness=self._cell_border_size,
                         highlightbackground="black"
                     )
                 c.grid(row=x, column=y)
