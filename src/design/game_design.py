@@ -52,8 +52,12 @@ class GUIGameDesign:
         for x in range(8):
             for y in range(8):
                 c = tk.Canvas(
-                        self.frame_board, width=self.cell_size, height=self.cell_size, 
-                        bg="green", highlightthickness=1, highlightbackground="black"
+                        self.frame_board,
+                        width=self.cell_size,
+                        height=self.cell_size, 
+                        bg="green",
+                        highlightthickness=1,
+                        highlightbackground="black"
                     )
                 c.grid(row=x, column=y)
                 self.canvases[x][y] = c
