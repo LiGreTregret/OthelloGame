@@ -57,16 +57,30 @@ class BoardOutputToGUI(BoardOutput):
     def __init__(self, first_color: str, second_color:str, gui_game_design: GUIGameDesign):
         self.first_color = first_color
         self.second_color = second_color
-        self.canvases = gui_game_design.canvases
-        self.cell_size = gui_game_design.cell_size
+
+        self._gui_game_design = gui_game_design
+
+    @property
+    def canvases(self):
+        return self._gui_game_design.canvases
+
+    @property
+    def cell_size(self) -> float:
+        return self._gui_game_design.cell_size
+
+    @property
+    def _stone_margin(self) -> float:
+        return self._gui_game_design.stone_margin
 
     def draw_stone(self, x, y, color):
         c = self.canvases[x][y]
-        margin = 5
+        margin = self._stone_margin
+       
         c.create_oval(
             margin, margin, 
             self.cell_size-margin, self.cell_size-margin,
-            fill=color
+            fill=color,
+            tags="stone"
         )
     
     def output_board(self, board: Board):
