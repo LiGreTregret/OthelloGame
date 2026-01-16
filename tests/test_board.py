@@ -1,5 +1,5 @@
-from src.othello.board import Board, BoardOutputToTerminal, BoardOutputToGUI, BoardOutputContext
-from src.othello.game_design import GUIGameDesign
+from src.board.board import Board, BoardOutputToTerminal, BoardOutputToGUI, BoardOutputContext
+from src.design.game_design import GUIGameDesign
 
 class BoardOutputTest:
     # 初期状態が出力されるか確認
