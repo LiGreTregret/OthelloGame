@@ -1,5 +1,5 @@
-from src.othello.putable_highlighter import PutableHighlighter
-from src.othello.Board import Board, BoardOutputToGUI
+from src.design.putable_highlighter import PutableHighlighter
+from src.board.board import Board, BoardOutputToGUI
 import tkinter as tk
 
 class PutableHighLighterTest:

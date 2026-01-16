@@ -1,6 +1,6 @@
-from src.othello.game_design import GUIGameDesign
-from src.othello.board import Board, BoardOutputToGUI, BoardOutputContext
-from src.othello.input_controller import InputControllerGUI
+from src.design.game_design import GUIGameDesign
+from src.board.board import Board, BoardOutputToGUI, BoardOutputContext
+from src.controller.input_controller import InputControllerGUI
 
 class TestInputController:
     def test_on_click(self):

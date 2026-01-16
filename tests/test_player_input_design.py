@@ -1,4 +1,4 @@
-from src.othello.player_input_design import GUIModeDesign
+from src.design.player_input_design import GUIModeDesign
 
 class PlayerInputDesignTest:
     def test_mode_design(self):
