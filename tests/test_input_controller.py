@@ -17,7 +17,7 @@ class TestInputController:
         gui_game_design = GUIGameDesign()
 
         board = Board()
-        board_output = BoardOutputToGUI(gui_game_design)
+        board_output = BoardOutputToGUI("white", "black", gui_game_design)
         board_output_context = BoardOutputContext()
         board_output_context.set_method(board_output)
         board_output_context.execute_output_board(board)
