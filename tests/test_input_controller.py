@@ -1,6 +1,6 @@
-from design.game_design import GUIGameDesign
-from board.board import Board, BoardOutputToGUI, BoardOutputContext
-from controller.input_controller import InputControllerGUI
+from src.design.game_design import GUIGameDesign
+from src.board.board import Board, BoardOutputToGUI, BoardOutputContext
+from src.controller.input_controller import InputControllerGUI
 
 class TestInputController:
     def test_on_click(self):
@@ -17,7 +17,7 @@ class TestInputController:
         gui_game_design = GUIGameDesign()
 
         board = Board()
-        board_output = BoardOutputToGUI(gui_game_design)
+        board_output = BoardOutputToGUI("white", "black", gui_game_design)
         board_output_context = BoardOutputContext()
         board_output_context.set_method(board_output)
         board_output_context.execute_output_board(board)

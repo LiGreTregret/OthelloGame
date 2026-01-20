@@ -1,17 +1,17 @@
-from src.othello.Player import (
+from src.player.player import (
     HumanPlayerFromTerminal as HPT,
     HumanPlayerFromGUI as HPG,
     RandomComputerPlayer as RCP,
     MostComputerPlayer as MCP,
     LeastComputerPlayer as LCP
 )
-from message.message_output import (
+from src.message.message_output import (
     MessageOutputToTerminal as MOT,
     MessageOutputToGUI as MOG
 )
-from controller.input_controller import InputControllerGUI as ICG
-from player.player_manager import PlayerManager as PM
-from design.game_design import GUIGameDesign
+from src.controller.input_controller import InputControllerGUI as ICG
+from src.player.player_manager import PlayerManager as PM
+from src.design.game_design import GUIGameDesign
 import tkinter as tk
 
 class TestPlayerManager:

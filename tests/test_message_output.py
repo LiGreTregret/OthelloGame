@@ -1,6 +1,6 @@
 import tkinter as tk
-from message.message_output import MessageOutputToTerminal, MessageOutputToGUI, MessageOutputContext
-from design.game_design import GUIGameDesign
+from src.message.message_output import MessageOutputToTerminal, MessageOutputToGUI, MessageOutputContext
+from src.design.game_design import GUIGameDesign
 
 # "Test"が出力されるか確認
 class MessageOutputTest:

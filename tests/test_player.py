@@ -1,8 +1,8 @@
-from player.player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayer, LMComputerPlayer, Lv1ComputerPlayer
-from message.message_output import MessageOutputToTerminal, MessageOutputToGUI
-from controller.input_controller import InputControllerGUI
-from board.board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
-from design.game_design import GUIGameDesign
+from src.player.player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayer, LMComputerPlayer, Lv1ComputerPlayer
+from src.message.message_output import MessageOutputToTerminal, MessageOutputToGUI
+from src.controller.input_controller import InputControllerGUI
+from src.board.board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
+from src.design.game_design import GUIGameDesign
 
 class TestPlayer:
     def t_put(self):
