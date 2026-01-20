@@ -1,10 +1,11 @@
 from src.design.game_design import GUIGameDesign
+from tests.mocks.dummy_board import (
+    DummyGUIGameDesign
+)
 
-class GameDesignTest:
-    def test_gui_game_design(self):
-        gui_game_design = GUIGameDesign()
-        gui_game_design.root.mainloop()
+def test_gui_game_design(self):
+    gui_game_design = GUIGameDesign()
+    gui_game_design.root.mainloop()
 
 if __name__ == "__main__":
-    game_design_test = GameDesignTest()
-    game_design_test.test_gui_game_design()
+    test_gui_game_design()
