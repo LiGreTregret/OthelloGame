@@ -1,4 +1,4 @@
-from src.othello.putable_highlighter import PutableHighlighter
+from design.putable_highlighter import PutableHighlighter
 from src.othello.Board import Board, BoardOutputToGUI
 import tkinter as tk
 

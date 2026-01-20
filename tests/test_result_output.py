@@ -1,8 +1,8 @@
-from src.othello.player_manager import PlayerManager as PM
+from player.player_manager import PlayerManager as PM
 from src.othello.Player import HumanPlayerFromTerminal
-from src.othello.message_output import MessageOutputToTerminal, MessageOutputToGUI
-from src.othello.result_output import ResultOutputContext, ResultMessageOutput
-from src.othello.game_design import GUIGameDesign
+from message.message_output import MessageOutputToTerminal, MessageOutputToGUI
+from result.result_output import ResultOutputContext, ResultMessageOutput
+from design.game_design import GUIGameDesign
 
 class TestResultOutput:
     def test_result_output_to_terminal(self):

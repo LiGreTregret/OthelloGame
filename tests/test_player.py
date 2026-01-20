@@ -1,8 +1,8 @@
-from src.othello.player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayer, LMComputerPlayer, Lv1ComputerPlayer
-from src.othello.message_output import MessageOutputToTerminal, MessageOutputToGUI
-from src.othello.input_controller import InputControllerGUI
-from src.othello.board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
-from src.othello.game_design import GUIGameDesign
+from player.player import PlayerContext, HumanPlayerFromTerminal, HumanPlayerFromGUI, RandomComputerPlayer, LMComputerPlayer, Lv1ComputerPlayer
+from message.message_output import MessageOutputToTerminal, MessageOutputToGUI
+from controller.input_controller import InputControllerGUI
+from board.board import Board, BoardOutputContext, BoardOutputToTerminal, BoardOutputToGUI
+from design.game_design import GUIGameDesign
 
 class TestPlayer:
     def t_put(self):

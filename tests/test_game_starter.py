@@ -1,4 +1,4 @@
-from src.othello.game_starter import GameStarterForHvHonGUI, \
+from script.game_starter import GameStarterForHvHonGUI, \
                         GameStarterForHvConGUI, \
                         GameStarterForCvConGUI
 
