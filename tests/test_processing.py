@@ -1,5 +1,5 @@
-from src.othello.Processing import Processing
-from src.othello.Board import Board
+from src.board.processing import Processing
+from src.board.board import Board
 from collections import deque
 
 class TestProcessing:
