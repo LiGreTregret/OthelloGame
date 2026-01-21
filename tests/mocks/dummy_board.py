@@ -14,6 +14,13 @@ class DummyCanvas:
     def delete(self, tag):
         self.calls.append(("delete", tag))
 
+class DummyTk:
+    """ Tkinter Tkのモック"""
+    def __init__(self):
+        self.called = False
+    
+    def mainloop(self):
+        self.called = True
 
 class DummyGUIGameDesign:
     """GUIGameDesignのモック"""
@@ -24,6 +31,7 @@ class DummyGUIGameDesign:
             [DummyCanvas() for _ in range(8)]
             for _ in range(8)
         ]
+        self.root = DummyTk()
 
 
 class DummyBoardOutput(BoardOutput):
