@@ -2,7 +2,7 @@ from src.design.putable_highlighter import PutableHighlighter
 from src.design.game_design import GUIGameDesign
 from src.board.board import Board, BoardOutputToGUI
 
-class PutableHighLighterTest:
+class TestPutableHighLighter:
     def test(self):
         gui_game_design = GUIGameDesign()
         board = Board()
@@ -19,5 +19,5 @@ class PutableHighLighterTest:
         gui_game_design.root.mainloop()
 
 if __name__ == "__main__":
-    putable_highlighter_test = PutableHighLighterTest()
+    putable_highlighter_test = TestPutableHighLighter()
     putable_highlighter_test.test()

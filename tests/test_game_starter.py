@@ -2,7 +2,7 @@ from src.script.game_starter import GameStarterForHvHonGUI, \
                         GameStarterForHvConGUI, \
                         GameStarterForCvConGUI
 
-class GameSterterTest:
+class TestGameSterter:
     def test_hvh(self):
         game_starter_hvh = GameStarterForHvHonGUI()
 
@@ -41,5 +41,5 @@ class GameSterterTest:
         game_starter_cvc.start(player_dict)
 
 if __name__ == "__main__":
-    game_starter_test = GameSterterTest()
+    game_starter_test = TestGameSterter()
     game_starter_test.test_hvc()

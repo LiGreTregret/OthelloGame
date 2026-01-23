@@ -3,7 +3,7 @@ from src.message.message_output import MessageOutputToTerminal, MessageOutputToG
 from src.design.game_design import GUIGameDesign
 
 # "Test"が出力されるか確認
-class MessageOutputTest:
+class TestMessageOutput:
     def test_to_terminal(self):
         message_output_context = MessageOutputContext()
         message_output = MessageOutputToTerminal() # ここで出力方法を選択
@@ -22,6 +22,6 @@ class MessageOutputTest:
         gui_game_design.root.mainloop()
 
 if __name__ == "__main__":
-    message_output_test = MessageOutputTest()
+    message_output_test = TestMessageOutput()
     message_output_test.test_to_terminal()
     message_output_test.test_to_gui()
