@@ -1,8 +1,9 @@
 from src.design.game_design import GUIGameDesign
-from src.board.board import Board, BoardOutputToGUI, BoardOutputContext
 from src.controller.input_controller import InputControllerGUI
 
-def test_on_click(self):
+from unittest.mock import MagicMock
+
+def test_on_click():
     gui_game_design = GUIGameDesign()
     input_controller = InputControllerGUI(gui_game_design)
     
@@ -12,16 +13,20 @@ def test_on_click(self):
     input_controller._on_click(7, 7)
     assert input_controller.clicked_pos == (7, 7)
 
-def test_wait_for_click(self):
-    gui_game_design = GUIGameDesign()
+def test_wait_for_click_no_gui():
+    mock_root = MagicMock()
 
-    board = Board()
-    board_output = BoardOutputToGUI("white", "black", gui_game_design)
-    board_output_context = BoardOutputContext()
-    board_output_context.set_method(board_output)
-    board_output_context.execute_output_board(board)
+    gui_mock = MagicMock()
+    gui_mock.root = mock_root
 
-    input_controller = InputControllerGUI(gui_game_design)
+    input_controller = InputControllerGUI(gui_mock)
 
-    pos = input_controller.wait_for_click(gui_game_design.root)
-    print(pos)
+    test_cases = [(x, y) for x in range(8) for y in range(8)]
+
+    for x, y in test_cases:
+        def side_effect():
+            input_controller.clicked_pos = (x, y)
+        
+        mock_root.update.side_effect = side_effect
+        pos = input_controller.wait_for_click(mock_root)
+        assert pos == (x, y)
