@@ -27,6 +27,7 @@ class DummyGUIGameDesign:
     def __init__(self):
         self.cell_size = 100
         self.stone_margin = 10
+        self.label = ""
         self.canvases = [
             [DummyCanvas() for _ in range(8)]
             for _ in range(8)

@@ -1,27 +1,26 @@
-import tkinter as tk
-from src.message.message_output import MessageOutputToTerminal, MessageOutputToGUI, MessageOutputContext
-from src.design.game_design import GUIGameDesign
+from src.message.message_output import MessageOutputContext
+from tests.mocks.dummy_message_output import DummyMessageOutputToTerminal, DummyMessageOutputToGUI
+from tests.mocks.dummy_board import DummyGUIGameDesign
 
-# "Test"が出力されるか確認
-class TestMessageOutput:
-    def test_to_terminal(self):
-        message_output_context = MessageOutputContext()
-        message_output = MessageOutputToTerminal() # ここで出力方法を選択
-        message_output_context.set_message_output(message_output)
-        message_output_context.execute_output_message("Test")
+def test_to_terminal():
+    message_output_context = MessageOutputContext()
+    message_output = DummyMessageOutputToTerminal()
 
-    def test_to_gui(self):
-        gui_game_design = GUIGameDesign()
+    message_output_context.set_message_output(message_output)
 
-        message_output_context = MessageOutputContext()
-        message_output_gui = MessageOutputToGUI(gui_game_design)
-        message_output_context.set_message_output(message_output_gui)
+    message_output_context.execute_output_message("test_message_only")
+    assert ("test_message_only", None, "") in message_output.calls
 
-        message_output_context.execute_output_message("Test")
-        gui_game_design.root.after(1000, lambda: message_output_context.execute_output_message("TEST", 1))
-        gui_game_design.root.mainloop()
+def test_to_gui():
+    gui = DummyGUIGameDesign()
 
-if __name__ == "__main__":
-    message_output_test = TestMessageOutput()
-    message_output_test.test_to_terminal()
-    message_output_test.test_to_gui()
+    message_output_context = MessageOutputContext()
+    message_output = DummyMessageOutputToGUI(gui)
+    message_output_context.set_message_output(message_output)
+
+    message_output_context.execute_output_message("Test")
+    assert message_output.label == "Test"
+    message_output_context.execute_output_message("TEST", 1)
+    gui.root.mainloop()
+    assert message_output.label == "Test"
+    assert ("TEST", 1, "Test") in message_output.calls 
