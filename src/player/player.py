@@ -22,6 +22,7 @@ from src.message.message_output import MessageOutputContext, MessageOutput, Mess
 from src.controller.input_controller import InputControllerGUI
 from src.design.game_design import GUIGameDesign
 from src.design.putable_highlighter import PutableHighlighter
+from src.soundplay.sound_player import SoundPlayer, SoundIndex
 import random
 
 class Player(ABC):
@@ -69,7 +70,7 @@ class HumanPlayerFromTerminal(Player):
         return board
 
 class HumanPlayerFromGUI(Player):
-    def __init__(self, order, name, input_controller: InputControllerGUI, gui_game_design: GUIGameDesign, message_output: MessageOutput):
+    def __init__(self, order, name, input_controller: InputControllerGUI, gui_game_design: GUIGameDesign, message_output: MessageOutput, sound: str = SoundIndex.SOUND_DICT[0][0]):
         self.order = order
         self.name = name
         self.input_controller = input_controller
@@ -77,6 +78,8 @@ class HumanPlayerFromGUI(Player):
         self.frame_board = gui_game_design.frame_board
         self.message_output = message_output
         self.record_manager = None
+        self.sound_player = SoundPlayer()
+        self.sound_player.set_sound(sound)
     
     def set_record_manager(self, record_manager) -> None:
         """対戦記録マネージャを設定する"""
@@ -106,6 +109,7 @@ class HumanPlayerFromGUI(Player):
             if(processing.is_valid_put()):
                 board = processing.put(x, y, self.order, board)
                 board = processing.flip(board)
+                self.sound_player.play_sound()
                 break
             else:
                 message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
@@ -113,10 +117,12 @@ class HumanPlayerFromGUI(Player):
         return board
     
 class RandomComputerPlayer(Player):
-    def __init__(self, order, name, message_output):
+    def __init__(self, order, name, message_output, sound: str = SoundIndex.SOUND_DICT[0][0]):
         self.order = order
         self.name = name
         self.message_output = message_output
+        self.sound_player = SoundPlayer()
+        self.sound_player.set_sound(sound)
     
     def put(self, board: Board) -> Board:
         processing = Processing()
@@ -137,16 +143,19 @@ class RandomComputerPlayer(Player):
         if(processing.is_valid_put()):
             board = processing.put(x, y, self.order, board)
             board = processing.flip(board)
+            self.sound_player.play_sound()
         else:
             message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
         
         return board
 
 class MostComputerPlayer(Player):
-    def __init__(self, order, name, message_output):
+    def __init__(self, order, name, message_output, sound: str = SoundIndex.SOUND_DICT[0][0]):
         self.order = order
         self.name = name
         self.message_output = message_output
+        self.sound_player = SoundPlayer()
+        self.sound_player.set_sound(sound)
     
     def put(self, board: Board) -> Board:
         processing = Processing()
@@ -169,16 +178,19 @@ class MostComputerPlayer(Player):
         if(processing.is_valid_put()):
             board = processing.put(x, y, self.order, board)
             board = processing.flip(board)
+            self.sound_player.play_sound()
         else:
             message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
         
         return board
     
 class LeastComputerPlayer(Player):
-    def __init__(self, order, name, message_output):
+    def __init__(self, order, name, message_output, sound: str = SoundIndex.SOUND_DICT[0][0]):
         self.order = order
         self.name = name
         self.message_output = message_output
+        self.sound_player = SoundPlayer()
+        self.sound_player.set_sound(sound)
     
     def put(self, board: Board) -> Board:
         processing = Processing()
@@ -201,23 +213,25 @@ class LeastComputerPlayer(Player):
         if(processing.is_valid_put()):
             board = processing.put(x, y, self.order, board)
             board = processing.flip(board)
+            self.sound_player.play_sound()
         else:
             message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
         
         return board
 
 class LMComputerPlayer(Player):
-    def __init__(self, order, name, message_output):
+    def __init__(self, order, name, message_output, sound: str = SoundIndex.SOUND_DICT[0][0]):
         self.order = order
         self.name = name
         self.message_output = message_output
+        self.sound = sound
     
     def put(self, board: Board) -> Board:
         processing = Processing()
         message_output_context = MessageOutputContext()
         message_output_context.set_message_output(self.message_output)
-        lcp = LeastComputerPlayer(self.order, self.name, self.message_output)
-        mcp = MostComputerPlayer(self.order, self.name, self.message_output)
+        lcp = LeastComputerPlayer(self.order, self.name, self.message_output, self.sound)
+        mcp = MostComputerPlayer(self.order, self.name, self.message_output, self.sound)
 
         processing.find_putable(self.order, board)
         l = len(processing.putable_coordinates)
@@ -236,10 +250,12 @@ class LMComputerPlayer(Player):
         return board
 
 class Lv1ComputerPlayer(Player):
-    def __init__(self, order, name, message_output):
+    def __init__(self, order, name, message_output, sound: str = SoundIndex.SOUND_DICT[0][0]):
         self.order = order
         self.name = name
         self.message_output = message_output
+        self.sound_player = SoundPlayer()
+        self.sound_player.set_sound(sound)
     
     def is_corner(self, x, y) -> bool:
         if((x == 0 or x == 7) and (y == 0 or y == 7)):
@@ -312,6 +328,7 @@ class Lv1ComputerPlayer(Player):
         if(processing.is_valid_put()):
             board = processing.put(x, y, self.order, board)
             board = processing.flip(board)
+            self.sound_player.play_sound()
         else:
             message_output_context.execute_output_message("そこには置けません。", 1, f"{self.name}さんの番です。石を置いてください。")
         
