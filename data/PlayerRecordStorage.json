@@ -1,14 +1,14 @@
 {
   "y": {
-    "matches": 4,
-    "wins": 4,
+    "matches": 11,
+    "wins": 11,
     "losses": 0,
     "draws": 0
   },
   "COM": {
-    "matches": 4,
+    "matches": 11,
     "wins": 0,
-    "losses": 4,
+    "losses": 11,
     "draws": 0
   }
 }
