@@ -1,19 +1,18 @@
-from src.script.game_starter import GameStarterComponent, GameStarterForHvHonGUI, GameStarterForHvConGUI, GameStarterForCvConGUI
+from src.script.game_starter import GameStarterComponent, GameStarterForHvHonGUI, GameStarterForHvConGUI, GameStarterForCvConGUI, ColorIndex
+from src.player.player import ComputerIndex
 import tkinter as tk
 import tkinter.ttk as ttk
 
 class GUIPlayerInputDesignForHvH:
     def __init__(self):
-        game_starter_component = GameStarterComponent()
-
         # 部品
         ## root
         self.root = tk.Tk()
         self.root.title("プレイヤー設定")
 
         # 色リスト
-        self.colors = tuple(v[0] for v in game_starter_component.COLOR.values())
-        self.color_dict = {v[0] : k for k, v in game_starter_component.COLOR.items()}
+        self.colors = tuple(v[0] for v in ColorIndex.COLOR_DICT.values())
+        self.color_dict = {v[0] : k for k, v in ColorIndex.COLOR_DICT.items()}
         
         ## 先攻
         self.first_frame = tk.Frame(self.root)
@@ -90,20 +89,18 @@ class GUIPlayerInputDesignForHvH:
 
 class GUIPlayerInputDesignForHvC:
     def __init__(self):
-        game_starter_component = GameStarterComponent()
-
         # 部品
         ## root
         self.root = tk.Tk()
         self.root.title("プレイヤー設定")
 
         # 色リスト
-        self.colors = tuple(v[0] for v in game_starter_component.COLOR.values())
-        self.color_dict = {v[0] : k for k, v in game_starter_component.COLOR.items()}
+        self.colors = tuple(v[0] for v in ColorIndex.COLOR_DICT.values())
+        self.color_dict = {v[0] : k for k, v in ColorIndex.COLOR_DICT.items()}
 
         # COMタイプリスト
-        self.types = tuple(v[1] for v in game_starter_component.COM_TYPE.values())
-        self.type_dict = {v[1] : k for k, v in game_starter_component.COM_TYPE.items()}
+        self.types = tuple(v[1] for v in ComputerIndex.COM_TYPE.values())
+        self.type_dict = {v[1] : k for k, v in ComputerIndex.COM_TYPE.items()}
 
         ## Human
         self.human_frame = tk.Frame(self.root)
@@ -196,20 +193,18 @@ class GUIPlayerInputDesignForHvC:
 
 class GUIPlayerInputDesignForCvC:
     def __init__(self):
-        game_starter_component = GameStarterComponent()
-
         # 部品
         ## root
         self.root = tk.Tk()
         self.root.title("プレイヤー設定")
 
         # 色リスト
-        self.colors = tuple(v[0] for v in game_starter_component.COLOR.values())
-        self.color_dict = {v[0] : k for k, v in game_starter_component.COLOR.items()}
+        self.colors = tuple(v[0] for v in ColorIndex.COLOR_DICT.values())
+        self.color_dict = {v[0] : k for k, v in ColorIndex.COLOR_DICT.items()}
 
         # COMタイプリスト
-        self.types = tuple(v[1] for v in game_starter_component.COM_TYPE.values())
-        self.type_dict = {v[1] : k for k, v in game_starter_component.COM_TYPE.items()}
+        self.types = tuple(v[1] for v in ComputerIndex.COM_TYPE.values())
+        self.type_dict = {v[1] : k for k, v in ComputerIndex.COM_TYPE.items()}
 
         ## 先攻
         self.first_frame = tk.Frame(self.root)

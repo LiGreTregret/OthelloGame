@@ -360,3 +360,12 @@ class PlayerContext:
         else:
             print("No method set up")
             return board
+        
+class ComputerIndex:
+    COM_TYPE = {
+        0 : [RandomComputerPlayer, "ランダム"],
+        1 : [MostComputerPlayer, "最多選択"],
+        2 : [LeastComputerPlayer, "最少選択"],
+        3 : [LMComputerPlayer, "少から多"],
+        4 : [Lv1ComputerPlayer, "Lv.1"]
+    }

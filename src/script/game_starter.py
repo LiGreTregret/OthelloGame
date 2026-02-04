@@ -1,6 +1,6 @@
 from src.design.game_design import GUIGameDesign
 from src.player.player_manager import PlayerManager
-from src.player.player import RandomComputerPlayer, MostComputerPlayer, LeastComputerPlayer, HumanPlayerFromGUI, LMComputerPlayer, Lv1ComputerPlayer
+from src.player.player import HumanPlayerFromGUI, ComputerIndex
 from src.board.board import Board, BoardOutputContext, BoardOutputToGUI
 from src.controller.input_controller import InputControllerGUI
 from src.board.processing import Processing
@@ -8,9 +8,8 @@ from src.message.message_output import MessageOutputContext, MessageOutputToGUI
 from src.result.result_output import ResultOutputContext, ResultMessageOutput
 from src.record.storage import JSONStorage
 
-class GameStarterComponent:
-    def __init__(self):
-        self.COLOR = {
+class ColorIndex:
+    COLOR_DICT = {
                 0 : ["白", "white"],
                 1 : ["黒", "black"],
                 2 : ["赤", "red"],
@@ -25,14 +24,7 @@ class GameStarterComponent:
                 11: ["灰", "grey"]
             }
 
-        self.COM_TYPE = {
-            0 : [RandomComputerPlayer, "ランダム"],
-            1 : [MostComputerPlayer, "最多選択"],
-            2 : [LeastComputerPlayer, "最少選択"],
-            3 : [LMComputerPlayer, "少から多"],
-            4 : [Lv1ComputerPlayer, "Lv.1"]
-        }
-
+class GameStarterComponent:
     # GUIゲーム進行メソッド
     def progress(self, processing, board, result_output_context, now, player_manager, first_color, second_color, message_output_context_game, board_output_context, gui_game_design):
         # 終了判定
@@ -113,10 +105,10 @@ class GameStarterForHvHonGUI:
         player1_color = player_dict[self.P1C]
         player2_color = player_dict[self.P2C]
 
-        first_color_jp = game_starter_component.COLOR[player1_color][0]
-        second_color_jp = game_starter_component.COLOR[player2_color][0]
-        first_color_en = game_starter_component.COLOR[player1_color][1]
-        second_color_en = game_starter_component.COLOR[player2_color][1]
+        first_color_jp = ColorIndex.COLOR_DICT[player1_color][0]
+        second_color_jp = ColorIndex.COLOR_DICT[player2_color][0]
+        first_color_en = ColorIndex.COLOR_DICT[player1_color][1]
+        second_color_en = ColorIndex.COLOR_DICT[player2_color][1]
 
         board_output = BoardOutputToGUI(first_color_en, second_color_en, gui_game_design)
         board_output_context = BoardOutputContext()
@@ -177,7 +169,7 @@ class GameStarterForHvConGUI:
 
         # プレイヤー登録
         human_player = HumanPlayerFromGUI(human_player_order, human_player_name, input_controller, gui_game_design, message_output_game)
-        com_player = game_starter_component.COM_TYPE[com_player_comtype][0](com_player_order, com_player_name, message_output_game)
+        com_player = ComputerIndex.COM_TYPE[com_player_comtype][0](com_player_order, com_player_name, message_output_game)
         if(human_player_order == 0):
             player_manager.register_first_player(human_player)
             player_manager.register_second_player(com_player)
@@ -189,10 +181,10 @@ class GameStarterForHvConGUI:
             first_color = com_player_color
             second_color = human_player_color
 
-        first_color_jp = game_starter_component.COLOR[first_color][0]
-        second_color_jp = game_starter_component.COLOR[second_color][0]
-        first_color_en = game_starter_component.COLOR[first_color][1]
-        second_color_en = game_starter_component.COLOR[second_color][1]
+        first_color_jp = ColorIndex.COLOR_DICT[first_color][0]
+        second_color_jp = ColorIndex.COLOR_DICT[second_color][0]
+        first_color_en = ColorIndex.COLOR_DICT[first_color][1]
+        second_color_en = ColorIndex.COLOR_DICT[second_color][1]
 
         board_output = BoardOutputToGUI(first_color_en, second_color_en, gui_game_design)
         board_output_context = BoardOutputContext()
@@ -242,8 +234,8 @@ class GameStarterForCvConGUI:
         player2_comtype = player_dict[self.P2T]
 
         # プレイヤー登録
-        player1 = game_starter_component.COM_TYPE[player1_comtype][0](0, player1_name, message_output_game)
-        player2 = game_starter_component.COM_TYPE[player2_comtype][0](1, player2_name, message_output_game)
+        player1 = ComputerIndex.COM_TYPE[player1_comtype][0](0, player1_name, message_output_game)
+        player2 = ComputerIndex.COM_TYPE[player2_comtype][0](1, player2_name, message_output_game)
         player_manager.register_first_player(player1)
         player_manager.register_second_player(player2)
 
@@ -251,10 +243,10 @@ class GameStarterForCvConGUI:
         player1_color = player_dict[self.P1C]
         player2_color = player_dict[self.P2C]
 
-        first_color_jp = game_starter_component.COLOR[player1_color][0]
-        second_color_jp = game_starter_component.COLOR[player2_color][0]
-        first_color_en = game_starter_component.COLOR[player1_color][1]
-        second_color_en = game_starter_component.COLOR[player2_color][1]
+        first_color_jp = ColorIndex.COLOR_DICT[player1_color][0]
+        second_color_jp = ColorIndex.COLOR_DICT[player2_color][0]
+        first_color_en = ColorIndex.COLOR_DICT[player1_color][1]
+        second_color_en = ColorIndex.COLOR_DICT[player2_color][1]
 
         board_output = BoardOutputToGUI(first_color_en, second_color_en, gui_game_design)
         board_output_context = BoardOutputContext()
