@@ -133,7 +133,8 @@ class GameStarterForHvHonGUI:
             second_color_jp,
             message_output_context_game,
             board_output_context,
-            gui_game_design)
+            gui_game_design
+        )
 
         now = 0
         gui_game_design.frame_board.after(1500, lambda: progress.progress(board, now))
@@ -217,7 +218,8 @@ class GameStarterForHvConGUI:
             second_color_jp,
             message_output_context_game,
             board_output_context,
-            gui_game_design)
+            gui_game_design
+        )
 
         now = 0
         gui_game_design.frame_board.after(1500, lambda: progress.progress(board, now))
@@ -287,9 +289,10 @@ class GameStarterForCvConGUI:
             second_color_jp,
             message_output_context_game,
             board_output_context,
-            gui_game_design)
+            gui_game_design
+        )
 
         now = 0
-        gui_game_design.frame_board.after(1500, lambda: progress.progress(processing, board, result_output_context, now, player_manager, first_color_jp, second_color_jp, message_output_context_game, board_output_context, gui_game_design))
+        gui_game_design.frame_board.after(1500, lambda: progress.progress(board, now))
         
         gui_game_design.root.mainloop()
