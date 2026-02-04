@@ -24,42 +24,52 @@ class ColorIndex:
                 11: ["灰", "grey"]
             }
 
-class GameStarterComponent:
+class Progress:
+    def __init__(self, processing, result_output_context, player_manager, first_color, second_color, message_output_context_game, board_output_context, gui_game_design):
+        self.processing = processing
+        self.result_output_context = result_output_context
+        self.player_manager = player_manager
+        self.first_color = first_color
+        self.second_color = second_color
+        self.message_output_context_game = message_output_context_game
+        self.board_output_context = board_output_context
+        self.gui_game_design = gui_game_design
+
     # GUIゲーム進行メソッド
-    def progress(self, processing, board, result_output_context, now, player_manager, first_color, second_color, message_output_context_game, board_output_context, gui_game_design):
+    def progress(self, board, now):
         # 終了判定
-        result = processing.judge_result(board)
+        result = self.processing.judge_result(board)
         if result != -1:
             try:
                 storage = JSONStorage()
                 if result == 2:
                     winner = None
                 elif result == 0:
-                    winner = player_manager.first_player.name
+                    winner = self.player_manager.first_player.name
                 else:
-                    winner = player_manager.second_player.name
-                storage.record_match(player_manager.first_player.name, player_manager.second_player.name, winner)
+                    winner = self.player_manager.second_player.name
+                storage.record_match(self.player_manager.first_player.name, self.player_manager.second_player.name, winner)
             except Exception:
                 pass
-            result_output_context.execute_output(result)
+            self.result_output_context.execute_output(result)
             return
 
         # 石を置く
         if(now == 0):
-            now_player = player_manager.first_player
-            color = first_color
+            now_player = self.player_manager.first_player
+            color = self.first_color
         else:
-            now_player = player_manager.second_player
-            color = second_color
+            now_player = self.player_manager.second_player
+            color = self.second_color
         name = now_player.name
-        message_output_context_game.execute_output_message(f"{name}さんの番です。石({color})を置いてください。")
+        self.message_output_context_game.execute_output_message(f"{name}さんの番です。石({color})を置いてください。")
 
         board = now_player.put(board)
-        gui_game_design.frame_board.after(500, lambda: board_output_context.execute_output_board(board))
+        self.gui_game_design.frame_board.after(500, lambda: self.board_output_context.execute_output_board(board))
 
         now = (now + 1) % 2
 
-        gui_game_design.frame_board.after(500, lambda: self.progress(processing, board, result_output_context, now, player_manager, first_color, second_color, message_output_context_game, board_output_context, gui_game_design))
+        self.gui_game_design.frame_board.after(500, lambda: self.progress(board, now))
 
 class GameStarterForHvHonGUI:
     def __init__(self):
@@ -88,8 +98,6 @@ class GameStarterForHvHonGUI:
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output_game))
 
-        game_starter_component = GameStarterComponent()
-
         # 名前入力
         player1_name = player_dict[self.P1N]
         player2_name = player_dict[self.P2N]
@@ -117,8 +125,18 @@ class GameStarterForHvHonGUI:
         board_output_context.execute_output_board(board)
         message_output_context_game.execute_output_message("ゲームを開始します。")
 
+        progress = Progress(
+            processing,
+            result_output_context,
+            player_manager,
+            first_color_jp,
+            second_color_jp,
+            message_output_context_game,
+            board_output_context,
+            gui_game_design)
+
         now = 0
-        gui_game_design.frame_board.after(1500, lambda: game_starter_component.progress(processing, board, result_output_context, now, player_manager, first_color_jp, second_color_jp, message_output_context_game, board_output_context, gui_game_design))
+        gui_game_design.frame_board.after(1500, lambda: progress.progress(board, now))
         
         gui_game_design.root.mainloop()
 
@@ -149,8 +167,6 @@ class GameStarterForHvConGUI:
 
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output_game))
-
-        game_starter_component = GameStarterComponent()
 
         # 名前入力
         human_player_name = player_dict[self.HN]
@@ -193,8 +209,18 @@ class GameStarterForHvConGUI:
         board_output_context.execute_output_board(board)
         message_output_context_game.execute_output_message("ゲームを開始します。")
 
+        progress = Progress(
+            processing,
+            result_output_context,
+            player_manager,
+            first_color_jp,
+            second_color_jp,
+            message_output_context_game,
+            board_output_context,
+            gui_game_design)
+
         now = 0
-        gui_game_design.frame_board.after(1500, lambda: game_starter_component.progress(processing, board, result_output_context, now, player_manager, first_color_jp, second_color_jp, message_output_context_game, board_output_context, gui_game_design))
+        gui_game_design.frame_board.after(1500, lambda: progress.progress(board, now))
         
         gui_game_design.root.mainloop()
 
@@ -222,8 +248,6 @@ class GameStarterForCvConGUI:
 
         result_output_context = ResultOutputContext()
         result_output_context.set_method(ResultMessageOutput(player_manager, message_output_game))
-
-        game_starter_component = GameStarterComponent()
 
         # 名前入力
         player1_name = "COM1"
@@ -255,7 +279,17 @@ class GameStarterForCvConGUI:
         board_output_context.execute_output_board(board)
         message_output_context_game.execute_output_message("ゲームを開始します。")
 
+        progress = Progress(
+            processing,
+            result_output_context,
+            player_manager,
+            first_color_jp,
+            second_color_jp,
+            message_output_context_game,
+            board_output_context,
+            gui_game_design)
+
         now = 0
-        gui_game_design.frame_board.after(1500, lambda: game_starter_component.progress(processing, board, result_output_context, now, player_manager, first_color_jp, second_color_jp, message_output_context_game, board_output_context, gui_game_design))
+        gui_game_design.frame_board.after(1500, lambda: progress.progress(processing, board, result_output_context, now, player_manager, first_color_jp, second_color_jp, message_output_context_game, board_output_context, gui_game_design))
         
         gui_game_design.root.mainloop()
