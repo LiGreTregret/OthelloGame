@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.3.6" pages="2">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.3.7" pages="2">
   <diagram id="R7lyvHR_F79ehCGKdhky" name="クラス図">
-    <mxGraphModel grid="1" page="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1728" dy="3928" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1139,7 +1139,7 @@
         </mxCell>
         <mxCell id="n2v1U37INQQHk2AdXCF_-16" connectable="0" parent="n2v1U37INQQHk2AdXCF_-15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontColor=light-dark(#000000,#FF8000);" value="&amp;lt;&amp;lt;use&amp;gt;&amp;gt;" vertex="1">
           <mxGeometry relative="1" x="0.0187" y="-2" as="geometry">
-            <mxPoint x="158" y="-69" as="offset" />
+            <mxPoint x="-225" y="-84" as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
